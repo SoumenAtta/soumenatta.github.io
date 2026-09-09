@@ -1,0 +1,1301 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Supplementary Webpage for Manuscript: SApHLP · Soumen Atta, Ph.D.</title>
+<meta name="description" content="Supplementary data and benchmark instances for a published research article by Dr. Soumen Atta.">
+<link rel="canonical" href="https://www.soumenatta.com/datasets/saphlp">
+<link rel="icon" href="/assets/img/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="/assets/css/style.css">
+</head>
+<body>
+<header class="site-header">
+  <div class="site-header__inner">
+    <a class="brand" href="/">Soumen Atta <span class="brand__suffix">Ph.D.</span></a>
+    <button class="nav-toggle" id="nav-toggle" aria-label="Toggle navigation" aria-expanded="false" aria-controls="primary-nav">
+      <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M1 4h16M1 9h16M1 14h16" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+      </svg>
+    </button>
+    <nav class="primary-nav" id="primary-nav">
+      <ul>
+        <li><a href="/">Home</a></li>
+        <li><a href="/academics">Academics</a></li>
+        <li><a href="/publications">Publications</a></li>
+        <li><a href="/experiences">Experiences</a></li>
+        <li><a href="/experiences/teaching_experiences/courses">Courses</a></li>
+        <li class="active"><a href="/datasets">Data Sets</a></li>
+        <li><a href="/blogs">Blogs</a></li>
+        <li><a href="/contact">Contact</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<div class="container wide">
+  <p class="small muted" style="margin-top:1.6rem;"><a href="/datasets">← Back to Data Sets</a></p>
+  <div class="dataset-body">
+
+
+<h1 style="text-align: center" align="center"><font size="5">Supplementary 
+Web-page for Manuscript:</font></h1>
+<h1 style="text-align: center" align="center"><font size="5">A new variant of the <i>p</i>-hub location problem with a ring backbone network for content placement in VoD services</font></h1>
+
+<p class="MsoNormal" align="center"><b><span lang="FI"><font size="4">
+Soumen Atta<sup>1, 2</sup>, Goutam Sen<sup>3</sup>
+</font></span></b></p>
+<p class="MsoNormal" align="center"><b><span lang="FI"><font size="3">
+<sup>1</sup>Indian Institute of Information Technology (IIIT) Vadodara, Gandhinagar Campus, Sector 28, Gandhinagar, Gujarat-382028, India <br> 
+<sup>2</sup>Faculty of Informatics, Masaryk University, Botanicka&acute 68a, Brno 602 00, Czech Republic <br>
+E-mail: soumen_atta@iiitvadodara.ac.in; atta@fi.muni.cz (Corresponding author) <br> 
+<sup>3</sup>Industrial and Systems Engineering, Indian Institute of Technology (IIT) Kharagpur, Kharagpur-721302, West Bengal, India <br>
+E-mail: gsen@iem.iitkgp.ernet.in
+</font></span></b></p>
+ 
+<p style="font-size:105%;" align="justify">
+The instances for the <i>single allocation p-hub location problem</i> (SApHLP) with ring backbone network mentioned in this page are generated from the real world movie data set known as <i>MovieLens 100K</i> data set (Harper and Konstan, 2016) available at <a href="https://grouplens.org/datasets/movielens/100k/">https://grouplens.org/datasets/movielens/100k/</a>. Thirty five different size instances are generated for SApHLP. All the instances are given in the table shown below where <i>n</i>, <i>f</i>, <i>p</i> and <i>&alpha;</i> denote the number of users, number of files, number of hubs and discount factor per unit inter-hub flow respectively. Each instance consists of the <i>query matrix (Q)</i> and the <i>distance matrix (D)</i>. In the table shown below, the column "Solution" denotes the structure of of the backbone ring network (<b>R</b>) and the assignment of the segments to the hubs (<b>S</b>). For example, <b>R</b> = (0, 3, 7, 4, 5) denotes that the ring is formed with the nodes 0, 3, 7, 4, 5, and <b>S</b> = (0, 1, 3, 2, 4) denotes that data segments <i>s<sub>0</sub>, s<sub>1</sub>, s<sub>3</sub></i>, <i>s<sub>2</sub></i> and <i>s<sub>4</sub></i> are assigned to the hub-nodes 0, 3, 7, 4 and 5 respectively. Each of the instances can be separately downloaded by clicking on the respective serial number (Sl. No.) of the instance. 
+<br><br> 
+</p>
+
+<p style="font-size:105%;" align="justify">
+Cite as: Soumen Atta, Goutam Sen. A new variant of the p-hub location problem with a ring backbone network for content placement in VoD services. Computers & Industrial Engineering, Elsevier, Vol. 159, pp. 107432, 2021.
+</p>
+	
+<p class="MsoNormal" align="right"><b><span lang="FI"><font size="3">
+Click <a href="SApHLP_data_sets.zip">here</a> to download all the instances as a single zip file. 
+</font></span></b></p>
+
+<div class="table-wrap"><table border="1" width="60%" bordercolor="#C0C0C0" bgcolor="#FFFFFF" height="10"align="center">
+  <tr>
+ 	<td width="5%" align="center"><font size="3"><b><i>Sl. No.</i></b></font></td>
+	<td width="5%" align="center"><font size="3"><b><i>n</i></b></font></td>
+  <td width="5%" align="center"><font size="3"><b><i>f</i></b></font></td>
+	<td width="5%" align="center"><font size="3"><b><i>p</i></b></font></td>
+	<td width="5%" align="center"><font size="3"><b><i>&alpha;</i></b></font></td>
+  <td width="30%" align="center"><font size="3"><b>Solution</b></font></td>
+	<td width="5%" align="center"><font size="3"><b><i>Cost</i></b></font></td>
+  </tr>
+  <tr>
+    	<td width="5%" valign="middle" height="1">
+      		<p align="center"><span lang="EN-US" style="font-size:12.0pt;font-family:
+  		&quot;Times New Roman&quot;;mso-ansi-language:EN-US"><a href="10_100_5.dat">1</a></span>
+			</td>
+    	<td width="5%">
+      		<p align="center"><span lang="EN-US" style="font-size:12.0pt;font-family:
+  		&quot;Times New Roman&quot;;mso-ansi-language:EN-US">10</span>
+			</td>
+    	<td width="5%">
+      		<p align="center"><font size="3">&nbsp;<span style="mso-fareast-font-family:
+		Times New Roman; mso-ansi-language: RU; mso-fareast-language: RU; mso-bidi-language: AR-SA">100</span></font></p>
+    	</td>
+    	<td width="5%">
+      		<p align="center"><font size="3">&nbsp;<span style="mso-fareast-font-family:
+		Times New Roman; mso-ansi-language: RU; mso-fareast-language: RU; mso-bidi-language: AR-SA">5</span></font></p>
+    	</td>
+    	<td width="5%">
+      		<p align="center"><font size="3">&nbsp;<span style="mso-fareast-font-family:
+		Times New Roman; mso-ansi-language: RU; mso-fareast-language: RU; mso-bidi-language: AR-SA">0.2</span></font></p>
+			</td>
+	    	<td width="30%">
+      		<p align="left"><font size="3">&nbsp;<span style="mso-fareast-font-family:
+		Times New Roman; mso-ansi-language: RU; mso-fareast-language: RU; mso-bidi-language: AR-SA">
+		<b>R</b> = (0, 3, 7, 4, 5), <b>S</b> = (0, 1, 3, 2, 4)
+		</span></font></p>
+			</td>	
+			</td>
+	    	<td width="5%">
+      		<p align="center"><font size="3">&nbsp;<span style="mso-fareast-font-family:
+		Times New Roman; mso-ansi-language: RU; mso-fareast-language: RU; mso-bidi-language: AR-SA">553104.47<sup>&star;</sup></span></font></p>
+			</td>	
+  </tr>
+  
+    <tr>
+    	<td width="5%" valign="middle" height="1">
+      		<p align="center"><span lang="EN-US" style="font-size:12.0pt;font-family:
+  		&quot;Times New Roman&quot;;mso-ansi-language:EN-US"><a href="10_100_5.dat">2</a></span>
+			</td>
+    	<td width="5%">
+      		<p align="center"><span lang="EN-US" style="font-size:12.0pt;font-family:
+  		&quot;Times New Roman&quot;;mso-ansi-language:EN-US">10</span>
+			</td>
+    	<td width="5%">
+      		<p align="center"><font size="3">&nbsp;<span style="mso-fareast-font-family:
+		Times New Roman; mso-ansi-language: RU; mso-fareast-language: RU; mso-bidi-language: AR-SA">100</span></font></p>
+    	</td>
+    	<td width="5%">
+      		<p align="center"><font size="3">&nbsp;<span style="mso-fareast-font-family:
+		Times New Roman; mso-ansi-language: RU; mso-fareast-language: RU; mso-bidi-language: AR-SA">5</span></font></p>
+    	</td>
+    	<td width="5%">
+      		<p align="center"><font size="3">&nbsp;<span style="mso-fareast-font-family:
+		Times New Roman; mso-ansi-language: RU; mso-fareast-language: RU; mso-bidi-language: AR-SA">0.4</span></font></p>
+			</td>
+	    	<td width="30%">
+      		<p align="left"><font size="3">&nbsp;<span style="mso-fareast-font-family:
+		Times New Roman; mso-ansi-language: RU; mso-fareast-language: RU; mso-bidi-language: AR-SA">
+		<b>R</b> = (2, 0, 5, 4, 6), <b>S</b> = (1, 0, 4, 2, 3)
+		</span></font></p>
+			</td>	
+			</td>
+	    	<td width="5%">
+      		<p align="center"><font size="3">&nbsp;<span style="mso-fareast-font-family:
+		Times New Roman; mso-ansi-language: RU; mso-fareast-language: RU; mso-bidi-language: AR-SA">936261.71<sup>&star;</sup></span></font></p>
+			</td>	
+  </tr>
+
+    <tr>
+    	<td width="5%" valign="middle" height="1">
+      		<p align="center"><span lang="EN-US" style="font-size:12.0pt;font-family:
+  		&quot;Times New Roman&quot;;mso-ansi-language:EN-US"><a href="10_100_5.dat">3</a></span>
+			</td>
+    	<td width="5%">
+      		<p align="center"><span lang="EN-US" style="font-size:12.0pt;font-family:
+  		&quot;Times New Roman&quot;;mso-ansi-language:EN-US">10</span>
+			</td>
+    	<td width="5%">
+      		<p align="center"><font size="3">&nbsp;<span style="mso-fareast-font-family:
+		Times New Roman; mso-ansi-language: RU; mso-fareast-language: RU; mso-bidi-language: AR-SA">100</span></font></p>
+    	</td>
+    	<td width="5%">
+      		<p align="center"><font size="3">&nbsp;<span style="mso-fareast-font-family:
+		Times New Roman; mso-ansi-language: RU; mso-fareast-language: RU; mso-bidi-language: AR-SA">5</span></font></p>
+    	</td>
+    	<td width="5%">
+      		<p align="center"><font size="3">&nbsp;<span style="mso-fareast-font-family:
+		Times New Roman; mso-ansi-language: RU; mso-fareast-language: RU; mso-bidi-language: AR-SA">0.6</span></font></p>
+			</td>
+	    	<td width="30%">
+      		<p align="left"><font size="3">&nbsp;<span style="mso-fareast-font-family:
+		Times New Roman; mso-ansi-language: RU; mso-fareast-language: RU; mso-bidi-language: AR-SA">
+		<b>R</b> = (0, 2, 3, 4, 5), <b>S</b> = (0, 1, 3, 2, 4)
+		</span></font></p>
+			</td>	
+			</td>
+	    	<td width="5%">
+      		<p align="center"><font size="3">&nbsp;<span style="mso-fareast-font-family:
+		Times New Roman; mso-ansi-language: RU; mso-fareast-language: RU; mso-bidi-language: AR-SA">1309206.30<sup>&star;</sup></span></font></p>
+			</td>	
+  </tr>
+
+    <tr>
+    	<td width="5%" valign="middle" height="1">
+      		<p align="center"><span lang="EN-US" style="font-size:12.0pt;font-family:
+  		&quot;Times New Roman&quot;;mso-ansi-language:EN-US"><a href="10_100_5.dat">4</a></span>
+			</td>
+    	<td width="5%">
+      		<p align="center"><span lang="EN-US" style="font-size:12.0pt;font-family:
+  		&quot;Times New Roman&quot;;mso-ansi-language:EN-US">10</span>
+			</td>
+    	<td width="5%">
+      		<p align="center"><font size="3">&nbsp;<span style="mso-fareast-font-family:
+		Times New Roman; mso-ansi-language: RU; mso-fareast-language: RU; mso-bidi-language: AR-SA">100</span></font></p>
+    	</td>
+    	<td width="5%">
+      		<p align="center"><font size="3">&nbsp;<span style="mso-fareast-font-family:
+		Times New Roman; mso-ansi-language: RU; mso-fareast-language: RU; mso-bidi-language: AR-SA">5</span></font></p>
+    	</td>
+    	<td width="5%">
+      		<p align="center"><font size="3">&nbsp;<span style="mso-fareast-font-family:
+		Times New Roman; mso-ansi-language: RU; mso-fareast-language: RU; mso-bidi-language: AR-SA">0.8</span></font></p>
+			</td>
+	    	<td width="30%">
+      		<p align="left"><font size="3">&nbsp;<span style="mso-fareast-font-family:
+		Times New Roman; mso-ansi-language: RU; mso-fareast-language: RU; mso-bidi-language: AR-SA">
+		<b>R</b> = (0, 2, 3, 4, 5), <b>S</b> = (0, 1, 3, 2, 4)
+		</span></font></p>
+			</td>	
+			</td>
+	    	<td width="5%">
+      		<p align="center"><font size="3">&nbsp;<span style="mso-fareast-font-family:
+		Times New Roman; mso-ansi-language: RU; mso-fareast-language: RU; mso-bidi-language: AR-SA">1652135.01<sup>&star;</sup></span></font></p>
+			</td>	
+  </tr>
+
+    <tr>
+    	<td width="5%" valign="middle" height="1">
+      		<p align="center"><span lang="EN-US" style="font-size:12.0pt;font-family:
+  		&quot;Times New Roman&quot;;mso-ansi-language:EN-US"><a href="10_100_5.dat">5</a></span>
+			</td>
+    	<td width="5%">
+      		<p align="center"><span lang="EN-US" style="font-size:12.0pt;font-family:
+  		&quot;Times New Roman&quot;;mso-ansi-language:EN-US">10</span>
+			</td>
+    	<td width="5%">
+      		<p align="center"><font size="3">&nbsp;<span style="mso-fareast-font-family:
+		Times New Roman; mso-ansi-language: RU; mso-fareast-language: RU; mso-bidi-language: AR-SA">100</span></font></p>
+    	</td>
+    	<td width="5%">
+      		<p align="center"><font size="3">&nbsp;<span style="mso-fareast-font-family:
+		Times New Roman; mso-ansi-language: RU; mso-fareast-language: RU; mso-bidi-language: AR-SA">5</span></font></p>
+    	</td>
+    	<td width="5%">
+      		<p align="center"><font size="3">&nbsp;<span style="mso-fareast-font-family:
+		Times New Roman; mso-ansi-language: RU; mso-fareast-language: RU; mso-bidi-language: AR-SA">1.0</span></font></p>
+			</td>
+	    	<td width="30%">
+      		<p align="left"><font size="3">&nbsp;<span style="mso-fareast-font-family:
+		Times New Roman; mso-ansi-language: RU; mso-fareast-language: RU; mso-bidi-language: AR-SA">
+		<b>R</b> = (0, 2, 3, 4, 5), <b>S</b> = (0, 1, 3, 2, 4)
+		</span></font></p>
+			</td>	
+			</td>
+	    	<td width="5%">
+      		<p align="center"><font size="3">&nbsp;<span style="mso-fareast-font-family:
+		Times New Roman; mso-ansi-language: RU; mso-fareast-language: RU; mso-bidi-language: AR-SA">1988500.34<sup>&star;</sup></span></font></p>
+			</td>	
+  </tr>
+
+    <tr>
+    	<td width="5%" valign="middle" height="1">
+      		<p align="center"><span lang="EN-US" style="font-size:12.0pt;font-family:
+  		&quot;Times New Roman&quot;;mso-ansi-language:EN-US"><a href="20_100_5.dat">6</a></span>
+			</td>
+    	<td width="5%">
+      		<p align="center"><span lang="EN-US" style="font-size:12.0pt;font-family:
+  		&quot;Times New Roman&quot;;mso-ansi-language:EN-US">20</span>
+			</td>
+    	<td width="5%">
+      		<p align="center"><font size="3">&nbsp;<span style="mso-fareast-font-family:
+		Times New Roman; mso-ansi-language: RU; mso-fareast-language: RU; mso-bidi-language: AR-SA">100</span></font></p>
+    	</td>
+    	<td width="5%">
+      		<p align="center"><font size="3">&nbsp;<span style="mso-fareast-font-family:
+		Times New Roman; mso-ansi-language: RU; mso-fareast-language: RU; mso-bidi-language: AR-SA">5</span></font></p>
+    	</td>
+    	<td width="5%">
+      		<p align="center"><font size="3">&nbsp;<span style="mso-fareast-font-family:
+		Times New Roman; mso-ansi-language: RU; mso-fareast-language: RU; mso-bidi-language: AR-SA">0.2</span></font></p>
+			</td>
+	    	<td width="30%">
+      		<p align="left"><font size="3">&nbsp;<span style="mso-fareast-font-family:
+		Times New Roman; mso-ansi-language: RU; mso-fareast-language: RU; mso-bidi-language: AR-SA">
+		<b>R</b> = (0, 15, 19, 4, 5), <b>S</b> = (4, 0, 1, 3, 2)
+		</span></font></p>
+			</td>	
+			</td>
+	    	<td width="5%">
+      		<p align="center"><font size="3">&nbsp;<span style="mso-fareast-font-family:
+		Times New Roman; mso-ansi-language: RU; mso-fareast-language: RU; mso-bidi-language: AR-SA">1227525.44<sup>&star;</sup></span></font></p>
+			</td>	
+  </tr>
+
+    <tr>
+    	<td width="5%" valign="middle" height="1">
+      		<p align="center"><span lang="EN-US" style="font-size:12.0pt;font-family:
+  		&quot;Times New Roman&quot;;mso-ansi-language:EN-US"><a href="20_100_5.dat">7</a></span>
+			</td>
+    	<td width="5%">
+      		<p align="center"><span lang="EN-US" style="font-size:12.0pt;font-family:
+  		&quot;Times New Roman&quot;;mso-ansi-language:EN-US">20</span>
+			</td>
+    	<td width="5%">
+      		<p align="center"><font size="3">&nbsp;<span style="mso-fareast-font-family:
+		Times New Roman; mso-ansi-language: RU; mso-fareast-language: RU; mso-bidi-language: AR-SA">100</span></font></p>
+    	</td>
+    	<td width="5%">
+      		<p align="center"><font size="3">&nbsp;<span style="mso-fareast-font-family:
+		Times New Roman; mso-ansi-language: RU; mso-fareast-language: RU; mso-bidi-language: AR-SA">5</span></font></p>
+    	</td>
+    	<td width="5%">
+      		<p align="center"><font size="3">&nbsp;<span style="mso-fareast-font-family:
+		Times New Roman; mso-ansi-language: RU; mso-fareast-language: RU; mso-bidi-language: AR-SA">0.4</span></font></p>
+			</td>
+	    	<td width="30%">
+      		<p align="left"><font size="3">&nbsp;<span style="mso-fareast-font-family:
+		Times New Roman; mso-ansi-language: RU; mso-fareast-language: RU; mso-bidi-language: AR-SA">
+		<b>R</b> = (15, 0, 17, 9, 19), <b>S</b> = (0, 2, 3, 1, 4)
+		</span></font></p>
+			</td>	
+			</td>
+	    	<td width="5%">
+      		<p align="center"><font size="3">&nbsp;<span style="mso-fareast-font-family:
+		Times New Roman; mso-ansi-language: RU; mso-fareast-language: RU; mso-bidi-language: AR-SA">1861434.59<sup>&star;</sup></span></font></p>
+			</td>	
+  </tr>
+
+    <tr>
+    	<td width="5%" valign="middle" height="1">
+      		<p align="center"><span lang="EN-US" style="font-size:12.0pt;font-family:
+  		&quot;Times New Roman&quot;;mso-ansi-language:EN-US"><a href="20_100_5.dat">8</a></span>
+			</td>
+    	<td width="5%">
+      		<p align="center"><span lang="EN-US" style="font-size:12.0pt;font-family:
+  		&quot;Times New Roman&quot;;mso-ansi-language:EN-US">20</span>
+			</td>
+    	<td width="5%">
+      		<p align="center"><font size="3">&nbsp;<span style="mso-fareast-font-family:
+		Times New Roman; mso-ansi-language: RU; mso-fareast-language: RU; mso-bidi-language: AR-SA">100</span></font></p>
+    	</td>
+    	<td width="5%">
+      		<p align="center"><font size="3">&nbsp;<span style="mso-fareast-font-family:
+		Times New Roman; mso-ansi-language: RU; mso-fareast-language: RU; mso-bidi-language: AR-SA">5</span></font></p>
+    	</td>
+    	<td width="5%">
+      		<p align="center"><font size="3">&nbsp;<span style="mso-fareast-font-family:
+		Times New Roman; mso-ansi-language: RU; mso-fareast-language: RU; mso-bidi-language: AR-SA">0.6</span></font></p>
+			</td>
+	    	<td width="30%">
+      		<p align="left"><font size="3">&nbsp;<span style="mso-fareast-font-family:
+		Times New Roman; mso-ansi-language: RU; mso-fareast-language: RU; mso-bidi-language: AR-SA">
+		<b>R</b> = (13, 12, 0, 15, 19), <b>S</b> = (1, 3, 2, 0, 4)
+		</span></font></p>
+			</td>	
+			</td>
+	    	<td width="5%">
+      		<p align="center"><font size="3">&nbsp;<span style="mso-fareast-font-family:
+		Times New Roman; mso-ansi-language: RU; mso-fareast-language: RU; mso-bidi-language: AR-SA">2435536.17<sup>&star;</sup></span></font></p>
+			</td>	
+  </tr>
+
+    <tr>
+    	<td width="5%" valign="middle" height="1">
+      		<p align="center"><span lang="EN-US" style="font-size:12.0pt;font-family:
+  		&quot;Times New Roman&quot;;mso-ansi-language:EN-US"><a href="20_100_5.dat">9</a></span>
+			</td>
+    	<td width="5%">
+      		<p align="center"><span lang="EN-US" style="font-size:12.0pt;font-family:
+  		&quot;Times New Roman&quot;;mso-ansi-language:EN-US">20</span>
+			</td>
+    	<td width="5%">
+      		<p align="center"><font size="3">&nbsp;<span style="mso-fareast-font-family:
+		Times New Roman; mso-ansi-language: RU; mso-fareast-language: RU; mso-bidi-language: AR-SA">100</span></font></p>
+    	</td>
+    	<td width="5%">
+      		<p align="center"><font size="3">&nbsp;<span style="mso-fareast-font-family:
+		Times New Roman; mso-ansi-language: RU; mso-fareast-language: RU; mso-bidi-language: AR-SA">5</span></font></p>
+    	</td>
+    	<td width="5%">
+      		<p align="center"><font size="3">&nbsp;<span style="mso-fareast-font-family:
+		Times New Roman; mso-ansi-language: RU; mso-fareast-language: RU; mso-bidi-language: AR-SA">0.8</span></font></p>
+			</td>
+	    	<td width="30%">
+      		<p align="left"><font size="3">&nbsp;<span style="mso-fareast-font-family:
+		Times New Roman; mso-ansi-language: RU; mso-fareast-language: RU; mso-bidi-language: AR-SA">
+		<b>R</b> = (3, 13, 0, 15, 19), <b>S</b> = (2, 1, 3, 4, 0)
+		</span></font></p>
+			</td>	
+			</td>
+	    	<td width="5%">
+      		<p align="center"><font size="3">&nbsp;<span style="mso-fareast-font-family:
+		Times New Roman; mso-ansi-language: RU; mso-fareast-language: RU; mso-bidi-language: AR-SA">2935572.40<sup>&star;</sup></span></font></p>
+			</td>	
+  </tr> 
+  
+     <tr>
+    	<td width="5%" valign="middle" height="1">
+      		<p align="center"><span lang="EN-US" style="font-size:12.0pt;font-family:
+  		&quot;Times New Roman&quot;;mso-ansi-language:EN-US"><a href="20_100_5.dat">10</a></span>
+			</td>
+    	<td width="5%">
+      		<p align="center"><span lang="EN-US" style="font-size:12.0pt;font-family:
+  		&quot;Times New Roman&quot;;mso-ansi-language:EN-US">20</span>
+			</td>
+    	<td width="5%">
+      		<p align="center"><font size="3">&nbsp;<span style="mso-fareast-font-family:
+		Times New Roman; mso-ansi-language: RU; mso-fareast-language: RU; mso-bidi-language: AR-SA">100</span></font></p>
+    	</td>
+    	<td width="5%">
+      		<p align="center"><font size="3">&nbsp;<span style="mso-fareast-font-family:
+		Times New Roman; mso-ansi-language: RU; mso-fareast-language: RU; mso-bidi-language: AR-SA">5</span></font></p>
+    	</td>
+    	<td width="5%">
+      		<p align="center"><font size="3">&nbsp;<span style="mso-fareast-font-family:
+		Times New Roman; mso-ansi-language: RU; mso-fareast-language: RU; mso-bidi-language: AR-SA">1.0</span></font></p>
+			</td>
+	    	<td width="30%">
+      		<p align="left"><font size="3">&nbsp;<span style="mso-fareast-font-family:
+		Times New Roman; mso-ansi-language: RU; mso-fareast-language: RU; mso-bidi-language: AR-SA">
+		<b>R</b> = (8, 18, 15, 19, 3), <b>S</b> = (3, 2, 4, 0, 1)
+		</span></font></p>
+			</td>	
+			</td>
+	    	<td width="5%">
+      		<p align="center"><font size="3">&nbsp;<span style="mso-fareast-font-family:
+		Times New Roman; mso-ansi-language: RU; mso-fareast-language: RU; mso-bidi-language: AR-SA">3203332.89<sup>&star;</sup></span></font></p>
+			</td>	
+  </tr>
+
+    <tr>
+    	<td width="5%" valign="middle" height="1">
+      		<p align="center"><span lang="EN-US" style="font-size:12.0pt;font-family:
+  		&quot;Times New Roman&quot;;mso-ansi-language:EN-US"><a href="30_100_5.dat">11</a></span>
+			</td>
+    	<td width="5%">
+      		<p align="center"><span lang="EN-US" style="font-size:12.0pt;font-family:
+  		&quot;Times New Roman&quot;;mso-ansi-language:EN-US">30</span>
+			</td>
+    	<td width="5%">
+      		<p align="center"><font size="3">&nbsp;<span style="mso-fareast-font-family:
+		Times New Roman; mso-ansi-language: RU; mso-fareast-language: RU; mso-bidi-language: AR-SA">100</span></font></p>
+    	</td>
+    	<td width="5%">
+      		<p align="center"><font size="3">&nbsp;<span style="mso-fareast-font-family:
+		Times New Roman; mso-ansi-language: RU; mso-fareast-language: RU; mso-bidi-language: AR-SA">5</span></font></p>
+    	</td>
+    	<td width="5%">
+      		<p align="center"><font size="3">&nbsp;<span style="mso-fareast-font-family:
+		Times New Roman; mso-ansi-language: RU; mso-fareast-language: RU; mso-bidi-language: AR-SA">0.2</span></font></p>
+			</td>
+	    	<td width="30%">
+      		<p align="left"><font size="3">&nbsp;<span style="mso-fareast-font-family:
+		Times New Roman; mso-ansi-language: RU; mso-fareast-language: RU; mso-bidi-language: AR-SA">
+		<b>R</b> = (0, 17, 22, 19, 28), <b>S</b> = (1, 3, 4, 0, 2)
+		</span></font></p>
+			</td>	
+			</td>
+	    	<td width="5%">
+      		<p align="center"><font size="3">&nbsp;<span style="mso-fareast-font-family:
+		Times New Roman; mso-ansi-language: RU; mso-fareast-language: RU; mso-bidi-language: AR-SA">1794292.89<sup>&star;</sup></span></font></p>
+			</td>	
+  </tr>
+
+    <tr>
+    	<td width="5%" valign="middle" height="1">
+      		<p align="center"><span lang="EN-US" style="font-size:12.0pt;font-family:
+  		&quot;Times New Roman&quot;;mso-ansi-language:EN-US"><a href="30_100_5.dat">12</a></span>
+			</td>
+    	<td width="5%">
+      		<p align="center"><span lang="EN-US" style="font-size:12.0pt;font-family:
+  		&quot;Times New Roman&quot;;mso-ansi-language:EN-US">30</span>
+			</td>
+    	<td width="5%">
+      		<p align="center"><font size="3">&nbsp;<span style="mso-fareast-font-family:
+		Times New Roman; mso-ansi-language: RU; mso-fareast-language: RU; mso-bidi-language: AR-SA">100</span></font></p>
+    	</td>
+    	<td width="5%">
+      		<p align="center"><font size="3">&nbsp;<span style="mso-fareast-font-family:
+		Times New Roman; mso-ansi-language: RU; mso-fareast-language: RU; mso-bidi-language: AR-SA">5</span></font></p>
+    	</td>
+    	<td width="5%">
+      		<p align="center"><font size="3">&nbsp;<span style="mso-fareast-font-family:
+		Times New Roman; mso-ansi-language: RU; mso-fareast-language: RU; mso-bidi-language: AR-SA">0.4</span></font></p>
+			</td>
+	    	<td width="30%">
+      		<p align="left"><font size="3">&nbsp;<span style="mso-fareast-font-family:
+		Times New Roman; mso-ansi-language: RU; mso-fareast-language: RU; mso-bidi-language: AR-SA">
+		<b>R</b> = (0, 15, 3, 22, 17), <b>S</b> = (1, 2, 0, 4, 3)
+		</span></font></p>
+			</td>	
+			</td>
+	    	<td width="5%">
+      		<p align="center"><font size="3">&nbsp;<span style="mso-fareast-font-family:
+		Times New Roman; mso-ansi-language: RU; mso-fareast-language: RU; mso-bidi-language: AR-SA">2675722.01<sup>&star;</sup></span></font></p>
+			</td>	
+  </tr>
+
+    <tr>
+    	<td width="5%" valign="middle" height="1">
+      		<p align="center"><span lang="EN-US" style="font-size:12.0pt;font-family:
+  		&quot;Times New Roman&quot;;mso-ansi-language:EN-US"><a href="30_100_5.dat">13</a></span>
+			</td>
+    	<td width="5%">
+      		<p align="center"><span lang="EN-US" style="font-size:12.0pt;font-family:
+  		&quot;Times New Roman&quot;;mso-ansi-language:EN-US">30</span>
+			</td>
+    	<td width="5%">
+      		<p align="center"><font size="3">&nbsp;<span style="mso-fareast-font-family:
+		Times New Roman; mso-ansi-language: RU; mso-fareast-language: RU; mso-bidi-language: AR-SA">100</span></font></p>
+    	</td>
+    	<td width="5%">
+      		<p align="center"><font size="3">&nbsp;<span style="mso-fareast-font-family:
+		Times New Roman; mso-ansi-language: RU; mso-fareast-language: RU; mso-bidi-language: AR-SA">5</span></font></p>
+    	</td>
+    	<td width="5%">
+      		<p align="center"><font size="3">&nbsp;<span style="mso-fareast-font-family:
+		Times New Roman; mso-ansi-language: RU; mso-fareast-language: RU; mso-bidi-language: AR-SA">0.6</span></font></p>
+			</td>
+	    	<td width="30%">
+      		<p align="left"><font size="3">&nbsp;<span style="mso-fareast-font-family:
+		Times New Roman; mso-ansi-language: RU; mso-fareast-language: RU; mso-bidi-language: AR-SA">
+		<b>R</b> = (0, 17, 22, 2, 19), <b>S</b> = (1, 3, 4, 0, 2)
+		</span></font></p>
+			</td>	
+			</td>
+	    	<td width="5%">
+      		<p align="center"><font size="3">&nbsp;<span style="mso-fareast-font-family:
+		Times New Roman; mso-ansi-language: RU; mso-fareast-language: RU; mso-bidi-language: AR-SA">3419104.85<sup>&star;</sup></span></font></p>
+			</td>	
+  </tr>
+
+    <tr>
+    	<td width="5%" valign="middle" height="1">
+      		<p align="center"><span lang="EN-US" style="font-size:12.0pt;font-family:
+  		&quot;Times New Roman&quot;;mso-ansi-language:EN-US"><a href="30_100_5.dat">14</a></span>
+			</td>
+    	<td width="5%">
+      		<p align="center"><span lang="EN-US" style="font-size:12.0pt;font-family:
+  		&quot;Times New Roman&quot;;mso-ansi-language:EN-US">30</span>
+			</td>
+    	<td width="5%">
+      		<p align="center"><font size="3">&nbsp;<span style="mso-fareast-font-family:
+		Times New Roman; mso-ansi-language: RU; mso-fareast-language: RU; mso-bidi-language: AR-SA">100</span></font></p>
+    	</td>
+    	<td width="5%">
+      		<p align="center"><font size="3">&nbsp;<span style="mso-fareast-font-family:
+		Times New Roman; mso-ansi-language: RU; mso-fareast-language: RU; mso-bidi-language: AR-SA">5</span></font></p>
+    	</td>
+    	<td width="5%">
+      		<p align="center"><font size="3">&nbsp;<span style="mso-fareast-font-family:
+		Times New Roman; mso-ansi-language: RU; mso-fareast-language: RU; mso-bidi-language: AR-SA">0.8</span></font></p>
+			</td>
+	    	<td width="30%">
+      		<p align="left"><font size="3">&nbsp;<span style="mso-fareast-font-family:
+		Times New Roman; mso-ansi-language: RU; mso-fareast-language: RU; mso-bidi-language: AR-SA">
+		<b>R</b> = (0, 19, 11, 22, 27), <b>S</b> = (3, 0, 2, 4, 1)
+		</span></font></p>
+			</td>	
+			</td>
+	    	<td width="5%">
+      		<p align="center"><font size="3">&nbsp;<span style="mso-fareast-font-family:
+		Times New Roman; mso-ansi-language: RU; mso-fareast-language: RU; mso-bidi-language: AR-SA">4063632.38<sup>&star;</sup></span></font></p>
+			</td>	
+  </tr>
+  
+     <tr>
+    	<td width="5%" valign="middle" height="1">
+      		<p align="center"><span lang="EN-US" style="font-size:12.0pt;font-family:
+  		&quot;Times New Roman&quot;;mso-ansi-language:EN-US"><a href="30_100_5.dat">15</a></span>
+			</td>
+    	<td width="5%">
+      		<p align="center"><span lang="EN-US" style="font-size:12.0pt;font-family:
+  		&quot;Times New Roman&quot;;mso-ansi-language:EN-US">30</span>
+			</td>
+    	<td width="5%">
+      		<p align="center"><font size="3">&nbsp;<span style="mso-fareast-font-family:
+		Times New Roman; mso-ansi-language: RU; mso-fareast-language: RU; mso-bidi-language: AR-SA">100</span></font></p>
+    	</td>
+    	<td width="5%">
+      		<p align="center"><font size="3">&nbsp;<span style="mso-fareast-font-family:
+		Times New Roman; mso-ansi-language: RU; mso-fareast-language: RU; mso-bidi-language: AR-SA">5</span></font></p>
+    	</td>
+    	<td width="5%">
+      		<p align="center"><font size="3">&nbsp;<span style="mso-fareast-font-family:
+		Times New Roman; mso-ansi-language: RU; mso-fareast-language: RU; mso-bidi-language: AR-SA">1.0</span></font></p>
+			</td>
+	    	<td width="30%">
+      		<p align="left"><font size="3">&nbsp;<span style="mso-fareast-font-family:
+		Times New Roman; mso-ansi-language: RU; mso-fareast-language: RU; mso-bidi-language: AR-SA">
+		<b>R</b> = (3, 8, 18, 15, 19), <b>S</b> = (2, 1, 3, 4, 0)
+		</span></font></p>
+			</td>	
+			</td>
+	    	<td width="5%">
+      		<p align="center"><font size="3">&nbsp;<span style="mso-fareast-font-family:
+		Times New Roman; mso-ansi-language: RU; mso-fareast-language: RU; mso-bidi-language: AR-SA">4363138.09<sup>&star;</sup></span></font></p>
+			</td>	
+  </tr>
+  
+    <tr>
+    	<td width="5%" valign="middle" height="1">
+      		<p align="center"><span lang="EN-US" style="font-size:12.0pt;font-family:
+  		&quot;Times New Roman&quot;;mso-ansi-language:EN-US"><a href="40_100_5.dat">16</a></span>
+			</td>
+    	<td width="5%">
+      		<p align="center"><span lang="EN-US" style="font-size:12.0pt;font-family:
+  		&quot;Times New Roman&quot;;mso-ansi-language:EN-US">40</span>
+			</td>
+    	<td width="5%">
+      		<p align="center"><font size="3">&nbsp;<span style="mso-fareast-font-family:
+		Times New Roman; mso-ansi-language: RU; mso-fareast-language: RU; mso-bidi-language: AR-SA">100</span></font></p>
+    	</td>
+    	<td width="5%">
+      		<p align="center"><font size="3">&nbsp;<span style="mso-fareast-font-family:
+		Times New Roman; mso-ansi-language: RU; mso-fareast-language: RU; mso-bidi-language: AR-SA">5</span></font></p>
+    	</td>
+    	<td width="5%">
+      		<p align="center"><font size="3">&nbsp;<span style="mso-fareast-font-family:
+		Times New Roman; mso-ansi-language: RU; mso-fareast-language: RU; mso-bidi-language: AR-SA">0.2</span></font></p>
+			</td>
+	    	<td width="30%">
+      		<p align="left"><font size="3">&nbsp;<span style="mso-fareast-font-family:
+		Times New Roman; mso-ansi-language: RU; mso-fareast-language: RU; mso-bidi-language: AR-SA">
+		<b>R</b> = (0, 17, 22, 19, 13), <b>S</b> = (4, 3, 2, 1, 0)
+		</span></font></p>
+			</td>	
+			</td>
+	    	<td width="5%">
+      		<p align="center"><font size="3">&nbsp;<span style="mso-fareast-font-family:
+		Times New Roman; mso-ansi-language: RU; mso-fareast-language: RU; mso-bidi-language: AR-SA">2272505.88</span></font></p>
+			</td>	
+  </tr>  
+
+    <tr>
+    	<td width="5%" valign="middle" height="1">
+      		<p align="center"><span lang="EN-US" style="font-size:12.0pt;font-family:
+  		&quot;Times New Roman&quot;;mso-ansi-language:EN-US"><a href="40_100_5.dat">17</a></span>
+			</td>
+    	<td width="5%">
+      		<p align="center"><span lang="EN-US" style="font-size:12.0pt;font-family:
+  		&quot;Times New Roman&quot;;mso-ansi-language:EN-US">40</span>
+			</td>
+    	<td width="5%">
+      		<p align="center"><font size="3">&nbsp;<span style="mso-fareast-font-family:
+		Times New Roman; mso-ansi-language: RU; mso-fareast-language: RU; mso-bidi-language: AR-SA">100</span></font></p>
+    	</td>
+    	<td width="5%">
+      		<p align="center"><font size="3">&nbsp;<span style="mso-fareast-font-family:
+		Times New Roman; mso-ansi-language: RU; mso-fareast-language: RU; mso-bidi-language: AR-SA">5</span></font></p>
+    	</td>
+    	<td width="5%">
+      		<p align="center"><font size="3">&nbsp;<span style="mso-fareast-font-family:
+		Times New Roman; mso-ansi-language: RU; mso-fareast-language: RU; mso-bidi-language: AR-SA">0.4</span></font></p>
+			</td>
+	    	<td width="30%">
+      		<p align="left"><font size="3">&nbsp;<span style="mso-fareast-font-family:
+		Times New Roman; mso-ansi-language: RU; mso-fareast-language: RU; mso-bidi-language: AR-SA">
+		<b>R</b> = (17, 38, 22, 19, 39), <b>S</b> = (4, 3, 2, 1, 0)
+		</span></font></p>
+			</td>	
+			</td>
+	    	<td width="5%">
+      		<p align="center"><font size="3">&nbsp;<span style="mso-fareast-font-family:
+		Times New Roman; mso-ansi-language: RU; mso-fareast-language: RU; mso-bidi-language: AR-SA">3291205.53</span></font></p>
+			</td>	
+  </tr>
+
+    <tr>
+    	<td width="5%" valign="middle" height="1">
+      		<p align="center"><span lang="EN-US" style="font-size:12.0pt;font-family:
+  		&quot;Times New Roman&quot;;mso-ansi-language:EN-US"><a href="40_100_5.dat">18</a></span>
+			</td>
+    	<td width="5%">
+      		<p align="center"><span lang="EN-US" style="font-size:12.0pt;font-family:
+  		&quot;Times New Roman&quot;;mso-ansi-language:EN-US">40</span>
+			</td>
+    	<td width="5%">
+      		<p align="center"><font size="3">&nbsp;<span style="mso-fareast-font-family:
+		Times New Roman; mso-ansi-language: RU; mso-fareast-language: RU; mso-bidi-language: AR-SA">100</span></font></p>
+    	</td>
+    	<td width="5%">
+      		<p align="center"><font size="3">&nbsp;<span style="mso-fareast-font-family:
+		Times New Roman; mso-ansi-language: RU; mso-fareast-language: RU; mso-bidi-language: AR-SA">5</span></font></p>
+    	</td>
+    	<td width="5%">
+      		<p align="center"><font size="3">&nbsp;<span style="mso-fareast-font-family:
+		Times New Roman; mso-ansi-language: RU; mso-fareast-language: RU; mso-bidi-language: AR-SA">0.6</span></font></p>
+			</td>
+	    	<td width="30%">
+      		<p align="left"><font size="3">&nbsp;<span style="mso-fareast-font-family:
+		Times New Roman; mso-ansi-language: RU; mso-fareast-language: RU; mso-bidi-language: AR-SA">
+		<b>R</b> = (2, 39, 17, 38, 22), <b>S</b> = (1, 0, 4, 3, 2)
+		</span></font></p>
+			</td>	
+			</td>
+	    	<td width="5%">
+      		<p align="center"><font size="3">&nbsp;<span style="mso-fareast-font-family:
+		Times New Roman; mso-ansi-language: RU; mso-fareast-language: RU; mso-bidi-language: AR-SA">4182210.73</span></font></p>
+			</td>	
+  </tr>  
+
+    <tr>
+    	<td width="5%" valign="middle" height="1">
+      		<p align="center"><span lang="EN-US" style="font-size:12.0pt;font-family:
+  		&quot;Times New Roman&quot;;mso-ansi-language:EN-US"><a href="40_100_5.dat">19</a></span>
+			</td>
+    	<td width="5%">
+      		<p align="center"><span lang="EN-US" style="font-size:12.0pt;font-family:
+  		&quot;Times New Roman&quot;;mso-ansi-language:EN-US">40</span>
+			</td>
+    	<td width="5%">
+      		<p align="center"><font size="3">&nbsp;<span style="mso-fareast-font-family:
+		Times New Roman; mso-ansi-language: RU; mso-fareast-language: RU; mso-bidi-language: AR-SA">100</span></font></p>
+    	</td>
+    	<td width="5%">
+      		<p align="center"><font size="3">&nbsp;<span style="mso-fareast-font-family:
+		Times New Roman; mso-ansi-language: RU; mso-fareast-language: RU; mso-bidi-language: AR-SA">5</span></font></p>
+    	</td>
+    	<td width="5%">
+      		<p align="center"><font size="3">&nbsp;<span style="mso-fareast-font-family:
+		Times New Roman; mso-ansi-language: RU; mso-fareast-language: RU; mso-bidi-language: AR-SA">0.8</span></font></p>
+			</td>
+	    	<td width="30%">
+      		<p align="left"><font size="3">&nbsp;<span style="mso-fareast-font-family:
+		Times New Roman; mso-ansi-language: RU; mso-fareast-language: RU; mso-bidi-language: AR-SA">
+		<b>R</b> = (2, 20, 35, 22, 38), <b>S</b> = (1, 0, 2, 3, 4)
+		</span></font></p>
+			</td>	
+			</td>
+	    	<td width="5%">
+      		<p align="center"><font size="3">&nbsp;<span style="mso-fareast-font-family:
+		Times New Roman; mso-ansi-language: RU; mso-fareast-language: RU; mso-bidi-language: AR-SA">4772493.40<sup>&star;</sup></span></font></p>
+			</td>	
+  </tr>  
+
+   <tr>
+    	<td width="5%" valign="middle" height="1">
+      		<p align="center"><span lang="EN-US" style="font-size:12.0pt;font-family:
+  		&quot;Times New Roman&quot;;mso-ansi-language:EN-US"><a href="40_100_5.dat">20</a></span>
+			</td>
+    	<td width="5%">
+      		<p align="center"><span lang="EN-US" style="font-size:12.0pt;font-family:
+  		&quot;Times New Roman&quot;;mso-ansi-language:EN-US">40</span>
+			</td>
+    	<td width="5%">
+      		<p align="center"><font size="3">&nbsp;<span style="mso-fareast-font-family:
+		Times New Roman; mso-ansi-language: RU; mso-fareast-language: RU; mso-bidi-language: AR-SA">100</span></font></p>
+    	</td>
+    	<td width="5%">
+      		<p align="center"><font size="3">&nbsp;<span style="mso-fareast-font-family:
+		Times New Roman; mso-ansi-language: RU; mso-fareast-language: RU; mso-bidi-language: AR-SA">5</span></font></p>
+    	</td>
+    	<td width="5%">
+      		<p align="center"><font size="3">&nbsp;<span style="mso-fareast-font-family:
+		Times New Roman; mso-ansi-language: RU; mso-fareast-language: RU; mso-bidi-language: AR-SA">1.0</span></font></p>
+			</td>
+	    	<td width="30%">
+      		<p align="left"><font size="3">&nbsp;<span style="mso-fareast-font-family:
+		Times New Roman; mso-ansi-language: RU; mso-fareast-language: RU; mso-bidi-language: AR-SA">
+		<b>R</b> = (15, 18, 31, 19, 32), <b>S</b> = (3, 4, 0, 1, 2)
+		</span></font></p>
+			</td>	
+			</td>
+	    	<td width="5%">
+      		<p align="center"><font size="3">&nbsp;<span style="mso-fareast-font-family:
+		Times New Roman; mso-ansi-language: RU; mso-fareast-language: RU; mso-bidi-language: AR-SA">5107719.96<sup>&star;</sup></span></font></p>
+			</td>	
+  </tr>  
+    <tr>
+    	<td width="5%" valign="middle" height="1">
+      		<p align="center"><span lang="EN-US" style="font-size:12.0pt;font-family:
+  		&quot;Times New Roman&quot;;mso-ansi-language:EN-US"><a href="50_100_5.dat">21</a></span>
+			</td>
+    	<td width="5%">
+      		<p align="center"><span lang="EN-US" style="font-size:12.0pt;font-family:
+  		&quot;Times New Roman&quot;;mso-ansi-language:EN-US">50</span>
+			</td>
+    	<td width="5%">
+      		<p align="center"><font size="3">&nbsp;<span style="mso-fareast-font-family:
+		Times New Roman; mso-ansi-language: RU; mso-fareast-language: RU; mso-bidi-language: AR-SA">100</span></font></p>
+    	</td>
+    	<td width="5%">
+      		<p align="center"><font size="3">&nbsp;<span style="mso-fareast-font-family:
+		Times New Roman; mso-ansi-language: RU; mso-fareast-language: RU; mso-bidi-language: AR-SA">5</span></font></p>
+    	</td>
+    	<td width="5%">
+      		<p align="center"><font size="3">&nbsp;<span style="mso-fareast-font-family:
+		Times New Roman; mso-ansi-language: RU; mso-fareast-language: RU; mso-bidi-language: AR-SA">0.2</span></font></p>
+			</td>
+	    	<td width="30%">
+      		<p align="left"><font size="3">&nbsp;<span style="mso-fareast-font-family:
+		Times New Roman; mso-ansi-language: RU; mso-fareast-language: RU; mso-bidi-language: AR-SA">
+		<b>R</b> = (39, 19, 34, 17, 0), <b>S</b> = (4, 0, 2, 3, 1)
+		</span></font></p>
+			</td>	
+			</td>
+	    	<td width="5%">
+      		<p align="center"><font size="3">&nbsp;<span style="mso-fareast-font-family:
+		Times New Roman; mso-ansi-language: RU; mso-fareast-language: RU; mso-bidi-language: AR-SA">2659882.50</span></font></p>
+			</td>	
+  </tr>
+
+    <tr>
+    	<td width="5%" valign="middle" height="1">
+      		<p align="center"><span lang="EN-US" style="font-size:12.0pt;font-family:
+  		&quot;Times New Roman&quot;;mso-ansi-language:EN-US"><a href="50_100_5.dat">22</a></span>
+			</td>
+    	<td width="5%">
+      		<p align="center"><span lang="EN-US" style="font-size:12.0pt;font-family:
+  		&quot;Times New Roman&quot;;mso-ansi-language:EN-US">50</span>
+			</td>
+    	<td width="5%">
+      		<p align="center"><font size="3">&nbsp;<span style="mso-fareast-font-family:
+		Times New Roman; mso-ansi-language: RU; mso-fareast-language: RU; mso-bidi-language: AR-SA">100</span></font></p>
+    	</td>
+    	<td width="5%">
+      		<p align="center"><font size="3">&nbsp;<span style="mso-fareast-font-family:
+		Times New Roman; mso-ansi-language: RU; mso-fareast-language: RU; mso-bidi-language: AR-SA">5</span></font></p>
+    	</td>
+    	<td width="5%">
+      		<p align="center"><font size="3">&nbsp;<span style="mso-fareast-font-family:
+		Times New Roman; mso-ansi-language: RU; mso-fareast-language: RU; mso-bidi-language: AR-SA">0.4</span></font></p>
+			</td>
+	    	<td width="30%">
+      		<p align="left"><font size="3">&nbsp;<span style="mso-fareast-font-family:
+		Times New Roman; mso-ansi-language: RU; mso-fareast-language: RU; mso-bidi-language: AR-SA">
+		<b>R</b> = (47, 41, 39, 17, 38), <b>S</b> = (2, 0, 4, 3, 1)
+		</span></font></p>
+			</td>	
+			</td>
+	    	<td width="5%">
+      		<p align="center"><font size="3">&nbsp;<span style="mso-fareast-font-family:
+		Times New Roman; mso-ansi-language: RU; mso-fareast-language: RU; mso-bidi-language: AR-SA">3718916.92</span></font></p>
+			</td>	
+  </tr>
+
+    <tr>
+    	<td width="5%" valign="middle" height="1">
+      		<p align="center"><span lang="EN-US" style="font-size:12.0pt;font-family:
+  		&quot;Times New Roman&quot;;mso-ansi-language:EN-US"><a href="50_100_5.dat">23</a></span>
+			</td>
+    	<td width="5%">
+      		<p align="center"><span lang="EN-US" style="font-size:12.0pt;font-family:
+  		&quot;Times New Roman&quot;;mso-ansi-language:EN-US">50</span>
+			</td>
+    	<td width="5%">
+      		<p align="center"><font size="3">&nbsp;<span style="mso-fareast-font-family:
+		Times New Roman; mso-ansi-language: RU; mso-fareast-language: RU; mso-bidi-language: AR-SA">100</span></font></p>
+    	</td>
+    	<td width="5%">
+      		<p align="center"><font size="3">&nbsp;<span style="mso-fareast-font-family:
+		Times New Roman; mso-ansi-language: RU; mso-fareast-language: RU; mso-bidi-language: AR-SA">5</span></font></p>
+    	</td>
+    	<td width="5%">
+      		<p align="center"><font size="3">&nbsp;<span style="mso-fareast-font-family:
+		Times New Roman; mso-ansi-language: RU; mso-fareast-language: RU; mso-bidi-language: AR-SA">0.6</span></font></p>
+			</td>
+	    	<td width="30%">
+      		<p align="left"><font size="3">&nbsp;<span style="mso-fareast-font-family:
+		Times New Roman; mso-ansi-language: RU; mso-fareast-language: RU; mso-bidi-language: AR-SA">
+		<b>R</b> = (47, 41, 39, 17, 38), <b>S</b> = (2, 0, 4, 3, 1)
+		</span></font></p>
+			</td>	
+			</td>
+	    	<td width="5%">
+      		<p align="center"><font size="3">&nbsp;<span style="mso-fareast-font-family:
+		Times New Roman; mso-ansi-language: RU; mso-fareast-language: RU; mso-bidi-language: AR-SA">4542755.11</span></font></p>
+			</td>	
+  </tr>
+
+    <tr>
+    	<td width="5%" valign="middle" height="1">
+      		<p align="center"><span lang="EN-US" style="font-size:12.0pt;font-family:
+  		&quot;Times New Roman&quot;;mso-ansi-language:EN-US"><a href="50_100_5.dat">24</a></span>
+			</td>
+    	<td width="5%">
+      		<p align="center"><span lang="EN-US" style="font-size:12.0pt;font-family:
+  		&quot;Times New Roman&quot;;mso-ansi-language:EN-US">50</span>
+			</td>
+    	<td width="5%">
+      		<p align="center"><font size="3">&nbsp;<span style="mso-fareast-font-family:
+		Times New Roman; mso-ansi-language: RU; mso-fareast-language: RU; mso-bidi-language: AR-SA">100</span></font></p>
+    	</td>
+    	<td width="5%">
+      		<p align="center"><font size="3">&nbsp;<span style="mso-fareast-font-family:
+		Times New Roman; mso-ansi-language: RU; mso-fareast-language: RU; mso-bidi-language: AR-SA">5</span></font></p>
+    	</td>
+    	<td width="5%">
+      		<p align="center"><font size="3">&nbsp;<span style="mso-fareast-font-family:
+		Times New Roman; mso-ansi-language: RU; mso-fareast-language: RU; mso-bidi-language: AR-SA">0.8</span></font></p>
+			</td>
+	    	<td width="30%">
+      		<p align="left"><font size="3">&nbsp;<span style="mso-fareast-font-family:
+		Times New Roman; mso-ansi-language: RU; mso-fareast-language: RU; mso-bidi-language: AR-SA">
+		<b>R</b> = (47, 38, 39, 3, 41), <b>S</b> = (2, 3, 1, 4, 0)
+		</span></font></p>
+			</td>	
+			</td>
+	    	<td width="5%">
+      		<p align="center"><font size="3">&nbsp;<span style="mso-fareast-font-family:
+		Times New Roman; mso-ansi-language: RU; mso-fareast-language: RU; mso-bidi-language: AR-SA">5217895.03</span></font></p>
+			</td>	
+  </tr>
+  
+     <tr>
+    	<td width="5%" valign="middle" height="1">
+      		<p align="center"><span lang="EN-US" style="font-size:12.0pt;font-family:
+  		&quot;Times New Roman&quot;;mso-ansi-language:EN-US"><a href="50_100_5.dat">25</a></span>
+			</td>
+    	<td width="5%">
+      		<p align="center"><span lang="EN-US" style="font-size:12.0pt;font-family:
+  		&quot;Times New Roman&quot;;mso-ansi-language:EN-US">50</span>
+			</td>
+    	<td width="5%">
+      		<p align="center"><font size="3">&nbsp;<span style="mso-fareast-font-family:
+		Times New Roman; mso-ansi-language: RU; mso-fareast-language: RU; mso-bidi-language: AR-SA">100</span></font></p>
+    	</td>
+    	<td width="5%">
+      		<p align="center"><font size="3">&nbsp;<span style="mso-fareast-font-family:
+		Times New Roman; mso-ansi-language: RU; mso-fareast-language: RU; mso-bidi-language: AR-SA">5</span></font></p>
+    	</td>
+    	<td width="5%">
+      		<p align="center"><font size="3">&nbsp;<span style="mso-fareast-font-family:
+		Times New Roman; mso-ansi-language: RU; mso-fareast-language: RU; mso-bidi-language: AR-SA">1.0</span></font></p>
+			</td>
+	    	<td width="30%">
+      		<p align="left"><font size="3">&nbsp;<span style="mso-fareast-font-family:
+		Times New Roman; mso-ansi-language: RU; mso-fareast-language: RU; mso-bidi-language: AR-SA">
+		<b>R</b> = (20, 2, 43, 41, 19), <b>S</b> = (1, 4, 0, 2, 3)
+		</span></font></p>
+			</td>	
+			</td>
+	    	<td width="5%">
+      		<p align="center"><font size="3">&nbsp;<span style="mso-fareast-font-family:
+		Times New Roman; mso-ansi-language: RU; mso-fareast-language: RU; mso-bidi-language: AR-SA">5628658.34</span></font></p>
+			</td>	
+  </tr>
+
+    <tr>
+    	<td width="5%" valign="middle" height="1">
+      		<p align="center"><span lang="EN-US" style="font-size:12.0pt;font-family:
+  		&quot;Times New Roman&quot;;mso-ansi-language:EN-US"><a href="100_100_5.dat">26</a></span>
+			</td>
+    	<td width="5%">
+      		<p align="center"><span lang="EN-US" style="font-size:12.0pt;font-family:
+  		&quot;Times New Roman&quot;;mso-ansi-language:EN-US">100</span>
+			</td>
+    	<td width="5%">
+      		<p align="center"><font size="3">&nbsp;<span style="mso-fareast-font-family:
+		Times New Roman; mso-ansi-language: RU; mso-fareast-language: RU; mso-bidi-language: AR-SA">100</span></font></p>
+    	</td>
+    	<td width="5%">
+      		<p align="center"><font size="3">&nbsp;<span style="mso-fareast-font-family:
+		Times New Roman; mso-ansi-language: RU; mso-fareast-language: RU; mso-bidi-language: AR-SA">5</span></font></p>
+    	</td>
+    	<td width="5%">
+      		<p align="center"><font size="3">&nbsp;<span style="mso-fareast-font-family:
+		Times New Roman; mso-ansi-language: RU; mso-fareast-language: RU; mso-bidi-language: AR-SA">0.2</span></font></p>
+			</td>
+	    	<td width="30%">
+      		<p align="left"><font size="3">&nbsp;<span style="mso-fareast-font-family:
+		Times New Roman; mso-ansi-language: RU; mso-fareast-language: RU; mso-bidi-language: AR-SA">
+		<b>R</b> = (38, 77, 13, 41, 63), <b>S</b> = (4, 3, 2, 0, 1)
+		</span></font></p>
+			</td>	
+			</td>
+	    	<td width="5%">
+      		<p align="center"><font size="3">&nbsp;<span style="mso-fareast-font-family:
+		Times New Roman; mso-ansi-language: RU; mso-fareast-language: RU; mso-bidi-language: AR-SA">6029245.45</span></font></p>
+			</td>	
+  </tr>
+
+    <tr>
+    	<td width="5%" valign="middle" height="1">
+      		<p align="center"><span lang="EN-US" style="font-size:12.0pt;font-family:
+  		&quot;Times New Roman&quot;;mso-ansi-language:EN-US"><a href="100_100_5.dat">27</a></span>
+			</td>
+    	<td width="5%">
+      		<p align="center"><span lang="EN-US" style="font-size:12.0pt;font-family:
+  		&quot;Times New Roman&quot;;mso-ansi-language:EN-US">100</span>
+			</td>
+    	<td width="5%">
+      		<p align="center"><font size="3">&nbsp;<span style="mso-fareast-font-family:
+		Times New Roman; mso-ansi-language: RU; mso-fareast-language: RU; mso-bidi-language: AR-SA">100</span></font></p>
+    	</td>
+    	<td width="5%">
+      		<p align="center"><font size="3">&nbsp;<span style="mso-fareast-font-family:
+		Times New Roman; mso-ansi-language: RU; mso-fareast-language: RU; mso-bidi-language: AR-SA">5</span></font></p>
+    	</td>
+    	<td width="5%">
+      		<p align="center"><font size="3">&nbsp;<span style="mso-fareast-font-family:
+		Times New Roman; mso-ansi-language: RU; mso-fareast-language: RU; mso-bidi-language: AR-SA">0.4</span></font></p>
+			</td>
+	    	<td width="30%">
+      		<p align="left"><font size="3">&nbsp;<span style="mso-fareast-font-family:
+		Times New Roman; mso-ansi-language: RU; mso-fareast-language: RU; mso-bidi-language: AR-SA">
+		<b>R</b> = (13, 53, 47, 70, 52), <b>S</b> = (4, 3, 2, 0, 1)
+		</span></font></p>
+			</td>	
+			</td>
+	    	<td width="5%">
+      		<p align="center"><font size="3">&nbsp;<span style="mso-fareast-font-family:
+		Times New Roman; mso-ansi-language: RU; mso-fareast-language: RU; mso-bidi-language: AR-SA">8090363.57</span></font></p>
+			</td>	
+  </tr>
+
+    <tr>
+    	<td width="5%" valign="middle" height="1">
+      		<p align="center"><span lang="EN-US" style="font-size:12.0pt;font-family:
+  		&quot;Times New Roman&quot;;mso-ansi-language:EN-US"><a href="100_100_5.dat">28</a></span>
+			</td>
+    	<td width="5%">
+      		<p align="center"><span lang="EN-US" style="font-size:12.0pt;font-family:
+  		&quot;Times New Roman&quot;;mso-ansi-language:EN-US">100</span>
+			</td>
+    	<td width="5%">
+      		<p align="center"><font size="3">&nbsp;<span style="mso-fareast-font-family:
+		Times New Roman; mso-ansi-language: RU; mso-fareast-language: RU; mso-bidi-language: AR-SA">100</span></font></p>
+    	</td>
+    	<td width="5%">
+      		<p align="center"><font size="3">&nbsp;<span style="mso-fareast-font-family:
+		Times New Roman; mso-ansi-language: RU; mso-fareast-language: RU; mso-bidi-language: AR-SA">5</span></font></p>
+    	</td>
+    	<td width="5%">
+      		<p align="center"><font size="3">&nbsp;<span style="mso-fareast-font-family:
+		Times New Roman; mso-ansi-language: RU; mso-fareast-language: RU; mso-bidi-language: AR-SA">0.6</span></font></p>
+			</td>
+	    	<td width="30%">
+      		<p align="left"><font size="3">&nbsp;<span style="mso-fareast-font-family:
+		Times New Roman; mso-ansi-language: RU; mso-fareast-language: RU; mso-bidi-language: AR-SA">
+		<b>R</b> = (47, 38, 39, 2, 62), <b>S</b> = (0, 3, 4, 2, 1)
+		</span></font></p>
+			</td>	
+			</td>
+	    	<td width="5%">
+      		<p align="center"><font size="3">&nbsp;<span style="mso-fareast-font-family:
+		Times New Roman; mso-ansi-language: RU; mso-fareast-language: RU; mso-bidi-language: AR-SA">9605985.94</span></font></p>
+			</td>	
+  </tr>
+
+    <tr>
+    	<td width="5%" valign="middle" height="1">
+      		<p align="center"><span lang="EN-US" style="font-size:12.0pt;font-family:
+  		&quot;Times New Roman&quot;;mso-ansi-language:EN-US"><a href="100_100_5.dat">29</a></span>
+			</td>
+    	<td width="5%">
+      		<p align="center"><span lang="EN-US" style="font-size:12.0pt;font-family:
+  		&quot;Times New Roman&quot;;mso-ansi-language:EN-US">100</span>
+			</td>
+    	<td width="5%">
+      		<p align="center"><font size="3">&nbsp;<span style="mso-fareast-font-family:
+		Times New Roman; mso-ansi-language: RU; mso-fareast-language: RU; mso-bidi-language: AR-SA">100</span></font></p>
+    	</td>
+    	<td width="5%">
+      		<p align="center"><font size="3">&nbsp;<span style="mso-fareast-font-family:
+		Times New Roman; mso-ansi-language: RU; mso-fareast-language: RU; mso-bidi-language: AR-SA">5</span></font></p>
+    	</td>
+    	<td width="5%">
+      		<p align="center"><font size="3">&nbsp;<span style="mso-fareast-font-family:
+		Times New Roman; mso-ansi-language: RU; mso-fareast-language: RU; mso-bidi-language: AR-SA">0.8</span></font></p>
+			</td>
+	    	<td width="30%">
+      		<p align="left"><font size="3">&nbsp;<span style="mso-fareast-font-family:
+		Times New Roman; mso-ansi-language: RU; mso-fareast-language: RU; mso-bidi-language: AR-SA">
+		<b>R</b> = (70, 41, 52, 3, 38), <b>S</b> = (0, 1, 2, 3, 4)
+		</span></font></p>
+			</td>	
+			</td>
+	    	<td width="5%">
+      		<p align="center"><font size="3">&nbsp;<span style="mso-fareast-font-family:
+		Times New Roman; mso-ansi-language: RU; mso-fareast-language: RU; mso-bidi-language: AR-SA">10769559.94</span></font></p>
+			</td>	
+  </tr>
+  
+      <tr>
+    	<td width="5%" valign="middle" height="1">
+      		<p align="center"><span lang="EN-US" style="font-size:12.0pt;font-family:
+  		&quot;Times New Roman&quot;;mso-ansi-language:EN-US"><a href="100_100_5.dat">30</a></span>
+			</td>
+    	<td width="5%">
+      		<p align="center"><span lang="EN-US" style="font-size:12.0pt;font-family:
+  		&quot;Times New Roman&quot;;mso-ansi-language:EN-US">100</span>
+			</td>
+    	<td width="5%">
+      		<p align="center"><font size="3">&nbsp;<span style="mso-fareast-font-family:
+		Times New Roman; mso-ansi-language: RU; mso-fareast-language: RU; mso-bidi-language: AR-SA">100</span></font></p>
+    	</td>
+    	<td width="5%">
+      		<p align="center"><font size="3">&nbsp;<span style="mso-fareast-font-family:
+		Times New Roman; mso-ansi-language: RU; mso-fareast-language: RU; mso-bidi-language: AR-SA">5</span></font></p>
+    	</td>
+    	<td width="5%">
+      		<p align="center"><font size="3">&nbsp;<span style="mso-fareast-font-family:
+		Times New Roman; mso-ansi-language: RU; mso-fareast-language: RU; mso-bidi-language: AR-SA">1.0</span></font></p>
+			</td>
+	    	<td width="30%">
+      		<p align="left"><font size="3">&nbsp;<span style="mso-fareast-font-family:
+		Times New Roman; mso-ansi-language: RU; mso-fareast-language: RU; mso-bidi-language: AR-SA">
+		<b>R</b> = (97, 43, 2, 64, 62), <b>S</b> = (2, 3, 4, 0, 1)
+		</span></font></p>
+			</td>	
+			</td>
+	    	<td width="5%">
+      		<p align="center"><font size="3">&nbsp;<span style="mso-fareast-font-family:
+		Times New Roman; mso-ansi-language: RU; mso-fareast-language: RU; mso-bidi-language: AR-SA">11284598.19</span></font></p>
+			</td>	
+  </tr>
+
+    <tr>
+    	<td width="5%" valign="middle" height="1">
+      		<p align="center"><span lang="EN-US" style="font-size:12.0pt;font-family:
+  		&quot;Times New Roman&quot;;mso-ansi-language:EN-US"><a href="150_100_5.dat">31</a></span>
+			</td>
+    	<td width="5%">
+      		<p align="center"><span lang="EN-US" style="font-size:12.0pt;font-family:
+  		&quot;Times New Roman&quot;;mso-ansi-language:EN-US">150</span>
+			</td>
+    	<td width="5%">
+      		<p align="center"><font size="3">&nbsp;<span style="mso-fareast-font-family:
+		Times New Roman; mso-ansi-language: RU; mso-fareast-language: RU; mso-bidi-language: AR-SA">100</span></font></p>
+    	</td>
+    	<td width="5%">
+      		<p align="center"><font size="3">&nbsp;<span style="mso-fareast-font-family:
+		Times New Roman; mso-ansi-language: RU; mso-fareast-language: RU; mso-bidi-language: AR-SA">5</span></font></p>
+    	</td>
+    	<td width="5%">
+      		<p align="center"><font size="3">&nbsp;<span style="mso-fareast-font-family:
+		Times New Roman; mso-ansi-language: RU; mso-fareast-language: RU; mso-bidi-language: AR-SA">0.2</span></font></p>
+			</td>
+	    	<td width="30%">
+      		<p align="left"><font size="3">&nbsp;<span style="mso-fareast-font-family:
+		Times New Roman; mso-ansi-language: RU; mso-fareast-language: RU; mso-bidi-language: AR-SA">
+		<b>R</b> = (77, 85, 40, 70, 11), <b>S</b> = (2, 3, 4, 0, 1)
+		</span></font></p>
+			</td>	
+			</td>
+	    	<td width="5%">
+      		<p align="center"><font size="3">&nbsp;<span style="mso-fareast-font-family:
+		Times New Roman; mso-ansi-language: RU; mso-fareast-language: RU; mso-bidi-language: AR-SA">8819803.26</span></font></p>
+			</td>	
+  </tr>
+
+    <tr>
+    	<td width="5%" valign="middle" height="1">
+      		<p align="center"><span lang="EN-US" style="font-size:12.0pt;font-family:
+  		&quot;Times New Roman&quot;;mso-ansi-language:EN-US"><a href="150_100_5.dat">32</a></span>
+			</td>
+    	<td width="5%">
+      		<p align="center"><span lang="EN-US" style="font-size:12.0pt;font-family:
+  		&quot;Times New Roman&quot;;mso-ansi-language:EN-US">150</span>
+			</td>
+    	<td width="5%">
+      		<p align="center"><font size="3">&nbsp;<span style="mso-fareast-font-family:
+		Times New Roman; mso-ansi-language: RU; mso-fareast-language: RU; mso-bidi-language: AR-SA">100</span></font></p>
+    	</td>
+    	<td width="5%">
+      		<p align="center"><font size="3">&nbsp;<span style="mso-fareast-font-family:
+		Times New Roman; mso-ansi-language: RU; mso-fareast-language: RU; mso-bidi-language: AR-SA">5</span></font></p>
+    	</td>
+    	<td width="5%">
+      		<p align="center"><font size="3">&nbsp;<span style="mso-fareast-font-family:
+		Times New Roman; mso-ansi-language: RU; mso-fareast-language: RU; mso-bidi-language: AR-SA">0.4</span></font></p>
+			</td>
+	    	<td width="30%">
+      		<p align="left"><font size="3">&nbsp;<span style="mso-fareast-font-family:
+		Times New Roman; mso-ansi-language: RU; mso-fareast-language: RU; mso-bidi-language: AR-SA">
+		<b>R</b> = (47, 108, 77, 23, 41), <b>S</b> = (4, 3, 2, 1, 0)
+		</span></font></p>
+			</td>	
+			</td>
+	    	<td width="5%">
+      		<p align="center"><font size="3">&nbsp;<span style="mso-fareast-font-family:
+		Times New Roman; mso-ansi-language: RU; mso-fareast-language: RU; mso-bidi-language: AR-SA">11580700.91</span></font></p>
+			</td>	
+  </tr>
+
+    <tr>
+    	<td width="5%" valign="middle" height="1">
+      		<p align="center"><span lang="EN-US" style="font-size:12.0pt;font-family:
+  		&quot;Times New Roman&quot;;mso-ansi-language:EN-US"><a href="150_100_5.dat">33</a></span>
+			</td>
+    	<td width="5%">
+      		<p align="center"><span lang="EN-US" style="font-size:12.0pt;font-family:
+  		&quot;Times New Roman&quot;;mso-ansi-language:EN-US">150</span>
+			</td>
+    	<td width="5%">
+      		<p align="center"><font size="3">&nbsp;<span style="mso-fareast-font-family:
+		Times New Roman; mso-ansi-language: RU; mso-fareast-language: RU; mso-bidi-language: AR-SA">100</span></font></p>
+    	</td>
+    	<td width="5%">
+      		<p align="center"><font size="3">&nbsp;<span style="mso-fareast-font-family:
+		Times New Roman; mso-ansi-language: RU; mso-fareast-language: RU; mso-bidi-language: AR-SA">5</span></font></p>
+    	</td>
+    	<td width="5%">
+      		<p align="center"><font size="3">&nbsp;<span style="mso-fareast-font-family:
+		Times New Roman; mso-ansi-language: RU; mso-fareast-language: RU; mso-bidi-language: AR-SA">0.6</span></font></p>
+			</td>
+	    	<td width="30%">
+      		<p align="left"><font size="3">&nbsp;<span style="mso-fareast-font-family:
+		Times New Roman; mso-ansi-language: RU; mso-fareast-language: RU; mso-bidi-language: AR-SA">
+		<b>R</b> = (62, 47, 53, 39, 2), <b>S</b> = (0, 1, 2, 3, 4)
+		</span></font></p>
+			</td>	
+			</td>
+	    	<td width="5%">
+      		<p align="center"><font size="3">&nbsp;<span style="mso-fareast-font-family:
+		Times New Roman; mso-ansi-language: RU; mso-fareast-language: RU; mso-bidi-language: AR-SA">13769200.46</span></font></p>
+			</td>	
+  </tr>
+
+    <tr>
+    	<td width="5%" valign="middle" height="1">
+      		<p align="center"><span lang="EN-US" style="font-size:12.0pt;font-family:
+  		&quot;Times New Roman&quot;;mso-ansi-language:EN-US"><a href="150_100_5.dat">34</a></span>
+			</td>
+    	<td width="5%">
+      		<p align="center"><span lang="EN-US" style="font-size:12.0pt;font-family:
+  		&quot;Times New Roman&quot;;mso-ansi-language:EN-US">150</span>
+			</td>
+    	<td width="5%">
+      		<p align="center"><font size="3">&nbsp;<span style="mso-fareast-font-family:
+		Times New Roman; mso-ansi-language: RU; mso-fareast-language: RU; mso-bidi-language: AR-SA">100</span></font></p>
+    	</td>
+    	<td width="5%">
+      		<p align="center"><font size="3">&nbsp;<span style="mso-fareast-font-family:
+		Times New Roman; mso-ansi-language: RU; mso-fareast-language: RU; mso-bidi-language: AR-SA">5</span></font></p>
+    	</td>
+    	<td width="5%">
+      		<p align="center"><font size="3">&nbsp;<span style="mso-fareast-font-family:
+		Times New Roman; mso-ansi-language: RU; mso-fareast-language: RU; mso-bidi-language: AR-SA">0.8</span></font></p>
+			</td>
+	    	<td width="30%">
+      		<p align="left"><font size="3">&nbsp;<span style="mso-fareast-font-family:
+		Times New Roman; mso-ansi-language: RU; mso-fareast-language: RU; mso-bidi-language: AR-SA">
+		<b>R</b> = (52, 41, 38, 3, 59), <b>S</b> = (0, 1, 2, 3, 4)
+		</span></font></p>
+			</td>	
+			</td>
+	    	<td width="5%">
+      		<p align="center"><font size="3">&nbsp;<span style="mso-fareast-font-family:
+		Times New Roman; mso-ansi-language: RU; mso-fareast-language: RU; mso-bidi-language: AR-SA">15439142.73</span></font></p>
+			</td>	
+  </tr>
+  
+     <tr>
+    	<td width="5%" valign="middle" height="1">
+      		<p align="center"><span lang="EN-US" style="font-size:12.0pt;font-family:
+  		&quot;Times New Roman&quot;;mso-ansi-language:EN-US"><a href="150_100_5.dat">35</a></span>
+			</td>
+    	<td width="5%">
+      		<p align="center"><span lang="EN-US" style="font-size:12.0pt;font-family:
+  		&quot;Times New Roman&quot;;mso-ansi-language:EN-US">150</span>
+			</td>
+    	<td width="5%">
+      		<p align="center"><font size="3">&nbsp;<span style="mso-fareast-font-family:
+		Times New Roman; mso-ansi-language: RU; mso-fareast-language: RU; mso-bidi-language: AR-SA">100</span></font></p>
+    	</td>
+    	<td width="5%">
+      		<p align="center"><font size="3">&nbsp;<span style="mso-fareast-font-family:
+		Times New Roman; mso-ansi-language: RU; mso-fareast-language: RU; mso-bidi-language: AR-SA">5</span></font></p>
+    	</td>
+    	<td width="5%">
+      		<p align="center"><font size="3">&nbsp;<span style="mso-fareast-font-family:
+		Times New Roman; mso-ansi-language: RU; mso-fareast-language: RU; mso-bidi-language: AR-SA">1.0</span></font></p>
+			</td>
+	    	<td width="30%">
+      		<p align="left"><font size="3">&nbsp;<span style="mso-fareast-font-family:
+		Times New Roman; mso-ansi-language: RU; mso-fareast-language: RU; mso-bidi-language: AR-SA">
+		<b>R</b> = (62, 113, 2, 140, 64), <b>S</b> = (0, 1, 2, 3, 4)
+		</span></font></p>
+			</td>	
+			</td>
+	    	<td width="5%">
+      		<p align="center"><font size="3">&nbsp;<span style="mso-fareast-font-family:
+		Times New Roman; mso-ansi-language: RU; mso-fareast-language: RU; mso-bidi-language: AR-SA">16093943.16</span></font></p>
+			</td>	
+  </tr>
+  
+</table></div>
+<sup>&star;</sup> denotes the optimal solution. 
+
+<p style="font-size:105%;">
+<b>Reference:</b><br>
+Harper FM, Konstan JA (2016) The movielens datasets: History and context. Acm transactions on interactive intelligent systems (tiis) 5(4):19 <br>
+</p>
+
+<p align=right>
+<!--
+<i>This page is maintained by <a href="https://sites.google.com/site/soumenatta/home">Dr. Soumen Atta, PhD</a>.<i> <br>
+-->
+<i>This page was created on October 08, 2020.</i> 
+</p>
+
+  </div>
+</div>
+
+<footer class="site-footer">
+  <div class="site-footer__inner">
+    <span>&copy; Soumen Atta. All rights reserved.</span>
+    <span>
+      <a href="mailto:soumen.atta@gmail.com"><svg class="footer-icon" viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="2.5" y="5" width="19" height="14" rx="2" stroke="currentColor" stroke-width="1.6"/><path d="M4 7l8 6 8-6" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>soumen.atta@gmail.com</a>
+      &nbsp;·&nbsp;
+      <a href="/"><svg class="footer-icon" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="1.6"/><path d="M3 12h18M12 3c2.5 2.5 2.5 15.5 0 18M12 3c-2.5 2.5-2.5 15.5 0 18" stroke="currentColor" stroke-width="1.6"/></svg>soumenatta.com</a>
+      &nbsp;·&nbsp;
+      <a href="https://www.linkedin.com/in/soumen-atta/" target="_blank" rel="noopener"><svg class="footer-icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M20.45 20.45h-3.55v-5.57c0-1.33-.02-3.03-1.85-3.03-1.85 0-2.14 1.45-2.14 2.94v5.66H9.36V9h3.41v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.46v6.28ZM5.34 7.43a2.06 2.06 0 1 1 0-4.12 2.06 2.06 0 0 1 0 4.12ZM7.12 20.45H3.56V9h3.56v11.45Z"/></svg>LinkedIn</a>
+    </span>
+  </div>
+</footer>
+
+<script src="/assets/js/main.js"></script>
+</body>
+</html>

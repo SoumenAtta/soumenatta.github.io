@@ -1,0 +1,35 @@
+<header class="site-header">
+  <div class="site-header__inner">
+    <a class="brand" href="{{ '/' | relative_url }}">Soumen Atta <span class="brand__suffix">Ph.D.</span></a>
+
+    <button class="nav-toggle" id="nav-toggle" aria-label="Toggle navigation" aria-expanded="false" aria-controls="primary-nav">
+      <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M1 4h16M1 9h16M1 14h16" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+      </svg>
+    </button>
+
+    <nav class="primary-nav" id="primary-nav">
+      <ul>
+        {% for item in site.nav %}
+        {% assign is_active = false %}
+        {% if page.url == item.url %}{% assign is_active = true %}{% endif %}
+        {% if item.children %}
+          {% for child in item.children %}
+            {% if page.url == child.url %}{% assign is_active = true %}{% endif %}
+          {% endfor %}
+        {% endif %}
+        <li class="{% if item.children %}has-children{% endif %}{% if is_active %} active{% endif %}">
+          <a href="{{ item.url | relative_url }}">{{ item.title }}</a>
+          {% if item.children %}
+          <ul class="submenu">
+            {% for child in item.children %}
+            <li><a href="{{ child.url | relative_url }}"{% if page.url == child.url %} class="active"{% endif %}>{{ child.title }}</a></li>
+            {% endfor %}
+          </ul>
+          {% endif %}
+        </li>
+        {% endfor %}
+      </ul>
+    </nav>
+  </div>
+</header>

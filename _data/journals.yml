@@ -1,0 +1,185 @@
+- authors: "Soumen Atta"
+  title: "Tool Indexing, Switching, and Loading Problems in CNC-Based Production Systems: A Structured Review and Research Agenda"
+  venue: "The International Journal of Advanced Manufacturing Technology"
+  publisher: "Springer"
+  year: 2026
+  note: "Accepted on 07 September 2026. Impact Factor: 3.7, JCR Q1, SCI-E"
+
+- authors: "Soumen Atta, Michael Emmerich"
+  title: "Riesz s-Energy Regularized Bi-Objective Maximal Covering Location Problem and Its Solution via a Memetic Algorithm"
+  venue: "Memetic Computing"
+  publisher: "Springer"
+  vol: "Vol. 18:47"
+  year: 2026
+  doi: "10.1007/s12293-026-00531-4"
+  note: "Impact Factor: 2.5, JCR Q2, SCI-E"
+  dataset_url: "/datasets/erbomclp"
+
+- authors: "Soumen Atta"
+  title: "An Enhanced Adaptive Large Neighborhood Search Algorithm for the Multiple Allocation p-Hub Location Problem with a Mesh Backbone Network in Video-on-Demand Services"
+  venue: "International Transactions in Operational Research"
+  year: 2026
+  doi: "10.1111/itor.70217"
+  note: "Impact Factor: 2.9, JCR Q2, SCI-E, AJG: 1, ABDC: B"
+  dataset_url: "/datasets/maphlp"
+
+- authors: "Soumen Atta"
+  title: "Riesz Energy Minimization Facility Location Problem in the Plane: Complexity and a Polynomial-Time Approximation Scheme"
+  venue: "Theoretical Computer Science"
+  publisher: "Elsevier"
+  vol: "Vol. 1070, Article 115833"
+  year: 2026
+  doi: "10.1016/j.tcs.2026.115833"
+  note: "Impact Factor: 1.0, JCR Q1, SCI-E"
+
+- authors: "Soumen Atta"
+  title: "Linear Formulations and a Hybrid Large Neighborhood Search Algorithm for the Tool Indexing Problem"
+  venue: "Computers and Operations Research"
+  publisher: "Elsevier"
+  vol: "Vol. 186, Article 107321"
+  year: 2026
+  doi: "10.1016/j.cor.2025.107321"
+  note: "Impact Factor: 4.3, JCR Q1, SCI-E, AJG: 3, ABDC: A"
+  dataset_url: "/datasets/tip-hlnsls"
+
+- authors: "Soumen Atta, Vítor Basto-Fernandes, Michael Emmerich"
+  title: "A Concise Review of the Home Health Care Routing and Scheduling Problem"
+  venue: "Operations Research Perspectives"
+  publisher: "Elsevier"
+  vol: "Vol. 15, Article 100347"
+  year: 2025
+  doi: "10.1016/j.orp.2025.100347"
+  note: "Impact Factor: 3.70, JCR Q2, SCI-E"
+
+- authors: "Soumen Atta"
+  title: "Solving the Capacitated Facility Location Problem with Service Distance and Outsourcing Using a Customized Artificial Bee Colony Algorithm"
+  venue: "Evolutionary Intelligence"
+  publisher: "Springer"
+  vol: "Vol. 18, Article 60"
+  year: 2025
+  doi: "10.1007/s12065-025-01042-w"
+  note: "Impact Factor: 2.30, JCR Q3, E-SCI"
+  dataset_url: "/datasets/cflpsdo"
+
+- authors: "Soumen Atta"
+  title: "An improved harmony search algorithm using opposition-based learning and local search for solving maximal covering location problem"
+  venue: "Engineering Optimization"
+  publisher: "Taylor & Francis"
+  vol: "Vol. 56(8), pp. 1298-1317"
+  year: 2024
+  doi: "10.1080/0305215X.2023.2244907"
+  note: "Impact Factor: 2.70, JCR Q2, SCI-E, AJG: 2"
+
+- authors: "Soumen Atta, Priya Ranjan Sinha Mahapatra, Anirban Mukhopadhyay"
+  title: "Solving a new variant of capacitated maximal covering location problem with fuzzy coverage area using metaheuristic approaches"
+  venue: "Computers & Industrial Engineering"
+  publisher: "Elsevier"
+  vol: "Vol. 170, Article 108315"
+  year: 2022
+  doi: "10.1016/j.cie.2022.108315"
+  note: "Impact Factor: 5.431, JCR Q1, SCI, AJG: 2, ABDC: A"
+  dataset_url: "/datasets/fcmclp"
+
+- authors: "Soumen Atta, Priya Ranjan Sinha Mahapatra, Anirban Mukhopadhyay"
+  title: "A multi-objective formulation of maximal covering location problem with customers' preferences: Exploring Pareto optimality-based solutions"
+  venue: "Expert Systems With Applications"
+  publisher: "Elsevier"
+  vol: "Vol. 186, Article 115830"
+  year: 2021
+  doi: "10.1016/j.eswa.2021.115830"
+  note: "Impact Factor: 6.954, JCR Q1, SCI-E, AJG: 1, ABDC: C"
+  dataset_url: "/datasets/momclpcp"
+
+- authors: "Soumen Atta, Goutam Sen"
+  title: "A new variant of the p-hub location problem with a ring backbone network for content placement in VoD services"
+  venue: "Computers & Industrial Engineering"
+  publisher: "Elsevier"
+  vol: "Vol. 159, Article 107432"
+  year: 2021
+  doi: "10.1016/j.cie.2021.107432"
+  note: "Impact Factor: 5.431, JCR Q1, SCI, AJG: 2, ABDC: A"
+  dataset_url: "/datasets/saphlp"
+
+- authors: "Soumen Atta, Goutam Sen"
+  title: "Multiple allocation p-hub location problem for content placement in VoD services: a differential evolution based approach"
+  venue: "Applied Intelligence"
+  publisher: "Springer"
+  vol: "Vol. 50, No. 5, pp. 1573-1589"
+  year: 2020
+  doi: "10.1007/s10489-019-01609-y"
+  note: "Impact Factor: 3.325, JCR Q2, SCI"
+  dataset_url: "/datasets/maphlp"
+
+- authors: "Soumen Atta, Priya Ranjan Sinha Mahapatra, Anirban Mukhopadhyay"
+  title: "Solving Tool Indexing Problem using Harmony Search Algorithm with Harmony Refinement"
+  venue: "Soft Computing"
+  publisher: "Springer"
+  vol: "Vol. 23, No. 16, pp. 7407–7423"
+  year: 2019
+  doi: "10.1007/s00500-018-3385-5"
+  note: "Impact Factor: 3.050, JCR Q2, SCI-E"
+  dataset_url: "/datasets/tip"
+
+- authors: "Soumen Atta, Priya Ranjan Sinha Mahapatra, Anirban Mukhopadhyay"
+  title: "Multi-objective Uncapacitated Facility Location Problem with Customers' Preferences: Pareto-based and Weighted Sum GA-based Approaches"
+  venue: "Soft Computing"
+  publisher: "Springer"
+  vol: "Vol. 23, No. 23, pp. 12347–12362"
+  year: 2019
+  doi: "10.1007/s00500-019-03774-1"
+  note: "Impact Factor: 3.050, JCR Q2, SCI-E"
+  dataset_url: "/datasets/mouflpcp"
+
+- authors: "Soumen Atta, Priya Ranjan Sinha Mahapatra"
+  title: "L(D, 2, 1)-labeling of Square Grid"
+  venue: "National Academy Science Letters"
+  publisher: "Springer"
+  vol: "Vol. 42, No. 6, pp. 485–487"
+  year: 2019
+  doi: "10.1007/s40009-018-0780-5"
+  note: "Impact Factor: 0.519, JCR Q4, SCI-E"
+
+- authors: "Soumen Atta, Priya Ranjan Sinha Mahapatra"
+  title: "Population Based Improvement Heuristic with Local Search for Single Row Facility Layout Problem"
+  venue: "Sādhanā"
+  publisher: "Springer"
+  vol: "Vol. 44:222, pp. 1-19"
+  year: 2019
+  doi: "10.1007/s12046-019-1203-0"
+  note: "Impact Factor: 0.849, JCR Q4, SCI-E"
+
+- authors: "Soumen Atta, Priya Ranjan Sinha Mahapatra, Anirban Mukhopadhyay"
+  title: "Solving Maximal Covering Location Problem using Genetic Algorithm with Local Refinement"
+  venue: "Soft Computing"
+  publisher: "Springer"
+  vol: "Vol. 22, No. 12, pp. 3891-3906"
+  year: 2018
+  doi: "10.1007/s00500-017-2598-3"
+  note: "Impact Factor: 2.784, JCR Q2, SCI-E"
+
+- authors: "Soumen Atta, Priya Ranjan Sinha Mahapatra, Anirban Mukhopadhyay"
+  title: "Perturbation-Minimizing Frequency Assignment to Address Short Term Demand Fluctuation in Cellular Network"
+  venue: "International Journal of Communication Networks and Distributed Systems"
+  publisher: "Inderscience"
+  vol: "Vol. 21, No. 3, pp. 418–443"
+  year: 2018
+  doi: "10.1504/IJCNDS.2018.094462"
+  note: "E-SCI, Scopus indexed"
+
+- authors: "Soumen Atta, Stanisław Goldstein, Priya Ranjan Sinha Mahapatra"
+  title: "No-hole λ-L(k, k − 1, . . . ,1)-labelings for Square Grid"
+  venue: "Bulletin de la Société des Sciences et des Lettres de Łódź, Série: Recherches sur les deformations"
+  publisher: "Poland"
+  vol: "Vol. LXVII, No. 3, pp. 9-19"
+  year: 2017
+  doi: "10.26485/0459-6854/2017/67.3/1"
+  note: "MathSciNet indexed"
+
+- authors: "Soumen Atta, Priya Ranjan Sinha Mahapatra, Anirban Mukhopadhyay"
+  title: "Solving Uncapacitated Facility Location Problem Using Heuristic Algorithms"
+  venue: "International Journal of Natural Computing Research"
+  publisher: "IGI Global"
+  vol: "Vol. 8, No. 2, pp. 18-50"
+  year: 2019
+  doi: "10.4018/IJNCR.2019040102"
+  note: "Scopus indexed"

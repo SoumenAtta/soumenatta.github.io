@@ -1,0 +1,131 @@
+- authors: "Soumen Atta"
+  title: "Drift Analysis of the (1 + 1) Evolutionary Algorithm with Swap Mutation for the Maximal Covering Location Problem"
+  venue: "GECCO '26 Companion"
+  place: "San José, Costa Rica"
+  date: "July 13–17, 2026"
+  pages: "pp. 117–120"
+  doi: "10.1145/3795101.3805300"
+
+- authors: "Soumen Atta, Michael Emmerich"
+  title: "Feasibility-Preserving Multi-Objective Evolutionary Algorithms with Local Search for the Bi-Objective Maximal Covering Location Problem with Compactness"
+  venue: "EvoApps 2026"
+  place: "Toulouse, France"
+  date: "April 8–10, 2026"
+  vol: "Lecture Notes in Computer Science, Vol. 16524, Springer, pp. 52-68"
+  doi: "10.1007/978-3-032-23604-3_4"
+
+- authors: "Soumen Atta, Michael Emmerich, Vítor Basto-Fernandes"
+  title: "A Multicriteria Decision-Making Perspective on Healthcare Operations, Logistics and IT Interoperability"
+  venue: "EUROGEN 2025"
+  vol: "Computational Methods in Applied Sciences, Vol. 60, Springer, pp. 227–271"
+  year: 2026
+  doi: "10.1007/978-3-032-21893-3_14"
+
+- authors: "Bruno Antunes-Batista, Soumen Atta, Vítor Basto-Fernandes, Iryna Yevseyeva, Michael Emmerich"
+  title: "Multiobjective Optimization Approaches for Room Allocation in University Course Timetabling"
+  venue: "CENTERIS 2025"
+  place: "Abu Dhabi"
+  date: "November 26–28, 2025"
+  vol: "Procedia Computer Science, Vol. 278, pp. 663-670"
+  year: 2026
+  doi: "10.1016/j.procs.2026.03.037"
+
+- authors: "Soumen Atta, Michael Emmerich, Vítor Basto-Fernandes"
+  title: "Computational Perspectives on Multi-Objective Home Healthcare Routing and Scheduling: Formulations and Challenges"
+  venue: "EUROGEN 2025"
+  place: "Lahti, Finland"
+  date: "September 16–18, 2025"
+  note: "Abstract"
+  url: "https://www.lut.fi/sites/default/files/media/documents/EUROGEN2025_Program_with_Abstract%20links-v03_0.pdf#page=61"
+
+- authors: "Ghazaleh Saboori, Soumen Atta, Giovanni Misitano, Babooshka Shavazipour"
+  title: "How to Survive Severe Disruptions in Energy Systems"
+  venue: "EUROGEN 2025"
+  place: "Lahti, Finland"
+  date: "September 16–18, 2025"
+  note: "Abstract"
+  url: "https://www.lut.fi/sites/default/files/media/documents/EUROGEN2025_Program_with_Abstract%20links-v03_0.pdf#page=92"
+
+- authors: "Soumen Atta, Michael Emmerich, Vítor Basto-Fernandes"
+  title: "Multi-Objective Models for Efficient and Patient-Centered Home Healthcare Routing and Scheduling"
+  venue: "ORAHS 2025"
+  place: "Trondheim, Norway"
+  date: "July 6–11, 2025"
+  note: "Abstract"
+  url: "https://www.ntnu.edu/documents/1359602192/0/ORAHS_2025_booklet_update.pdf/bba44b8d-9ea9-f33e-fb55-d115b355b35f?t=1753958655473#page=5"
+
+- authors: "Santanu Banerjee, Soumen Atta, Goutam Sen"
+  title: "Single Depot Heterogeneous Capacitated Vehicle Routing Problem with Simultaneous Delivery and Pickup for Disaster Management Systems"
+  venue: "IEEE IEEM2023"
+  place: "Singapore"
+  year: 2023
+  doi: "10.1109/IEEM58616.2023.10406762"
+
+- authors: "Petr Valenta, Hana Rudova, Soumen Atta"
+  title: "A New Variant of Dynamic Pickup and Delivery Problem with Time Windows"
+  venue: "SPARK"
+  place: "Nancy, France"
+  date: "October 22, 2020"
+  pages: "pp. 1-3"
+  note: "Workshop"
+  url: "https://icaps20subpages.icaps-conference.org/wp-content/uploads/2020/10/SPARK-2020_paper_3.pdf"
+
+- authors: "Soumen Atta, Priya Ranjan Sinha Mahapatra, Anirban Mukhopadhyay"
+  title: "Deterministic and Randomized Heuristic Algorithms for Uncapacitated Facility Location Problem"
+  venue: "FICTA-2017, Intelligent Engineering Informatics"
+  place: "Bhubaneswar"
+  vol: "Springer, pp. 205-216"
+  year: 2017
+  doi: "10.1007/978-981-10-7563-6_22"
+
+- authors: "Soumen Atta, Priya Ranjan Sinha Mahapatra, Anirban Mukhopadhyay"
+  title: "Solving Uncapacitated Facility Location Problem Using Monkey Algorithm"
+  venue: "FICTA-2017, Intelligent Engineering Informatics"
+  place: "Bhubaneswar"
+  vol: "Springer, pp. 71-78"
+  year: 2017
+  doi: "10.1007/978-981-10-7566-7_8"
+
+- authors: "Soumen Atta, Priya Ranjan Sinha Mahapatra"
+  title: "An efficient algorithm for PMFAP"
+  venue: "COMSNETS-2016"
+  place: "Bengaluru"
+  vol: "IEEE, pp. 1-8"
+  year: 2016
+  doi: "10.1109/COMSNETS.2016.7440013"
+
+- authors: "Soumen Atta, Priya Ranjan Sinha Mahapatra"
+  title: "Multi-Objective K-Center Sum Clustering Problem"
+  venue: "Computer Society of India 49th Annual Convention"
+  vol: "Springer, pp. 417-425"
+  year: 2015
+  doi: "10.1007/978-3-319-13728-5_47"
+
+- authors: "Soumen Atta, Priya Ranjan Sinha Mahapatra"
+  title: "L(4, 3, 2, 1)-Labeling for Simple Graphs"
+  venue: "Second International Conference on Information Systems Design and Intelligent Applications"
+  place: "Kalyani"
+  vol: "Springer, pp. 511-518"
+  year: 2015
+  doi: "10.1007/978-81-322-2250-7_50"
+
+- authors: "Soumen Atta, Priya Ranjan Sinha Mahapatra"
+  title: "Genetic Algorithm Based Approaches to Install Different Types of Facilities"
+  venue: "Computer Society of India 48th Annual Convention"
+  vol: "Springer, pp. 195–203"
+  year: 2014
+  doi: "10.1007/978-3-319-03107-1_23"
+
+- authors: "Soumen Atta, Priya Ranjan Sinha Mahapatra"
+  title: "Genetic Algorithm Based Approach for Serving Maximum Number of Customers Using Limited Resources"
+  venue: "CIMTA-2013"
+  vol: "Procedia Technology, Vol. 10, Elsevier, pp. 492-497"
+  year: 2013
+  doi: "10.1016/j.protcy.2013.12.387"
+
+- authors: "Soumen Atta, Anirban Mukhopadhyay"
+  title: "Power-aware Traffic Grooming in WDM Optical Mesh Networks for Bandwidth Wastage Minimization: A Genetic Algorithm-based Approach"
+  venue: "NCCCS"
+  vol: "IEEE, pp. 115-119"
+  year: 2012
+  doi: "10.1109/NCCCS.2012.6412977"

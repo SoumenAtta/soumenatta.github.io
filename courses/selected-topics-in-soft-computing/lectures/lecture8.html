@@ -1,0 +1,1824 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.7.33">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>Lecture 8 — Tabu Search and Memory-Based Heuristics – Selected Topics in Soft Computing</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<script src="../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-ea385d0e468b0dd5ea5bf0780b1290d9.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-dark-bc185b5c5bdbcb35c2eb49d8a876ef70.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-ea385d0e468b0dd5ea5bf0780b1290d9.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap-376eda28aa9f89c8ff844ce97b1c8190.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/bootstrap/bootstrap-dark-e9bb19cd34d53f25e420f2fd1f8a3f86.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<link href="../site_libs/bootstrap/bootstrap-376eda28aa9f89c8ff844ce97b1c8190.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<style>html{ scroll-behavior: smooth; }</style>
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+<link rel="stylesheet" href="../assets/site.css">
+</head>
+
+<body class="nav-fixed quarto-light"><script id="quarto-html-before-body" type="application/javascript">
+    const toggleBodyColorMode = (bsSheetEl) => {
+      const mode = bsSheetEl.getAttribute("data-mode");
+      const bodyEl = window.document.querySelector("body");
+      if (mode === "dark") {
+        bodyEl.classList.add("quarto-dark");
+        bodyEl.classList.remove("quarto-light");
+      } else {
+        bodyEl.classList.add("quarto-light");
+        bodyEl.classList.remove("quarto-dark");
+      }
+    }
+    const toggleBodyColorPrimary = () => {
+      const bsSheetEl = window.document.querySelector("link#quarto-bootstrap:not([rel=disabled-stylesheet])");
+      if (bsSheetEl) {
+        toggleBodyColorMode(bsSheetEl);
+      }
+    }
+    const setColorSchemeToggle = (alternate) => {
+      const toggles = window.document.querySelectorAll('.quarto-color-scheme-toggle');
+      for (let i=0; i < toggles.length; i++) {
+        const toggle = toggles[i];
+        if (toggle) {
+          if (alternate) {
+            toggle.classList.add("alternate");
+          } else {
+            toggle.classList.remove("alternate");
+          }
+        }
+      }
+    };
+    const toggleColorMode = (alternate) => {
+      // Switch the stylesheets
+      const primaryStylesheets = window.document.querySelectorAll('link.quarto-color-scheme:not(.quarto-color-alternate)');
+      const alternateStylesheets = window.document.querySelectorAll('link.quarto-color-scheme.quarto-color-alternate');
+      manageTransitions('#quarto-margin-sidebar .nav-link', false);
+      if (alternate) {
+        // note: dark is layered on light, we don't disable primary!
+        enableStylesheet(alternateStylesheets);
+        for (const sheetNode of alternateStylesheets) {
+          if (sheetNode.id === "quarto-bootstrap") {
+            toggleBodyColorMode(sheetNode);
+          }
+        }
+      } else {
+        disableStylesheet(alternateStylesheets);
+        enableStylesheet(primaryStylesheets)
+        toggleBodyColorPrimary();
+      }
+      manageTransitions('#quarto-margin-sidebar .nav-link', true);
+      // Switch the toggles
+      setColorSchemeToggle(alternate)
+      // Hack to workaround the fact that safari doesn't
+      // properly recolor the scrollbar when toggling (#1455)
+      if (navigator.userAgent.indexOf('Safari') > 0 && navigator.userAgent.indexOf('Chrome') == -1) {
+        manageTransitions("body", false);
+        window.scrollTo(0, 1);
+        setTimeout(() => {
+          window.scrollTo(0, 0);
+          manageTransitions("body", true);
+        }, 40);
+      }
+    }
+    const disableStylesheet = (stylesheets) => {
+      for (let i=0; i < stylesheets.length; i++) {
+        const stylesheet = stylesheets[i];
+        stylesheet.rel = 'disabled-stylesheet';
+      }
+    }
+    const enableStylesheet = (stylesheets) => {
+      for (let i=0; i < stylesheets.length; i++) {
+        const stylesheet = stylesheets[i];
+        if(stylesheet.rel !== 'stylesheet') { // for Chrome, which will still FOUC without this check
+          stylesheet.rel = 'stylesheet';
+        }
+      }
+    }
+    const manageTransitions = (selector, allowTransitions) => {
+      const els = window.document.querySelectorAll(selector);
+      for (let i=0; i < els.length; i++) {
+        const el = els[i];
+        if (allowTransitions) {
+          el.classList.remove('notransition');
+        } else {
+          el.classList.add('notransition');
+        }
+      }
+    }
+    const isFileUrl = () => {
+      return window.location.protocol === 'file:';
+    }
+    const hasAlternateSentinel = () => {
+      let styleSentinel = getColorSchemeSentinel();
+      if (styleSentinel !== null) {
+        return styleSentinel === "alternate";
+      } else {
+        return false;
+      }
+    }
+    const setStyleSentinel = (alternate) => {
+      const value = alternate ? "alternate" : "default";
+      if (!isFileUrl()) {
+        window.localStorage.setItem("quarto-color-scheme", value);
+      } else {
+        localAlternateSentinel = value;
+      }
+    }
+    const getColorSchemeSentinel = () => {
+      if (!isFileUrl()) {
+        const storageValue = window.localStorage.getItem("quarto-color-scheme");
+        return storageValue != null ? storageValue : localAlternateSentinel;
+      } else {
+        return localAlternateSentinel;
+      }
+    }
+    const toggleGiscusIfUsed = (isAlternate, darkModeDefault) => {
+      const baseTheme = document.querySelector('#giscus-base-theme')?.value ?? 'light';
+      const alternateTheme = document.querySelector('#giscus-alt-theme')?.value ?? 'dark';
+      let newTheme = '';
+      if(authorPrefersDark) {
+        newTheme = isAlternate ? baseTheme : alternateTheme;
+      } else {
+        newTheme = isAlternate ? alternateTheme : baseTheme;
+      }
+      const changeGiscusTheme = () => {
+        // From: https://github.com/giscus/giscus/issues/336
+        const sendMessage = (message) => {
+          const iframe = document.querySelector('iframe.giscus-frame');
+          if (!iframe) return;
+          iframe.contentWindow.postMessage({ giscus: message }, 'https://giscus.app');
+        }
+        sendMessage({
+          setConfig: {
+            theme: newTheme
+          }
+        });
+      }
+      const isGiscussLoaded = window.document.querySelector('iframe.giscus-frame') !== null;
+      if (isGiscussLoaded) {
+        changeGiscusTheme();
+      }
+    };
+    const authorPrefersDark = false;
+    const darkModeDefault = authorPrefersDark;
+      document.querySelector('link#quarto-text-highlighting-styles.quarto-color-scheme-extra').rel = 'disabled-stylesheet';
+      document.querySelector('link#quarto-bootstrap.quarto-color-scheme-extra').rel = 'disabled-stylesheet';
+    let localAlternateSentinel = darkModeDefault ? 'alternate' : 'default';
+    // Dark / light mode switch
+    window.quartoToggleColorScheme = () => {
+      // Read the current dark / light value
+      let toAlternate = !hasAlternateSentinel();
+      toggleColorMode(toAlternate);
+      setStyleSentinel(toAlternate);
+      toggleGiscusIfUsed(toAlternate, darkModeDefault);
+      window.dispatchEvent(new Event('resize'));
+    };
+    // Switch to dark mode if need be
+    if (hasAlternateSentinel()) {
+      toggleColorMode(true);
+    } else {
+      toggleColorMode(false);
+    }
+  </script>
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="../index.html">
+    <span class="navbar-title">Selected Topics in Soft Computing</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../index.html"> 
+<span class="menu-text">Home</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../schedule.html"> 
+<span class="menu-text">Schedule</span></a>
+  </li>  
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-lectures" role="link" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">Lectures</span>
+    </a>
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-lectures">    
+        <li>
+    <a class="dropdown-item" href="../lectures/lecture0.html">
+ <span class="dropdown-text">Lecture 0 - Course Introduction</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../lectures/lecture1.html">
+ <span class="dropdown-text">Lecture 1 — Introduction to Optimization</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../lectures/lecture2.html">
+ <span class="dropdown-text">Lecture 2 — Mathematical Programming with Python and Gurobi</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../lectures/lecture3.html">
+ <span class="dropdown-text">Lecture 3 — Why Exact Methods Fail: Complexity, Scalability, and Motivation for Soft Computing</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../lectures/lecture4.html">
+ <span class="dropdown-text">Lecture 4 — Introduction to Heuristics and Metaheuristics</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../lectures/lecture5.html">
+ <span class="dropdown-text">Lecture 5 — Local Search and Neighborhood Structures</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../lectures/lecture6.html">
+ <span class="dropdown-text">Lecture 6 — Hill Climbing, Descent Methods, and Local Optima</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../lectures/lecture7.html">
+ <span class="dropdown-text">Lecture 7 — Simulated Annealing and Probabilistic Local Search</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../lectures/lecture8.html">
+ <span class="dropdown-text">Lecture 8 — Tabu Search and Memory-Based Heuristics</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../lectures/lecture9.html">
+ <span class="dropdown-text">Lecture 9 — Population-Based Metaheuristics: Genetic Algorithms</span></a>
+  </li>  
+    </ul>
+  </li>
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+  <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#learning-objectives" id="toc-learning-objectives" class="nav-link active" data-scroll-target="#learning-objectives"><span class="header-section-number">1</span> Learning Objectives</a></li>
+  <li><a href="#lecture-roadmap" id="toc-lecture-roadmap" class="nav-link" data-scroll-target="#lecture-roadmap"><span class="header-section-number">2</span> Lecture Roadmap</a></li>
+  <li><a href="#motivation-beyond-greedy-and-probabilistic-search" id="toc-motivation-beyond-greedy-and-probabilistic-search" class="nav-link" data-scroll-target="#motivation-beyond-greedy-and-probabilistic-search"><span class="header-section-number">3</span> Motivation: Beyond Greedy and Probabilistic Search</a></li>
+  <li><a href="#what-is-tabu-search" id="toc-what-is-tabu-search" class="nav-link" data-scroll-target="#what-is-tabu-search"><span class="header-section-number">4</span> What Is Tabu Search?</a></li>
+  <li><a href="#generic-tabu-search-framework" id="toc-generic-tabu-search-framework" class="nav-link" data-scroll-target="#generic-tabu-search-framework"><span class="header-section-number">5</span> Generic Tabu Search Framework</a>
+  <ul class="collapse">
+  <li><a href="#implementation-oriented-tabu-search-skeleton" id="toc-implementation-oriented-tabu-search-skeleton" class="nav-link" data-scroll-target="#implementation-oriented-tabu-search-skeleton"><span class="header-section-number">5.1</span> Implementation-Oriented Tabu Search Skeleton</a></li>
+  <li><a href="#key-observations" id="toc-key-observations" class="nav-link" data-scroll-target="#key-observations"><span class="header-section-number">5.2</span> Key Observations</a></li>
+  </ul></li>
+  <li><a href="#key-idea-memory-in-search" id="toc-key-idea-memory-in-search" class="nav-link" data-scroll-target="#key-idea-memory-in-search"><span class="header-section-number">6</span> Key Idea: Memory in Search</a>
+  <ul class="collapse">
+  <li><a href="#short-term-memory" id="toc-short-term-memory" class="nav-link" data-scroll-target="#short-term-memory"><span class="header-section-number">6.1</span> Short-Term Memory</a></li>
+  <li><a href="#long-term-memory" id="toc-long-term-memory" class="nav-link" data-scroll-target="#long-term-memory"><span class="header-section-number">6.2</span> Long-Term Memory</a></li>
+  <li><a href="#strategic-impact-of-memory" id="toc-strategic-impact-of-memory" class="nav-link" data-scroll-target="#strategic-impact-of-memory"><span class="header-section-number">6.3</span> Strategic Impact of Memory</a></li>
+  </ul></li>
+  <li><a href="#short-term-memory-and-tabu-lists" id="toc-short-term-memory-and-tabu-lists" class="nav-link" data-scroll-target="#short-term-memory-and-tabu-lists"><span class="header-section-number">7</span> Short-Term Memory and Tabu Lists</a>
+  <ul class="collapse">
+  <li><a href="#tabu-lists" id="toc-tabu-lists" class="nav-link" data-scroll-target="#tabu-lists"><span class="header-section-number">7.1</span> Tabu Lists</a></li>
+  <li><a href="#what-can-be-tabu" id="toc-what-can-be-tabu" class="nav-link" data-scroll-target="#what-can-be-tabu"><span class="header-section-number">7.2</span> What Can Be Tabu?</a></li>
+  <li><a href="#tabu-tenure" id="toc-tabu-tenure" class="nav-link" data-scroll-target="#tabu-tenure"><span class="header-section-number">7.3</span> Tabu Tenure</a></li>
+  <li><a href="#tuning-tabu-tenure-in-practice" id="toc-tuning-tabu-tenure-in-practice" class="nav-link" data-scroll-target="#tuning-tabu-tenure-in-practice"><span class="header-section-number">7.4</span> Tuning Tabu Tenure in Practice</a></li>
+  </ul></li>
+  <li><a href="#aspiration-criteria" id="toc-aspiration-criteria" class="nav-link" data-scroll-target="#aspiration-criteria"><span class="header-section-number">8</span> Aspiration Criteria</a>
+  <ul class="collapse">
+  <li><a href="#purpose-of-aspiration-criteria" id="toc-purpose-of-aspiration-criteria" class="nav-link" data-scroll-target="#purpose-of-aspiration-criteria"><span class="header-section-number">8.1</span> Purpose of Aspiration Criteria</a></li>
+  <li><a href="#alternative-aspiration-rules" id="toc-alternative-aspiration-rules" class="nav-link" data-scroll-target="#alternative-aspiration-rules"><span class="header-section-number">8.2</span> Alternative Aspiration Rules</a></li>
+  <li><a href="#practical-insight" id="toc-practical-insight" class="nav-link" data-scroll-target="#practical-insight"><span class="header-section-number">8.3</span> Practical Insight</a></li>
+  </ul></li>
+  <li><a href="#move-selection-in-tabu-search" id="toc-move-selection-in-tabu-search" class="nav-link" data-scroll-target="#move-selection-in-tabu-search"><span class="header-section-number">9</span> Move Selection in Tabu Search</a>
+  <ul class="collapse">
+  <li><a href="#best-admissible-move-principle" id="toc-best-admissible-move-principle" class="nav-link" data-scroll-target="#best-admissible-move-principle"><span class="header-section-number">9.1</span> Best Admissible Move Principle</a></li>
+  <li><a href="#contrast-with-hill-climbing" id="toc-contrast-with-hill-climbing" class="nav-link" data-scroll-target="#contrast-with-hill-climbing"><span class="header-section-number">9.2</span> Contrast with Hill Climbing</a></li>
+  <li><a href="#contrast-with-simulated-annealing" id="toc-contrast-with-simulated-annealing" class="nav-link" data-scroll-target="#contrast-with-simulated-annealing"><span class="header-section-number">9.3</span> Contrast with Simulated Annealing</a></li>
+  <li><a href="#intensification-and-diversification-via-move-selection" id="toc-intensification-and-diversification-via-move-selection" class="nav-link" data-scroll-target="#intensification-and-diversification-via-move-selection"><span class="header-section-number">9.4</span> Intensification and Diversification via Move Selection</a></li>
+  <li><a href="#practical-implications" id="toc-practical-implications" class="nav-link" data-scroll-target="#practical-implications"><span class="header-section-number">9.5</span> Practical Implications</a></li>
+  <li><a href="#summary" id="toc-summary" class="nav-link" data-scroll-target="#summary"><span class="header-section-number">9.6</span> Summary</a></li>
+  <li><a href="#candidate-lists-and-scalability" id="toc-candidate-lists-and-scalability" class="nav-link" data-scroll-target="#candidate-lists-and-scalability"><span class="header-section-number">9.7</span> Candidate Lists and Scalability</a></li>
+  </ul></li>
+  <li><a href="#intensification-in-tabu-search" id="toc-intensification-in-tabu-search" class="nav-link" data-scroll-target="#intensification-in-tabu-search"><span class="header-section-number">10</span> Intensification in Tabu Search</a>
+  <ul class="collapse">
+  <li><a href="#intensification-via-best-admissible-moves" id="toc-intensification-via-best-admissible-moves" class="nav-link" data-scroll-target="#intensification-via-best-admissible-moves"><span class="header-section-number">10.1</span> Intensification via Best Admissible Moves</a></li>
+  <li><a href="#role-of-short-term-memory" id="toc-role-of-short-term-memory" class="nav-link" data-scroll-target="#role-of-short-term-memory"><span class="header-section-number">10.2</span> Role of Short-Term Memory</a></li>
+  <li><a href="#elite-solutions-and-intensification-phases" id="toc-elite-solutions-and-intensification-phases" class="nav-link" data-scroll-target="#elite-solutions-and-intensification-phases"><span class="header-section-number">10.3</span> Elite Solutions and Intensification Phases</a></li>
+  <li><a href="#modified-tabu-restrictions-for-intensification" id="toc-modified-tabu-restrictions-for-intensification" class="nav-link" data-scroll-target="#modified-tabu-restrictions-for-intensification"><span class="header-section-number">10.4</span> Modified Tabu Restrictions for Intensification</a></li>
+  <li><a href="#intensification-vs-greedy-exploitation" id="toc-intensification-vs-greedy-exploitation" class="nav-link" data-scroll-target="#intensification-vs-greedy-exploitation"><span class="header-section-number">10.5</span> Intensification vs Greedy Exploitation</a></li>
+  <li><a href="#balance-with-diversification" id="toc-balance-with-diversification" class="nav-link" data-scroll-target="#balance-with-diversification"><span class="header-section-number">10.6</span> Balance with Diversification</a></li>
+  <li><a href="#summary-1" id="toc-summary-1" class="nav-link" data-scroll-target="#summary-1"><span class="header-section-number">10.7</span> Summary</a></li>
+  </ul></li>
+  <li><a href="#long-term-memory-and-diversification" id="toc-long-term-memory-and-diversification" class="nav-link" data-scroll-target="#long-term-memory-and-diversification"><span class="header-section-number">11</span> Long-Term Memory and Diversification</a>
+  <ul class="collapse">
+  <li><a href="#motivation" id="toc-motivation" class="nav-link" data-scroll-target="#motivation"><span class="header-section-number">11.1</span> Motivation</a></li>
+  <li><a href="#role-of-long-term-memory" id="toc-role-of-long-term-memory" class="nav-link" data-scroll-target="#role-of-long-term-memory"><span class="header-section-number">11.2</span> Role of Long-Term Memory</a></li>
+  <li><a href="#forms-of-long-term-memory" id="toc-forms-of-long-term-memory" class="nav-link" data-scroll-target="#forms-of-long-term-memory"><span class="header-section-number">11.3</span> Forms of Long-Term Memory</a></li>
+  <li><a href="#diversification-strategies-in-practice" id="toc-diversification-strategies-in-practice" class="nav-link" data-scroll-target="#diversification-strategies-in-practice"><span class="header-section-number">11.4</span> Diversification Strategies in Practice</a></li>
+  <li><a href="#interaction-with-intensification" id="toc-interaction-with-intensification" class="nav-link" data-scroll-target="#interaction-with-intensification"><span class="header-section-number">11.5</span> Interaction with Intensification</a></li>
+  <li><a href="#summary-2" id="toc-summary-2" class="nav-link" data-scroll-target="#summary-2"><span class="header-section-number">11.6</span> Summary</a></li>
+  </ul></li>
+  <li><a href="#tabu-search-vs-simulated-annealing" id="toc-tabu-search-vs-simulated-annealing" class="nav-link" data-scroll-target="#tabu-search-vs-simulated-annealing"><span class="header-section-number">12</span> Tabu Search vs Simulated Annealing</a>
+  <ul class="collapse">
+  <li><a href="#key-conceptual-differences" id="toc-key-conceptual-differences" class="nav-link" data-scroll-target="#key-conceptual-differences"><span class="header-section-number">12.1</span> Key Conceptual Differences</a></li>
+  <li><a href="#strengths-in-practice" id="toc-strengths-in-practice" class="nav-link" data-scroll-target="#strengths-in-practice"><span class="header-section-number">12.2</span> Strengths in Practice</a></li>
+  <li><a href="#complementarity" id="toc-complementarity" class="nav-link" data-scroll-target="#complementarity"><span class="header-section-number">12.3</span> Complementarity</a></li>
+  </ul></li>
+  <li><a href="#practical-strengths-of-tabu-search" id="toc-practical-strengths-of-tabu-search" class="nav-link" data-scroll-target="#practical-strengths-of-tabu-search"><span class="header-section-number">13</span> Practical Strengths of Tabu Search</a></li>
+  <li><a href="#practical-limitations" id="toc-practical-limitations" class="nav-link" data-scroll-target="#practical-limitations"><span class="header-section-number">14</span> Practical Limitations</a>
+  <ul class="collapse">
+  <li><a href="#diagnostics-and-failure-modes" id="toc-diagnostics-and-failure-modes" class="nav-link" data-scroll-target="#diagnostics-and-failure-modes"><span class="header-section-number">14.1</span> Diagnostics and Failure Modes</a></li>
+  </ul></li>
+  <li><a href="#role-of-tabu-search-in-modern-soft-computing" id="toc-role-of-tabu-search-in-modern-soft-computing" class="nav-link" data-scroll-target="#role-of-tabu-search-in-modern-soft-computing"><span class="header-section-number">15</span> Role of Tabu Search in Modern Soft Computing</a>
+  <ul class="collapse">
+  <li><a href="#key-takeaways" id="toc-key-takeaways" class="nav-link" data-scroll-target="#key-takeaways"><span class="header-section-number">15.1</span> Key Takeaways</a></li>
+  </ul></li>
+  <li><a href="#mini-exercises" id="toc-mini-exercises" class="nav-link" data-scroll-target="#mini-exercises"><span class="header-section-number">16</span> Mini Exercises</a></li>
+  <li><a href="#references-for-this-chapter" id="toc-references-for-this-chapter" class="nav-link" data-scroll-target="#references-for-this-chapter"><span class="header-section-number">17</span> References for This Chapter</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Lecture 8 — Tabu Search and Memory-Based Heuristics</h1>
+<p class="subtitle lead">Short-term and long-term memory, tabu lists, aspiration</p>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<section id="learning-objectives" class="level2" data-number="1">
+<h2 data-number="1" class="anchored" data-anchor-id="learning-objectives"><span class="header-section-number">1</span> Learning Objectives</h2>
+<p>By the end of this lecture, you should be able to:</p>
+<ul>
+<li>understand the motivation for memory-based search</li>
+<li>explain the core components of tabu search</li>
+<li>distinguish short-term and long-term memory mechanisms</li>
+<li>design tabu lists and aspiration criteria</li>
+<li>analyze intensification and diversification in tabu search</li>
+</ul>
+<hr>
+</section>
+<section id="lecture-roadmap" class="level2" data-number="2">
+<h2 data-number="2" class="anchored" data-anchor-id="lecture-roadmap"><span class="header-section-number">2</span> Lecture Roadmap</h2>
+<p>This lecture proceeds in eight blocks:</p>
+<ol type="1">
+<li>motivation for memory-based search</li>
+<li>tabu search core loop and admissible move logic</li>
+<li>short-term memory, tabu lists, and tenure effects</li>
+<li>aspiration criteria and override logic</li>
+<li>move-selection strategy and computational implications</li>
+<li>long-term memory for diversification</li>
+<li>tuning, diagnostics, and practical failure modes</li>
+<li>comparison and hybridization with simulated annealing</li>
+</ol>
+<hr>
+</section>
+<section id="motivation-beyond-greedy-and-probabilistic-search" class="level2" data-number="3">
+<h2 data-number="3" class="anchored" data-anchor-id="motivation-beyond-greedy-and-probabilistic-search"><span class="header-section-number">3</span> Motivation: Beyond Greedy and Probabilistic Search</h2>
+<p>Hill climbing and simulated annealing represent two fundamentally different responses to the problem of local optimality:</p>
+<ul>
+<li><p><strong>Hill climbing</strong> relies on purely greedy improvement and therefore converges rapidly, but almost inevitably stagnates at local optima. Once no improving move exists, the search terminates with no mechanism for recovery.</p></li>
+<li><p><strong>Simulated annealing</strong> introduces randomness to escape local optima by occasionally accepting worsening moves. While this probabilistic behavior improves robustness, it can also lead to slow convergence and sensitivity to parameter tuning.</p></li>
+</ul>
+<p><strong>Tabu search (TS)</strong> introduces a third and complementary idea:</p>
+<blockquote class="blockquote">
+<p>Use <strong>memory</strong> to guide the search intelligently.</p>
+</blockquote>
+<p>Rather than relying on randomness alone, tabu search explicitly records information about the search history and uses this information to shape future decisions. By remembering recent moves, solution attributes, and long-term usage patterns, tabu search is able to:</p>
+<ul>
+<li>prevent cycling and repetitive behavior,</li>
+<li>enforce strategic exploration of new regions, and</li>
+<li>intensify the search around promising areas in a controlled manner.</li>
+</ul>
+<p>This memory-based guidance allows tabu search to accept non-improving moves <strong>deterministically</strong>, without sacrificing direction or control. As a result, tabu search occupies a unique position between greedy descent and probabilistic search: it is <strong>systematic rather than random</strong>, yet <strong>flexible rather than rigid</strong>.</p>
+<p>In modern soft computing, tabu search is valued for its ability to incorporate domain knowledge, enforce intelligent restrictions, and maintain strong search momentum, making it a powerful and versatile metaheuristic for large-scale combinatorial optimization problems.</p>
+<hr>
+</section>
+<section id="what-is-tabu-search" class="level2" data-number="4">
+<h2 data-number="4" class="anchored" data-anchor-id="what-is-tabu-search"><span class="header-section-number">4</span> What Is Tabu Search?</h2>
+<p>Tabu search is a <strong>metaheuristic framework</strong> that systematically enhances local search by incorporating <strong>explicit memory structures</strong> to guide the search process. Its central idea is to use information from the search history to make more informed decisions, rather than relying solely on greedy improvement or randomness.</p>
+<p>At a high level, tabu search operates as follows:</p>
+<ul>
+<li>it explores the neighborhood of the current solution, often exhaustively or selectively,</li>
+<li>it allows <strong>non-improving moves</strong>, enabling the search to move away from local optima,</li>
+<li>it temporarily forbids certain moves or solution attributes through <strong>tabu restrictions</strong> in order to prevent cycling, and</li>
+<li>it applies <strong>aspiration criteria</strong> to override tabu status when a move leads to a sufficiently high-quality solution.</li>
+</ul>
+<p>Unlike basic local search, tabu search does not simply react to the current objective value. Instead, the search trajectory is influenced by the <strong>history of visited solutions, recent moves, and attribute usage</strong>. This historical information provides context, allowing the algorithm to avoid repeating unproductive patterns and to explore the solution space more strategically.</p>
+<p>A defining characteristic of tabu search is that it replaces randomness with <strong>structured memory-based control</strong>. The algorithm deterministically selects the best admissible move at each iteration, subject to tabu restrictions, while memory mechanisms regulate intensification and diversification. This makes tabu search both robust and highly adaptable across a wide range of combinatorial optimization problems.</p>
+<p>In essence, tabu search transforms local search from a short-sighted improvement process into a <strong>strategic exploration guided by memory</strong>, balancing exploitation of good regions with deliberate exploration of new ones.</p>
+<hr>
+</section>
+<section id="generic-tabu-search-framework" class="level2" data-number="5">
+<h2 data-number="5" class="anchored" data-anchor-id="generic-tabu-search-framework"><span class="header-section-number">5</span> Generic Tabu Search Framework</h2>
+<p>A generic tabu search algorithm can be described as a structured extension of local search, augmented with memory-based control mechanisms. The high-level procedure is as follows:</p>
+<ol type="1">
+<li><p><strong>Generate an initial feasible solution</strong> <span class="math inline">\(s\)</span></p>
+<ul>
+<li>typically obtained via a constructive heuristic or simple local search,</li>
+<li>feasibility is maintained throughout the search.</li>
+</ul></li>
+<li><p><strong>Initialize tabu memory structures</strong></p>
+<ul>
+<li>create and empty tabu lists or attribute memories,</li>
+<li>set parameters such as tabu tenure and aspiration rules.</li>
+</ul></li>
+<li><p><strong>Repeat</strong></p>
+<ul>
+<li><strong>Generate the neighborhood</strong> <span class="math inline">\(\mathcal{N}(s)\)</span> of the current solution,</li>
+<li><strong>Identify tabu moves or attributes</strong> and temporarily forbid them,</li>
+<li><strong>Apply aspiration criteria</strong> to allow tabu moves that meet predefined quality thresholds,</li>
+<li><strong>Select the best admissible move</strong>, even if it is non-improving,</li>
+<li><strong>Update the current solution</strong> by applying the selected move,</li>
+<li><strong>Update tabu memory</strong>, recording attributes of the executed move and expiring old tabu entries.</li>
+</ul></li>
+<li><p><strong>Stop</strong> when a termination criterion is met</p>
+<ul>
+<li>such as a maximum number of iterations,</li>
+<li>a time limit, or</li>
+<li>lack of improvement over a specified number of iterations.</li>
+</ul></li>
+</ol>
+<p>At the end of the algorithm, return the <strong>best solution encountered during the entire search</strong>, not necessarily the final solution. This is important because tabu search may temporarily move to worse solutions as part of its exploration strategy.</p>
+<hr>
+<section id="implementation-oriented-tabu-search-skeleton" class="level3" data-number="5.1">
+<h3 data-number="5.1" class="anchored" data-anchor-id="implementation-oriented-tabu-search-skeleton"><span class="header-section-number">5.1</span> Implementation-Oriented Tabu Search Skeleton</h3>
+<div class="sourceCode" id="cb1"><pre class="sourceCode numberSource text number-lines code-with-copy"><code class="sourceCode"><span id="cb1-1"><a href="#cb1-1"></a>Input: initial solution s, tabu tenure tau, stopping criterion</span>
+<span id="cb1-2"><a href="#cb1-2"></a>best &lt;- s</span>
+<span id="cb1-3"><a href="#cb1-3"></a>tabu_memory &lt;- empty</span>
+<span id="cb1-4"><a href="#cb1-4"></a>while not stop:</span>
+<span id="cb1-5"><a href="#cb1-5"></a>  generate candidate moves from N(s)</span>
+<span id="cb1-6"><a href="#cb1-6"></a>  filter tabu moves unless aspiration is satisfied</span>
+<span id="cb1-7"><a href="#cb1-7"></a>  choose best admissible move m*</span>
+<span id="cb1-8"><a href="#cb1-8"></a>  apply m* to obtain s</span>
+<span id="cb1-9"><a href="#cb1-9"></a>  update tabu_memory with attributes of m*</span>
+<span id="cb1-10"><a href="#cb1-10"></a>  expire entries older than tau</span>
+<span id="cb1-11"><a href="#cb1-11"></a>  if f(s) better than f(best): best &lt;- s</span>
+<span id="cb1-12"><a href="#cb1-12"></a>return best</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>This structure makes the main control points explicit: candidate generation, admissibility filtering, move selection, and memory updates.</p>
+<hr>
+</section>
+<section id="key-observations" class="level3" data-number="5.2">
+<h3 data-number="5.2" class="anchored" data-anchor-id="key-observations"><span class="header-section-number">5.2</span> Key Observations</h3>
+<ul>
+<li>Tabu search always selects the <strong>best admissible move</strong>, ensuring strong intensification at each iteration.</li>
+<li>The use of tabu restrictions prevents short-term cycling while encouraging exploration of new regions.</li>
+<li>Allowing non-improving moves enables escape from local optima without relying on randomness.</li>
+</ul>
+<p>This framework is highly adaptable: the definition of neighborhoods, tabu attributes, tenure lengths, and aspiration criteria can be customized to suit a wide variety of optimization problems, making tabu search one of the most flexible and powerful metaheuristic paradigms.</p>
+<hr>
+</section>
+</section>
+<section id="key-idea-memory-in-search" class="level2" data-number="6">
+<h2 data-number="6" class="anchored" data-anchor-id="key-idea-memory-in-search"><span class="header-section-number">6</span> Key Idea: Memory in Search</h2>
+<p>The defining feature of tabu search is the explicit use of <strong>memory</strong> to guide and control the search process. Unlike greedy or probabilistic methods that rely solely on the current solution, tabu search incorporates information about the <strong>past behavior of the search</strong> to make more informed decisions.</p>
+<p>Memory in tabu search can be broadly categorized according to its <strong>time horizon</strong>, with each type serving a distinct purpose.</p>
+<hr>
+<section id="short-term-memory" class="level3" data-number="6.1">
+<h3 data-number="6.1" class="anchored" data-anchor-id="short-term-memory"><span class="header-section-number">6.1</span> Short-Term Memory</h3>
+<p><strong>Short-term memory</strong> operates over a limited number of recent iterations and is primarily responsible for preventing unproductive behavior.</p>
+<p>Its main roles are:</p>
+<ul>
+<li><p><strong>preventing immediate cycling</strong></p>
+<ul>
+<li>forbids reversing recent moves or revisiting recently used solution attributes,</li>
+<li>ensures the search continues to progress rather than oscillate.</li>
+</ul></li>
+<li><p><strong>supporting local intensification</strong></p>
+<ul>
+<li>forces the search to explore new neighbors around a promising region,</li>
+<li>encourages structured local exploration rather than repetitive moves.</li>
+</ul></li>
+</ul>
+<p>Short-term memory is typically implemented via <strong>tabu lists</strong> with finite tenure.</p>
+<hr>
+</section>
+<section id="long-term-memory" class="level3" data-number="6.2">
+<h3 data-number="6.2" class="anchored" data-anchor-id="long-term-memory"><span class="header-section-number">6.2</span> Long-Term Memory</h3>
+<p><strong>Long-term memory</strong> captures information accumulated over a much longer portion of the search and is used to guide strategic decisions.</p>
+<p>Its main roles are:</p>
+<ul>
+<li><p><strong>promoting diversification</strong></p>
+<ul>
+<li>discourages overuse of frequently visited solution attributes,</li>
+<li>encourages exploration of underexplored or unexplored regions.</li>
+</ul></li>
+<li><p><strong>guiding global search behavior</strong></p>
+<ul>
+<li>influences restart strategies, penalties, or objective modifications,</li>
+<li>helps balance intensification and diversification over time.</li>
+</ul></li>
+</ul>
+<p>Long-term memory is often implemented through frequency-based statistics, elite solution sets, or adaptive penalties.</p>
+<hr>
+</section>
+<section id="strategic-impact-of-memory" class="level3" data-number="6.3">
+<h3 data-number="6.3" class="anchored" data-anchor-id="strategic-impact-of-memory"><span class="header-section-number">6.3</span> Strategic Impact of Memory</h3>
+<p>By integrating both short-term and long-term memory, tabu search transforms local search from a purely reactive improvement process into a <strong>strategic exploration of the solution space</strong>. Memory enables the algorithm to learn from past experience, avoid known pitfalls, and adapt its behavior dynamically, which is a key reason for the effectiveness of tabu search on large and complex optimization problems.</p>
+<hr>
+</section>
+</section>
+<section id="short-term-memory-and-tabu-lists" class="level2" data-number="7">
+<h2 data-number="7" class="anchored" data-anchor-id="short-term-memory-and-tabu-lists"><span class="header-section-number">7</span> Short-Term Memory and Tabu Lists</h2>
+<section id="tabu-lists" class="level3" data-number="7.1">
+<h3 data-number="7.1" class="anchored" data-anchor-id="tabu-lists"><span class="header-section-number">7.1</span> Tabu Lists</h3>
+<p>The most recognizable and widely used component of tabu search is the <strong>tabu list</strong>, which implements short-term memory.</p>
+<p>A tabu list:</p>
+<ul>
+<li>records information about <strong>recent moves or solution attributes</strong>,</li>
+<li>temporarily forbids these items by declaring them <strong>tabu</strong>, and</li>
+<li>automatically removes tabu status after a predefined number of iterations, known as the <strong>tabu tenure</strong>.</li>
+</ul>
+<p>The primary purpose of the tabu list is to <strong>prevent cycling</strong>, that is, to avoid the search repeatedly undoing recent moves or oscillating among a small set of solutions. By enforcing temporary prohibitions, tabu search is forced to explore new configurations even when the best local move would revert a recent decision.</p>
+<hr>
+</section>
+<section id="what-can-be-tabu" class="level3" data-number="7.2">
+<h3 data-number="7.2" class="anchored" data-anchor-id="what-can-be-tabu"><span class="header-section-number">7.2</span> What Can Be Tabu?</h3>
+<p>The specific content of the tabu list depends on the problem structure and the chosen representation. Common options include:</p>
+<ul>
+<li><p><strong>Moves</strong></p>
+<ul>
+<li>forbidding the reversal of a recent move,</li>
+<li>for example, preventing a binary variable that was just flipped from being flipped back immediately.</li>
+</ul></li>
+<li><p><strong>Attributes</strong></p>
+<ul>
+<li>forbidding certain solution characteristics rather than entire moves,</li>
+<li>for example, preventing an item from being assigned to a recently used position or facility.</li>
+</ul></li>
+<li><p><strong>Solutions</strong></p>
+<ul>
+<li>forbidding complete solutions that were recently visited,</li>
+<li>rarely used in large-scale problems due to excessive memory requirements.</li>
+</ul></li>
+</ul>
+<p>In practice, <strong>attribute-based tabu restrictions</strong> are the most common and scalable approach. They generalize well, require limited memory, and effectively prevent short-term cycling without overly constraining the search.</p>
+<hr>
+</section>
+<section id="tabu-tenure" class="level3" data-number="7.3">
+<h3 data-number="7.3" class="anchored" data-anchor-id="tabu-tenure"><span class="header-section-number">7.3</span> Tabu Tenure</h3>
+<p>The <strong>tabu tenure</strong> specifies how long a move or attribute remains tabu after it is applied.</p>
+<ul>
+<li><p><strong>Short tenure</strong></p>
+<ul>
+<li>provides weak protection against cycling,</li>
+<li>may allow the search to revert too quickly to previously visited solutions.</li>
+</ul></li>
+<li><p><strong>Long tenure</strong></p>
+<ul>
+<li>enforces stronger diversification,</li>
+<li>but risks forbidding useful or improving moves for too long.</li>
+</ul></li>
+</ul>
+<p>Tabu tenure can be implemented as:</p>
+<ul>
+<li><strong>fixed</strong>, using a constant number of iterations, or</li>
+<li><strong>adaptive</strong>, where the tenure changes dynamically based on search behavior, progress, or problem size.</li>
+</ul>
+<p>Selecting an appropriate tabu tenure is critical for performance. Too small a value reduces the effectiveness of tabu search, while too large a value may overly restrict the search and slow convergence. Balancing tabu tenure is therefore a key design decision in practical tabu search implementations.</p>
+<hr>
+</section>
+<section id="tuning-tabu-tenure-in-practice" class="level3" data-number="7.4">
+<h3 data-number="7.4" class="anchored" data-anchor-id="tuning-tabu-tenure-in-practice"><span class="header-section-number">7.4</span> Tuning Tabu Tenure in Practice</h3>
+<p>A practical rule is to relate tenure to neighborhood size and problem dimension, then tune empirically.</p>
+<p>Common behaviors:</p>
+<ul>
+<li><p>tenure too small:</p>
+<ul>
+<li>frequent backtracking and short cycles,</li>
+<li>weak diversification.</li>
+</ul></li>
+<li><p>tenure too large:</p>
+<ul>
+<li>excessive move prohibition,</li>
+<li>slow local refinement and possible stagnation.</li>
+</ul></li>
+</ul>
+<p>Practical workflow:</p>
+<ol type="1">
+<li>start with a moderate fixed tenure</li>
+<li>monitor cycling and stagnation indicators</li>
+<li>increase tenure when cycling dominates</li>
+<li>decrease tenure when progress becomes too constrained</li>
+</ol>
+<p>Many robust implementations use <strong>adaptive tenure windows</strong> rather than a single fixed value.</p>
+<hr>
+</section>
+</section>
+<section id="aspiration-criteria" class="level2" data-number="8">
+<h2 data-number="8" class="anchored" data-anchor-id="aspiration-criteria"><span class="header-section-number">8</span> Aspiration Criteria</h2>
+<p>In tabu search, tabu restrictions are intentionally <strong>temporary and conditional</strong>, not absolute. An <strong>aspiration criterion</strong> provides a mechanism to override tabu status when enforcing the restriction would be counterproductive.</p>
+<p>The most common and widely used aspiration rule is:</p>
+<blockquote class="blockquote">
+<p>A tabu move is allowed if it produces a solution that is better than any solution seen so far.</p>
+</blockquote>
+<p>This rule ensures that tabu restrictions never block significant progress toward high-quality solutions. If a move leads to a new global best solution, it should be accepted regardless of its tabu status.</p>
+<hr>
+<section id="purpose-of-aspiration-criteria" class="level3" data-number="8.1">
+<h3 data-number="8.1" class="anchored" data-anchor-id="purpose-of-aspiration-criteria"><span class="header-section-number">8.1</span> Purpose of Aspiration Criteria</h3>
+<p>Aspiration criteria serve several important roles:</p>
+<ul>
+<li><p><strong>Preventing over-restriction</strong></p>
+<ul>
+<li>ensures that tabu lists do not prohibit genuinely beneficial moves,</li>
+<li>avoids stagnation caused by overly aggressive tabu tenure.</li>
+</ul></li>
+<li><p><strong>Preserving intensification</strong></p>
+<ul>
+<li>allows the search to exploit promising regions fully,</li>
+<li>ensures that the best solutions remain accessible.</li>
+</ul></li>
+<li><p><strong>Balancing control and flexibility</strong></p>
+<ul>
+<li>tabu restrictions guide the search,</li>
+<li>aspiration criteria restore flexibility when needed.</li>
+</ul></li>
+</ul>
+<hr>
+</section>
+<section id="alternative-aspiration-rules" class="level3" data-number="8.2">
+<h3 data-number="8.2" class="anchored" data-anchor-id="alternative-aspiration-rules"><span class="header-section-number">8.2</span> Alternative Aspiration Rules</h3>
+<p>While global-best aspiration is the most common, other aspiration criteria may also be used:</p>
+<ul>
+<li>allow a tabu move if it improves upon the current solution by a specified margin,</li>
+<li>allow tabu moves after a certain number of iterations without improvement,</li>
+<li>allow tabu moves that satisfy problem-specific quality or feasibility thresholds.</li>
+</ul>
+<p>These variants provide additional control and can be tailored to specific problem structures.</p>
+<hr>
+</section>
+<section id="practical-insight" class="level3" data-number="8.3">
+<h3 data-number="8.3" class="anchored" data-anchor-id="practical-insight"><span class="header-section-number">8.3</span> Practical Insight</h3>
+<p>Aspiration criteria are essential for making tabu search robust. Without them, tabu restrictions could inadvertently prevent the algorithm from reaching high-quality solutions. With well-designed aspiration rules, tabu search maintains both <strong>discipline</strong> and <strong>adaptability</strong>, ensuring steady progress throughout the search.</p>
+<hr>
+</section>
+</section>
+<section id="move-selection-in-tabu-search" class="level2" data-number="9">
+<h2 data-number="9" class="anchored" data-anchor-id="move-selection-in-tabu-search"><span class="header-section-number">9</span> Move Selection in Tabu Search</h2>
+<p>Move selection is a defining element of tabu search and a key reason for its strong performance on difficult optimization problems. Unlike simple local search, tabu search deliberately <strong>decouples move acceptance from immediate improvement</strong>.</p>
+<p>In tabu search:</p>
+<ul>
+<li>non-improving (worsening) moves are allowed,</li>
+<li>the algorithm evaluates a neighborhood of candidate moves,</li>
+<li>tabu restrictions are applied to filter out forbidden moves, and</li>
+<li>the <strong>best admissible move</strong> is selected deterministically.</li>
+</ul>
+<p>This selection strategy fundamentally differentiates tabu search from both greedy descent and probabilistic methods.</p>
+<hr>
+<section id="best-admissible-move-principle" class="level3" data-number="9.1">
+<h3 data-number="9.1" class="anchored" data-anchor-id="best-admissible-move-principle"><span class="header-section-number">9.1</span> Best Admissible Move Principle</h3>
+<p>At each iteration, tabu search selects:</p>
+<blockquote class="blockquote">
+<p>the best move in the neighborhood that is <strong>not tabu</strong>, or that satisfies an aspiration criterion.</p>
+</blockquote>
+<p>Key aspects:</p>
+<ul>
+<li>“best” refers to the objective value after applying the move,</li>
+<li>the move does not need to improve the current solution,</li>
+<li>admissibility is determined by tabu status and aspiration rules.</li>
+</ul>
+<p>As a result, the search may temporarily move to worse solutions, but it does so <strong>strategically</strong>, not randomly.</p>
+<hr>
+</section>
+<section id="contrast-with-hill-climbing" class="level3" data-number="9.2">
+<h3 data-number="9.2" class="anchored" data-anchor-id="contrast-with-hill-climbing"><span class="header-section-number">9.2</span> Contrast with Hill Climbing</h3>
+<p>Hill climbing enforces a strict rule:</p>
+<ul>
+<li>only improving moves are accepted,</li>
+<li>search terminates at the first local optimum.</li>
+</ul>
+<p>Tabu search relaxes this rule:</p>
+<ul>
+<li>worsening moves are allowed to escape local optima,</li>
+<li>tabu restrictions prevent cycling back to recently visited solutions,</li>
+<li>the search continues even when no improving neighbor exists.</li>
+</ul>
+<p>This makes tabu search far more robust on rugged or deceptive landscapes.</p>
+<hr>
+</section>
+<section id="contrast-with-simulated-annealing" class="level3" data-number="9.3">
+<h3 data-number="9.3" class="anchored" data-anchor-id="contrast-with-simulated-annealing"><span class="header-section-number">9.3</span> Contrast with Simulated Annealing</h3>
+<p>Simulated annealing also allows worsening moves, but:</p>
+<ul>
+<li>acceptance is probabilistic,</li>
+<li>behavior depends heavily on temperature and randomness.</li>
+</ul>
+<p>In contrast, tabu search:</p>
+<ul>
+<li>is primarily deterministic,</li>
+<li>relies on memory rather than probability,</li>
+<li>makes deliberate choices based on neighborhood evaluation and search history.</li>
+</ul>
+<p>This determinism often leads to more predictable and stable performance.</p>
+<hr>
+</section>
+<section id="intensification-and-diversification-via-move-selection" class="level3" data-number="9.4">
+<h3 data-number="9.4" class="anchored" data-anchor-id="intensification-and-diversification-via-move-selection"><span class="header-section-number">9.4</span> Intensification and Diversification via Move Selection</h3>
+<p>Move selection in tabu search implicitly balances:</p>
+<ul>
+<li><p><strong>intensification</strong></p>
+<ul>
+<li>selecting the best admissible move exploits high-quality regions,</li>
+<li>aspiration criteria reinforce exploitation of promising areas.</li>
+</ul></li>
+<li><p><strong>diversification</strong></p>
+<ul>
+<li>tabu restrictions forbid recent moves or attributes,</li>
+<li>forcing the search to explore new regions of the solution space.</li>
+</ul></li>
+</ul>
+<p>Thus, move selection is not only about improvement but also about <strong>strategic exploration</strong>.</p>
+<hr>
+</section>
+<section id="practical-implications" class="level3" data-number="9.5">
+<h3 data-number="9.5" class="anchored" data-anchor-id="practical-implications"><span class="header-section-number">9.5</span> Practical Implications</h3>
+<p>The best admissible move strategy implies that:</p>
+<ul>
+<li>tabu search does not require carefully tuned probabilities,</li>
+<li>performance depends strongly on neighborhood quality and memory design,</li>
+<li>the algorithm progresses steadily even on flat or deceptive landscapes.</li>
+</ul>
+<p>This makes tabu search particularly effective for large-scale combinatorial problems where purely greedy or purely random approaches fail.</p>
+<hr>
+</section>
+<section id="summary" class="level3" data-number="9.6">
+<h3 data-number="9.6" class="anchored" data-anchor-id="summary"><span class="header-section-number">9.6</span> Summary</h3>
+<p>Move selection in tabu search is characterized by:</p>
+<ul>
+<li>deterministic choice of the best admissible move,</li>
+<li>acceptance of non-improving moves when strategically useful,</li>
+<li>explicit control through tabu lists and aspiration criteria.</li>
+</ul>
+<p>Together, these features make tabu search a powerful memory-based alternative to both greedy local search and probabilistic metaheuristics.</p>
+<hr>
+</section>
+<section id="candidate-lists-and-scalability" class="level3" data-number="9.7">
+<h3 data-number="9.7" class="anchored" data-anchor-id="candidate-lists-and-scalability"><span class="header-section-number">9.7</span> Candidate Lists and Scalability</h3>
+<p>On large neighborhoods, evaluating all moves can be expensive. A common strategy is to use a <strong>candidate list</strong>:</p>
+<ul>
+<li>sample or pre-rank a subset of promising moves,</li>
+<li>apply tabu/aspiration filtering only within this subset,</li>
+<li>choose the best admissible move from candidates.</li>
+</ul>
+<p>Benefits:</p>
+<ul>
+<li>lower per-iteration cost,</li>
+<li>better scalability to large instances,</li>
+<li>often negligible quality loss when candidate lists are well designed.</li>
+</ul>
+<p>This is one of the most important engineering choices in high-performance tabu-search implementations.</p>
+<hr>
+</section>
+</section>
+<section id="intensification-in-tabu-search" class="level2" data-number="10">
+<h2 data-number="10" class="anchored" data-anchor-id="intensification-in-tabu-search"><span class="header-section-number">10</span> Intensification in Tabu Search</h2>
+<p><strong>Intensification</strong> in tabu search refers to deliberately concentrating the search effort around <strong>high-quality solutions or regions</strong> of the solution space in order to extract as much improvement as possible from them. Unlike greedy local search, intensification in tabu search is <strong>controlled by memory</strong>, not by rigid acceptance rules.</p>
+<p>Tabu search intensifies the search through several complementary mechanisms.</p>
+<hr>
+<section id="intensification-via-best-admissible-moves" class="level3" data-number="10.1">
+<h3 data-number="10.1" class="anchored" data-anchor-id="intensification-via-best-admissible-moves"><span class="header-section-number">10.1</span> Intensification via Best Admissible Moves</h3>
+<p>At each iteration, tabu search selects the <strong>best admissible move</strong> in the neighborhood, even if that move is non-improving. This has two important effects:</p>
+<ul>
+<li>the search consistently follows the strongest available descent directions,</li>
+<li>local structure around promising solutions is thoroughly exploited.</li>
+</ul>
+<p>Because cycling is prevented by tabu restrictions, the search can push deeper into a region than hill climbing without becoming trapped.</p>
+<hr>
+</section>
+<section id="role-of-short-term-memory" class="level3" data-number="10.2">
+<h3 data-number="10.2" class="anchored" data-anchor-id="role-of-short-term-memory"><span class="header-section-number">10.2</span> Role of Short-Term Memory</h3>
+<p>Short-term memory, implemented through tabu lists, plays a central role in intensification.</p>
+<p>By temporarily forbidding recently used moves or attributes, tabu search:</p>
+<ul>
+<li>avoids immediate backtracking,</li>
+<li>enforces exploration of alternative improving paths within the same region,</li>
+<li>encourages structured local exploration rather than random wandering.</li>
+</ul>
+<p>This produces a <strong>deeper and more systematic local search</strong> than classical descent methods.</p>
+<hr>
+</section>
+<section id="elite-solutions-and-intensification-phases" class="level3" data-number="10.3">
+<h3 data-number="10.3" class="anchored" data-anchor-id="elite-solutions-and-intensification-phases"><span class="header-section-number">10.3</span> Elite Solutions and Intensification Phases</h3>
+<p>Many tabu search implementations explicitly track <strong>elite solutions</strong>, defined as the best solutions found so far.</p>
+<p>Intensification can then be strengthened by:</p>
+<ul>
+<li>restarting the search from an elite solution,</li>
+<li>reducing tabu tenure to allow finer local adjustments,</li>
+<li>restricting neighborhoods to smaller, more focused move sets.</li>
+</ul>
+<p>This allows the algorithm to revisit promising regions with fresh search dynamics and refined control.</p>
+<hr>
+</section>
+<section id="modified-tabu-restrictions-for-intensification" class="level3" data-number="10.4">
+<h3 data-number="10.4" class="anchored" data-anchor-id="modified-tabu-restrictions-for-intensification"><span class="header-section-number">10.4</span> Modified Tabu Restrictions for Intensification</h3>
+<p>Intensification can also be achieved by <strong>adjusting tabu restrictions</strong>:</p>
+<ul>
+<li>shortening tabu tenure to allow more flexible local moves,</li>
+<li>relaxing certain tabu attributes while keeping others active,</li>
+<li>temporarily disabling diversification mechanisms.</li>
+</ul>
+<p>These adjustments allow the search to concentrate on incremental improvements around high-quality configurations.</p>
+<hr>
+</section>
+<section id="intensification-vs-greedy-exploitation" class="level3" data-number="10.5">
+<h3 data-number="10.5" class="anchored" data-anchor-id="intensification-vs-greedy-exploitation"><span class="header-section-number">10.5</span> Intensification vs Greedy Exploitation</h3>
+<p>Although intensification resembles greedy exploitation, there is a critical difference:</p>
+<ul>
+<li>greedy methods stop at local optima,</li>
+<li>tabu search intensifies <em>beyond</em> local optima by allowing controlled non-improving moves.</li>
+</ul>
+<p>This enables tabu search to uncover improving sequences of moves that greedy descent cannot reach.</p>
+<hr>
+</section>
+<section id="balance-with-diversification" class="level3" data-number="10.6">
+<h3 data-number="10.6" class="anchored" data-anchor-id="balance-with-diversification"><span class="header-section-number">10.6</span> Balance with Diversification</h3>
+<p>Excessive intensification can lead to stagnation. Effective tabu search therefore alternates between:</p>
+<ul>
+<li><strong>intensification phases</strong>, focusing on elite regions, and</li>
+<li><strong>diversification phases</strong>, pushing the search into unexplored areas.</li>
+</ul>
+<p>The power of tabu search lies in its ability to <strong>switch between these modes dynamically</strong> using memory-based control.</p>
+<hr>
+</section>
+<section id="summary-1" class="level3" data-number="10.7">
+<h3 data-number="10.7" class="anchored" data-anchor-id="summary-1"><span class="header-section-number">10.7</span> Summary</h3>
+<p>Intensification in tabu search is achieved through:</p>
+<ul>
+<li>deterministic selection of the best admissible moves,</li>
+<li>short-term memory that prevents cycling while enabling deep local exploration,</li>
+<li>elite solution management and controlled restarts, and</li>
+<li>adaptive adjustment of tabu restrictions.</li>
+</ul>
+<p>Together, these mechanisms allow tabu search to exploit promising regions far more effectively than simple local search, while still retaining the ability to escape local optima.</p>
+<hr>
+</section>
+</section>
+<section id="long-term-memory-and-diversification" class="level2" data-number="11">
+<h2 data-number="11" class="anchored" data-anchor-id="long-term-memory-and-diversification"><span class="header-section-number">11</span> Long-Term Memory and Diversification</h2>
+<section id="motivation" class="level3" data-number="11.1">
+<h3 data-number="11.1" class="anchored" data-anchor-id="motivation"><span class="header-section-number">11.1</span> Motivation</h3>
+<p>While <strong>short-term memory</strong> in tabu search is effective at preventing immediate cycling and supporting local intensification, it does not by itself ensure that the search explores <strong>different regions of the solution space</strong>. Over time, the search may still become confined to a limited area, repeatedly visiting structurally similar solutions.</p>
+<p><strong>Long-term memory</strong> is introduced to counteract this tendency by explicitly encouraging <strong>diversification</strong>. Its role is strategic rather than tactical: instead of controlling the next few moves, it influences the <em>overall trajectory</em> of the search.</p>
+<hr>
+</section>
+<section id="role-of-long-term-memory" class="level3" data-number="11.2">
+<h3 data-number="11.2" class="anchored" data-anchor-id="role-of-long-term-memory"><span class="header-section-number">11.2</span> Role of Long-Term Memory</h3>
+<p>Long-term memory mechanisms are designed to:</p>
+<ul>
+<li>identify regions of the solution space that have been overexplored,</li>
+<li>detect regions that have been rarely or never visited,</li>
+<li>bias future search decisions toward underexplored structures, and</li>
+<li>maintain a balance between exploration and exploitation over long time horizons.</li>
+</ul>
+<p>Unlike short-term memory, which is typically iteration-based, long-term memory accumulates information over <strong>many iterations</strong>.</p>
+<hr>
+</section>
+<section id="forms-of-long-term-memory" class="level3" data-number="11.3">
+<h3 data-number="11.3" class="anchored" data-anchor-id="forms-of-long-term-memory"><span class="header-section-number">11.3</span> Forms of Long-Term Memory</h3>
+<p>Several forms of long-term memory are commonly used in tabu search.</p>
+<section id="frequency-based-memory" class="level4" data-number="11.3.1">
+<h4 data-number="11.3.1" class="anchored" data-anchor-id="frequency-based-memory"><span class="header-section-number">11.3.1</span> Frequency-Based Memory</h4>
+<p>Frequency-based memory records how often certain <strong>solution attributes</strong> or <strong>moves</strong> appear during the search.</p>
+<p>Typical attributes include:</p>
+<ul>
+<li>assignment of an item to a location,</li>
+<li>activation of a facility or resource,</li>
+<li>selection of a particular edge or arc in routing problems.</li>
+</ul>
+<p>Diversification is encouraged by:</p>
+<ul>
+<li>penalizing frequently used attributes in the objective function, or</li>
+<li>favoring moves that introduce rarely used attributes.</li>
+</ul>
+<p>This approach systematically pushes the search away from familiar patterns and toward novel configurations.</p>
+<hr>
+</section>
+<section id="elite-solution-memory" class="level4" data-number="11.3.2">
+<h4 data-number="11.3.2" class="anchored" data-anchor-id="elite-solution-memory"><span class="header-section-number">11.3.2</span> Elite Solution Memory</h4>
+<p>Elite solution memory stores a collection of the <strong>best solutions found so far</strong>.</p>
+<p>These elite solutions are used to:</p>
+<ul>
+<li>intensify the search by restarting from high-quality solutions,</li>
+<li>recombine features of good solutions, or</li>
+<li>guide diversification by comparing current solutions against elite structures.</li>
+</ul>
+<p>Elite memory provides a long-term reference that preserves valuable information discovered during the search.</p>
+<hr>
+</section>
+<section id="strategic-oscillation" class="level4" data-number="11.3.3">
+<h4 data-number="11.3.3" class="anchored" data-anchor-id="strategic-oscillation"><span class="header-section-number">11.3.3</span> Strategic Oscillation</h4>
+<p><strong>Strategic oscillation</strong> deliberately allows the search to move between:</p>
+<ul>
+<li>feasible solutions, and</li>
+<li>controlled infeasible solutions.</li>
+</ul>
+<p>By temporarily relaxing constraints, the search can:</p>
+<ul>
+<li>cross infeasible regions that separate distant feasible basins,</li>
+<li>escape from regions blocked by strict feasibility requirements, and</li>
+<li>discover high-quality feasible solutions unreachable by purely feasible moves.</li>
+</ul>
+<p>Strategic oscillation is particularly effective in constrained optimization problems.</p>
+<hr>
+</section>
+</section>
+<section id="diversification-strategies-in-practice" class="level3" data-number="11.4">
+<h3 data-number="11.4" class="anchored" data-anchor-id="diversification-strategies-in-practice"><span class="header-section-number">11.4</span> Diversification Strategies in Practice</h3>
+<p>Long-term memory supports diversification through several practical strategies:</p>
+<ul>
+<li><p><strong>Penalty adjustment</strong></p>
+<ul>
+<li>dynamically increase penalties for frequently used attributes,</li>
+<li>reduce penalties for rare or unused attributes.</li>
+</ul></li>
+<li><p><strong>Guided restarts</strong></p>
+<ul>
+<li>restart the search from solutions constructed using rarely used components,</li>
+<li>avoid purely random restarts.</li>
+</ul></li>
+<li><p><strong>Adaptive tabu tenure</strong></p>
+<ul>
+<li>increase tabu tenure when cycling or stagnation is detected,</li>
+<li>decrease tenure during intensification phases.</li>
+</ul></li>
+</ul>
+<p>These strategies ensure that diversification is <strong>guided and informed</strong>, rather than random.</p>
+<hr>
+</section>
+<section id="interaction-with-intensification" class="level3" data-number="11.5">
+<h3 data-number="11.5" class="anchored" data-anchor-id="interaction-with-intensification"><span class="header-section-number">11.5</span> Interaction with Intensification</h3>
+<p>Effective tabu search alternates between:</p>
+<ul>
+<li><strong>intensification</strong>, driven mainly by short-term memory and elite solutions, and</li>
+<li><strong>diversification</strong>, driven by long-term memory mechanisms.</li>
+</ul>
+<p>Long-term memory ensures that intensification does not become excessive and that the search periodically explores new regions where better solutions may exist.</p>
+<hr>
+</section>
+<section id="summary-2" class="level3" data-number="11.6">
+<h3 data-number="11.6" class="anchored" data-anchor-id="summary-2"><span class="header-section-number">11.6</span> Summary</h3>
+<p>Long-term memory is essential for making tabu search a truly global optimization method. It:</p>
+<ul>
+<li>prevents long-term stagnation,</li>
+<li>promotes systematic exploration of the solution space,</li>
+<li>complements short-term memory and intensification, and</li>
+<li>enables tabu search to scale to large and complex optimization problems.</li>
+</ul>
+<p>By integrating short-term and long-term memory, tabu search achieves a powerful balance between <strong>depth</strong> and <strong>breadth</strong> in the search process.</p>
+<hr>
+</section>
+</section>
+<section id="tabu-search-vs-simulated-annealing" class="level2" data-number="12">
+<h2 data-number="12" class="anchored" data-anchor-id="tabu-search-vs-simulated-annealing"><span class="header-section-number">12</span> Tabu Search vs Simulated Annealing</h2>
+<p>Tabu search and simulated annealing are two classical metaheuristics designed to overcome the limitations of greedy local search. While both allow non-improving moves and aim to escape local optima, they rely on <strong>fundamentally different mechanisms</strong>.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 24%">
+<col style="width: 35%">
+<col style="width: 39%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Aspect</th>
+<th>Tabu Search</th>
+<th>Simulated Annealing</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Acceptance of worse moves</td>
+<td>Deterministic (best admissible move)</td>
+<td>Probabilistic (temperature-based)</td>
+</tr>
+<tr class="even">
+<td>Use of memory</td>
+<td>Explicit and structured</td>
+<td>None (memoryless)</td>
+</tr>
+<tr class="odd">
+<td>Control of cycling</td>
+<td>Tabu lists and tenure</td>
+<td>Randomness</td>
+</tr>
+<tr class="even">
+<td>Exploration mechanism</td>
+<td>Memory-guided diversification</td>
+<td>Stochastic acceptance</td>
+</tr>
+<tr class="odd">
+<td>Exploitation mechanism</td>
+<td>Intensification via best moves</td>
+<td>Gradual cooling</td>
+</tr>
+<tr class="even">
+<td>Parameter sensitivity</td>
+<td>Moderate (tabu tenure, memory rules)</td>
+<td>High (initial temperature, cooling rate)</td>
+</tr>
+<tr class="odd">
+<td>Typical behavior</td>
+<td>Strategic exploration</td>
+<td>Stochastic exploration</td>
+</tr>
+<tr class="even">
+<td>Reproducibility</td>
+<td>High (often deterministic)</td>
+<td>Lower (randomized runs differ)</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<section id="key-conceptual-differences" class="level3" data-number="12.1">
+<h3 data-number="12.1" class="anchored" data-anchor-id="key-conceptual-differences"><span class="header-section-number">12.1</span> Key Conceptual Differences</h3>
+<p><strong>Tabu search</strong> uses <em>deterministic decision-making guided by memory</em>. At each iteration, it selects the best admissible move, even if that move worsens the objective value. Memory structures prevent cycling and steer the search toward unexplored regions in a controlled manner.</p>
+<p><strong>Simulated annealing</strong>, in contrast, relies on <em>randomized acceptance</em>. Worse moves are accepted with a probability that decreases over time, controlled by the temperature schedule. There is no explicit memory of past decisions, and diversification emerges implicitly through randomness.</p>
+<hr>
+</section>
+<section id="strengths-in-practice" class="level3" data-number="12.2">
+<h3 data-number="12.2" class="anchored" data-anchor-id="strengths-in-practice"><span class="header-section-number">12.2</span> Strengths in Practice</h3>
+<ul>
+<li><p>Tabu search is particularly effective when:</p>
+<ul>
+<li>neighborhoods are well structured,</li>
+<li>cycling is a major concern,</li>
+<li>deterministic behavior and reproducibility are desired.</li>
+</ul></li>
+<li><p>Simulated annealing is particularly effective when:</p>
+<ul>
+<li>the landscape contains many deep local optima,</li>
+<li>a simple implementation is preferred,</li>
+<li>problem-specific memory structures are difficult to design.</li>
+</ul></li>
+</ul>
+<hr>
+</section>
+<section id="complementarity" class="level3" data-number="12.3">
+<h3 data-number="12.3" class="anchored" data-anchor-id="complementarity"><span class="header-section-number">12.3</span> Complementarity</h3>
+<p>In modern soft computing practice, tabu search and simulated annealing are often <strong>combined rather than compared</strong>. For example:</p>
+<ul>
+<li>simulated annealing can be used to diversify the search before applying tabu search for intensification,</li>
+<li>tabu search can be embedded inside a probabilistic framework, or</li>
+<li>both can be used as components of larger hybrid or matheuristic algorithms.</li>
+</ul>
+<p>Together, they illustrate two complementary philosophies of escaping local optima: <strong>memory-driven strategic control</strong> versus <strong>probability-driven stochastic exploration</strong>.</p>
+<hr>
+</section>
+</section>
+<section id="practical-strengths-of-tabu-search" class="level2" data-number="13">
+<h2 data-number="13" class="anchored" data-anchor-id="practical-strengths-of-tabu-search"><span class="header-section-number">13</span> Practical Strengths of Tabu Search</h2>
+<p>Tabu search has several practical advantages that make it one of the most robust and widely used metaheuristics for combinatorial optimization:</p>
+<ul>
+<li><p><strong>Effective cycling avoidance</strong> Explicit tabu restrictions prevent the search from undoing recent moves, eliminating short cycles that commonly trap basic local search.</p></li>
+<li><p><strong>Consistently high-quality solutions</strong> By always selecting the best admissible move, tabu search maintains strong intensification while still allowing temporary deterioration when needed.</p></li>
+<li><p><strong>Reduced dependence on randomness</strong> Unlike probabilistic methods, tabu search relies primarily on deterministic rules and memory, leading to more stable and reproducible performance.</p></li>
+<li><p><strong>Strong performance on structured problems</strong> Tabu search is particularly effective when solution attributes and neighborhoods have clear structure, such as in scheduling, routing, assignment, facility location, and network design problems.</p></li>
+</ul>
+<p>In many applications, tabu search reaches high-quality solutions quickly and improves them steadily over long runs.</p>
+<hr>
+</section>
+<section id="practical-limitations" class="level2" data-number="14">
+<h2 data-number="14" class="anchored" data-anchor-id="practical-limitations"><span class="header-section-number">14</span> Practical Limitations</h2>
+<p>Despite its effectiveness, tabu search is not without challenges:</p>
+<ul>
+<li><p><strong>Design complexity</strong> Choosing appropriate tabu attributes (moves, variables, assignments) requires problem-specific insight.</p></li>
+<li><p><strong>Parameter tuning</strong> Tabu tenure, memory length, and aspiration rules strongly influence performance and often require experimentation.</p></li>
+<li><p><strong>Increased algorithmic complexity</strong> Long-term memory, diversification strategies, and adaptive tenure mechanisms add implementation overhead.</p></li>
+<li><p><strong>Scalability of memory structures</strong> Poorly designed memory schemes can increase computational cost or unintentionally restrict the search.</p></li>
+</ul>
+<p>Because of these factors, tabu search is rarely used as a completely standalone method in large systems.</p>
+<hr>
+<section id="diagnostics-and-failure-modes" class="level3" data-number="14.1">
+<h3 data-number="14.1" class="anchored" data-anchor-id="diagnostics-and-failure-modes"><span class="header-section-number">14.1</span> Diagnostics and Failure Modes</h3>
+<p>Useful runtime diagnostics:</p>
+<ul>
+<li>repeated-solution frequency (cycling signal),</li>
+<li>best-objective improvement rate,</li>
+<li>proportion of moves blocked by tabu restrictions,</li>
+<li>distribution of attribute frequencies (diversification signal).</li>
+</ul>
+<p>Common failure modes and fixes:</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Failure mode</th>
+<th>Typical cause</th>
+<th>Practical fix</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>persistent short cycling</td>
+<td>tenure too short</td>
+<td>increase tenure or strengthen attribute-based tabu</td>
+</tr>
+<tr class="even">
+<td>search over-constrained</td>
+<td>tenure too long or overly broad tabu attributes</td>
+<td>relax tenure or narrow tabu definition</td>
+</tr>
+<tr class="odd">
+<td>weak diversification</td>
+<td>short-term memory only</td>
+<td>add long-term frequency penalties or guided restarts</td>
+</tr>
+<tr class="even">
+<td>high runtime per iteration</td>
+<td>full neighborhood evaluation too expensive</td>
+<td>introduce candidate lists / partial evaluation</td>
+</tr>
+</tbody>
+</table>
+<hr>
+</section>
+</section>
+<section id="role-of-tabu-search-in-modern-soft-computing" class="level2" data-number="15">
+<h2 data-number="15" class="anchored" data-anchor-id="role-of-tabu-search-in-modern-soft-computing"><span class="header-section-number">15</span> Role of Tabu Search in Modern Soft Computing</h2>
+<p>Tabu search occupies a central position in the evolution of soft computing methods:</p>
+<ul>
+<li>it established <strong>memory-based control</strong> as a core optimization principle,</li>
+<li>it inspired later metaheuristics that incorporate history and learning,</li>
+<li>it demonstrated that deterministic strategies can compete with stochastic methods, and</li>
+<li>it serves as a powerful <strong>intensification engine</strong> within hybrid frameworks.</li>
+</ul>
+<p>In modern practice, tabu search is frequently embedded within larger algorithms, combined with local search, evolutionary methods, or exact solvers. Understanding tabu search provides deep insight into how <strong>strategic memory and controlled exploration</strong> can dramatically improve heuristic optimization performance.</p>
+<hr>
+<section id="key-takeaways" class="level3" data-number="15.1">
+<h3 data-number="15.1" class="anchored" data-anchor-id="key-takeaways"><span class="header-section-number">15.1</span> Key Takeaways</h3>
+<ul>
+<li>tabu search enhances local search with memory</li>
+<li>tabu lists prevent cycling and encourage exploration</li>
+<li>aspiration criteria override overly restrictive tabu rules</li>
+<li>short-term memory intensifies search</li>
+<li>long-term memory enables diversification</li>
+</ul>
+<hr>
+</section>
+</section>
+<section id="mini-exercises" class="level2" data-number="16">
+<h2 data-number="16" class="anchored" data-anchor-id="mini-exercises"><span class="header-section-number">16</span> Mini Exercises</h2>
+<ol type="1">
+<li><p><strong>Tabu list design</strong> Consider a binary optimization problem with decision variables <span class="math inline">\(x \in \{0,1\}^n\)</span>.</p>
+<ul>
+<li>Define an appropriate tabu list (move-based or attribute-based).</li>
+<li>Explain which recent moves or variable changes should be declared tabu and why this prevents cycling.</li>
+</ul></li>
+<li><p><strong>Effect of tabu tenure</strong></p>
+<ul>
+<li>Describe how a short tabu tenure versus a long tabu tenure affects the search trajectory.</li>
+<li>Discuss the impact of tabu tenure on intensification, diversification, and convergence speed.</li>
+</ul></li>
+<li><p><strong>Comparison with simulated annealing</strong></p>
+<ul>
+<li>Compare tabu search and simulated annealing in terms of how they escape local optima.</li>
+<li>Focus on the roles of memory, determinism, and randomness in their exploration mechanisms.</li>
+</ul></li>
+<li><p><strong>Aspiration criteria design</strong></p>
+<ul>
+<li>Propose an aspiration criterion for a routing or scheduling problem.</li>
+<li>Explain under what conditions a tabu move should be allowed and how this criterion balances flexibility and control.</li>
+</ul></li>
+<li><p><strong>Candidate-list design and trade-off</strong></p>
+<ul>
+<li>Propose a candidate-list strategy for a large neighborhood routing or scheduling problem.</li>
+<li>Explain how candidate-list size affects runtime and solution quality.</li>
+<li>Suggest one adaptive rule for changing candidate-list size during search.</li>
+</ul></li>
+</ol>
+<hr>
+</section>
+<section id="references-for-this-chapter" class="level2" data-number="17">
+<h2 data-number="17" class="anchored" data-anchor-id="references-for-this-chapter"><span class="header-section-number">17</span> References for This Chapter</h2>
+<ol type="1">
+<li>Glover, F. (1989). Tabu Search-Part I. <em>ORSA Journal on Computing</em>, 1(3), 190-206. DOI: <a href="https://doi.org/10.1287/ijoc.1.3.190">10.1287/ijoc.1.3.190</a></li>
+<li>Glover, F. (1990). Tabu Search-Part II. <em>ORSA Journal on Computing</em>, 2(1), 4-32. DOI: <a href="https://doi.org/10.1287/ijoc.2.1.4">10.1287/ijoc.2.1.4</a></li>
+<li>Glover, F., &amp; Laguna, M. (1997). <em>Tabu Search</em>. Springer. DOI: <a href="https://doi.org/10.1007/978-1-4615-6089-0">10.1007/978-1-4615-6089-0</a></li>
+<li>Taillard, E. D. (1991). Robust taboo search for the quadratic assignment problem. <em>Parallel Computing</em>, 17(4-5), 443-455. DOI: <a href="https://doi.org/10.1016/S0167-8191(05)80147-4">10.1016/S0167-8191(05)80147-4</a></li>
+<li>Hertz, A., &amp; de Werra, D. (1987). Using tabu search techniques for graph coloring. <em>Computing</em>, 39(4), 345-351. DOI: <a href="https://doi.org/10.1007/BF02239976">10.1007/BF02239976</a></li>
+<li>Battiti, R., &amp; Tecchiolli, G. (1995). Training neural nets with the reactive tabu search. <em>IEEE Transactions on Neural Networks</em>, 6(5), 1185-1200. DOI: <a href="https://doi.org/10.1109/72.410361">10.1109/72.410361</a></li>
+<li>Gendreau, M., &amp; Potvin, J.-Y. (Eds.). (2019). <em>Handbook of Metaheuristics</em> (3rd ed.). Springer. DOI: <a href="https://doi.org/10.1007/978-3-319-91086-4">10.1007/978-3-319-91086-4</a></li>
+</ol>
+
+
+</section>
+
+<a onclick="window.scrollTo(0, 0); return false;" role="button" id="quarto-back-to-top"><i class="bi bi-arrow-up"></i> Back to top</a></main> <!-- /main -->
+<div class="ui-controls" role="group" aria-label="Display controls">
+  <!-- Quarto already shows a light or dark toggle in the navbar when you set light and dark themes.
+       Here we only add font size. -->
+  <label for="fontSize" class="ui-label">A</label>
+  <select id="fontSize" aria-label="Font size">
+    <option value="16">A</option>
+    <option value="18">A+</option>
+    <option value="20">A++</option>
+  </select>
+</div>
+
+<script>
+(function () {
+  const KEY = "q_font_size_px";
+  const select = document.getElementById("fontSize");
+
+  function apply(px) {
+    document.documentElement.style.fontSize = px + "px";
+  }
+
+  // Load saved value or default to 16
+  const saved = localStorage.getItem(KEY) || "16";
+  select.value = saved;
+  apply(saved);
+
+  // Save on change
+  select.addEventListener("change", () => {
+    localStorage.setItem(KEY, select.value);
+    apply(select.value);
+  });
+})();
+</script>
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    // Ensure there is a toggle, if there isn't float one in the top right
+    if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
+      const a = window.document.createElement('a');
+      a.classList.add('top-right');
+      a.classList.add('quarto-color-scheme-toggle');
+      a.href = "";
+      a.onclick = function() { try { window.quartoToggleColorScheme(); } catch {} return false; };
+      const i = window.document.createElement("i");
+      i.classList.add('bi');
+      a.appendChild(i);
+      window.document.body.appendChild(a);
+    }
+    setColorSchemeToggle(hasAlternateSentinel())
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+        const codeEl = trigger.previousElementSibling.cloneNode(true);
+        for (const childEl of codeEl.children) {
+          if (isCodeAnnotation(childEl)) {
+            childEl.remove();
+          }
+        }
+        return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp("https:\/\/soumenatta\.github\.io\/selected_topics_in_soft_computing\/");
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+            // target, if specified
+            link.setAttribute("target", "_blank");
+            if (link.getAttribute("rel") === null) {
+              link.setAttribute("rel", "noopener");
+            }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">
+<p>© Dr.&nbsp;Soumen Atta, Ph.D.&nbsp;(2025)</p>
+</div>   
+    <div class="nav-footer-center">
+      &nbsp;
+    </div>
+    <div class="nav-footer-right">
+      &nbsp;
+    </div>
+  </div>
+</footer>
+
+
+
+
+<script src="../site_libs/quarto-html/zenscroll-min.js"></script>
+</body></html>

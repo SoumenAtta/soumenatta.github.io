@@ -1,0 +1,1329 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.7.33">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>Lecture 2 — Mathematical Programming with Python and Gurobi – Selected Topics in Soft Computing</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<script src="../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-ea385d0e468b0dd5ea5bf0780b1290d9.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-dark-bc185b5c5bdbcb35c2eb49d8a876ef70.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-ea385d0e468b0dd5ea5bf0780b1290d9.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap-376eda28aa9f89c8ff844ce97b1c8190.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/bootstrap/bootstrap-dark-e9bb19cd34d53f25e420f2fd1f8a3f86.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<link href="../site_libs/bootstrap/bootstrap-376eda28aa9f89c8ff844ce97b1c8190.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<style>html{ scroll-behavior: smooth; }</style>
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+<link rel="stylesheet" href="../assets/site.css">
+</head>
+
+<body class="nav-fixed quarto-light"><script id="quarto-html-before-body" type="application/javascript">
+    const toggleBodyColorMode = (bsSheetEl) => {
+      const mode = bsSheetEl.getAttribute("data-mode");
+      const bodyEl = window.document.querySelector("body");
+      if (mode === "dark") {
+        bodyEl.classList.add("quarto-dark");
+        bodyEl.classList.remove("quarto-light");
+      } else {
+        bodyEl.classList.add("quarto-light");
+        bodyEl.classList.remove("quarto-dark");
+      }
+    }
+    const toggleBodyColorPrimary = () => {
+      const bsSheetEl = window.document.querySelector("link#quarto-bootstrap:not([rel=disabled-stylesheet])");
+      if (bsSheetEl) {
+        toggleBodyColorMode(bsSheetEl);
+      }
+    }
+    const setColorSchemeToggle = (alternate) => {
+      const toggles = window.document.querySelectorAll('.quarto-color-scheme-toggle');
+      for (let i=0; i < toggles.length; i++) {
+        const toggle = toggles[i];
+        if (toggle) {
+          if (alternate) {
+            toggle.classList.add("alternate");
+          } else {
+            toggle.classList.remove("alternate");
+          }
+        }
+      }
+    };
+    const toggleColorMode = (alternate) => {
+      // Switch the stylesheets
+      const primaryStylesheets = window.document.querySelectorAll('link.quarto-color-scheme:not(.quarto-color-alternate)');
+      const alternateStylesheets = window.document.querySelectorAll('link.quarto-color-scheme.quarto-color-alternate');
+      manageTransitions('#quarto-margin-sidebar .nav-link', false);
+      if (alternate) {
+        // note: dark is layered on light, we don't disable primary!
+        enableStylesheet(alternateStylesheets);
+        for (const sheetNode of alternateStylesheets) {
+          if (sheetNode.id === "quarto-bootstrap") {
+            toggleBodyColorMode(sheetNode);
+          }
+        }
+      } else {
+        disableStylesheet(alternateStylesheets);
+        enableStylesheet(primaryStylesheets)
+        toggleBodyColorPrimary();
+      }
+      manageTransitions('#quarto-margin-sidebar .nav-link', true);
+      // Switch the toggles
+      setColorSchemeToggle(alternate)
+      // Hack to workaround the fact that safari doesn't
+      // properly recolor the scrollbar when toggling (#1455)
+      if (navigator.userAgent.indexOf('Safari') > 0 && navigator.userAgent.indexOf('Chrome') == -1) {
+        manageTransitions("body", false);
+        window.scrollTo(0, 1);
+        setTimeout(() => {
+          window.scrollTo(0, 0);
+          manageTransitions("body", true);
+        }, 40);
+      }
+    }
+    const disableStylesheet = (stylesheets) => {
+      for (let i=0; i < stylesheets.length; i++) {
+        const stylesheet = stylesheets[i];
+        stylesheet.rel = 'disabled-stylesheet';
+      }
+    }
+    const enableStylesheet = (stylesheets) => {
+      for (let i=0; i < stylesheets.length; i++) {
+        const stylesheet = stylesheets[i];
+        if(stylesheet.rel !== 'stylesheet') { // for Chrome, which will still FOUC without this check
+          stylesheet.rel = 'stylesheet';
+        }
+      }
+    }
+    const manageTransitions = (selector, allowTransitions) => {
+      const els = window.document.querySelectorAll(selector);
+      for (let i=0; i < els.length; i++) {
+        const el = els[i];
+        if (allowTransitions) {
+          el.classList.remove('notransition');
+        } else {
+          el.classList.add('notransition');
+        }
+      }
+    }
+    const isFileUrl = () => {
+      return window.location.protocol === 'file:';
+    }
+    const hasAlternateSentinel = () => {
+      let styleSentinel = getColorSchemeSentinel();
+      if (styleSentinel !== null) {
+        return styleSentinel === "alternate";
+      } else {
+        return false;
+      }
+    }
+    const setStyleSentinel = (alternate) => {
+      const value = alternate ? "alternate" : "default";
+      if (!isFileUrl()) {
+        window.localStorage.setItem("quarto-color-scheme", value);
+      } else {
+        localAlternateSentinel = value;
+      }
+    }
+    const getColorSchemeSentinel = () => {
+      if (!isFileUrl()) {
+        const storageValue = window.localStorage.getItem("quarto-color-scheme");
+        return storageValue != null ? storageValue : localAlternateSentinel;
+      } else {
+        return localAlternateSentinel;
+      }
+    }
+    const toggleGiscusIfUsed = (isAlternate, darkModeDefault) => {
+      const baseTheme = document.querySelector('#giscus-base-theme')?.value ?? 'light';
+      const alternateTheme = document.querySelector('#giscus-alt-theme')?.value ?? 'dark';
+      let newTheme = '';
+      if(authorPrefersDark) {
+        newTheme = isAlternate ? baseTheme : alternateTheme;
+      } else {
+        newTheme = isAlternate ? alternateTheme : baseTheme;
+      }
+      const changeGiscusTheme = () => {
+        // From: https://github.com/giscus/giscus/issues/336
+        const sendMessage = (message) => {
+          const iframe = document.querySelector('iframe.giscus-frame');
+          if (!iframe) return;
+          iframe.contentWindow.postMessage({ giscus: message }, 'https://giscus.app');
+        }
+        sendMessage({
+          setConfig: {
+            theme: newTheme
+          }
+        });
+      }
+      const isGiscussLoaded = window.document.querySelector('iframe.giscus-frame') !== null;
+      if (isGiscussLoaded) {
+        changeGiscusTheme();
+      }
+    };
+    const authorPrefersDark = false;
+    const darkModeDefault = authorPrefersDark;
+      document.querySelector('link#quarto-text-highlighting-styles.quarto-color-scheme-extra').rel = 'disabled-stylesheet';
+      document.querySelector('link#quarto-bootstrap.quarto-color-scheme-extra').rel = 'disabled-stylesheet';
+    let localAlternateSentinel = darkModeDefault ? 'alternate' : 'default';
+    // Dark / light mode switch
+    window.quartoToggleColorScheme = () => {
+      // Read the current dark / light value
+      let toAlternate = !hasAlternateSentinel();
+      toggleColorMode(toAlternate);
+      setStyleSentinel(toAlternate);
+      toggleGiscusIfUsed(toAlternate, darkModeDefault);
+      window.dispatchEvent(new Event('resize'));
+    };
+    // Switch to dark mode if need be
+    if (hasAlternateSentinel()) {
+      toggleColorMode(true);
+    } else {
+      toggleColorMode(false);
+    }
+  </script>
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="../index.html">
+    <span class="navbar-title">Selected Topics in Soft Computing</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../index.html"> 
+<span class="menu-text">Home</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../schedule.html"> 
+<span class="menu-text">Schedule</span></a>
+  </li>  
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-lectures" role="link" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">Lectures</span>
+    </a>
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-lectures">    
+        <li>
+    <a class="dropdown-item" href="../lectures/lecture0.html">
+ <span class="dropdown-text">Lecture 0 - Course Introduction</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../lectures/lecture1.html">
+ <span class="dropdown-text">Lecture 1 — Introduction to Optimization</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../lectures/lecture2.html">
+ <span class="dropdown-text">Lecture 2 — Mathematical Programming with Python and Gurobi</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../lectures/lecture3.html">
+ <span class="dropdown-text">Lecture 3 — Why Exact Methods Fail: Complexity, Scalability, and Motivation for Soft Computing</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../lectures/lecture4.html">
+ <span class="dropdown-text">Lecture 4 — Introduction to Heuristics and Metaheuristics</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../lectures/lecture5.html">
+ <span class="dropdown-text">Lecture 5 — Local Search and Neighborhood Structures</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../lectures/lecture6.html">
+ <span class="dropdown-text">Lecture 6 — Hill Climbing, Descent Methods, and Local Optima</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../lectures/lecture7.html">
+ <span class="dropdown-text">Lecture 7 — Simulated Annealing and Probabilistic Local Search</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../lectures/lecture8.html">
+ <span class="dropdown-text">Lecture 8 — Tabu Search and Memory-Based Heuristics</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../lectures/lecture9.html">
+ <span class="dropdown-text">Lecture 9 — Population-Based Metaheuristics: Genetic Algorithms</span></a>
+  </li>  
+    </ul>
+  </li>
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+  <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#learning-objectives" id="toc-learning-objectives" class="nav-link active" data-scroll-target="#learning-objectives"><span class="header-section-number">1</span> Learning Objectives</a></li>
+  <li><a href="#lecture-roadmap" id="toc-lecture-roadmap" class="nav-link" data-scroll-target="#lecture-roadmap"><span class="header-section-number">2</span> Lecture Roadmap</a></li>
+  <li><a href="#optimization-models-and-solvers" id="toc-optimization-models-and-solvers" class="nav-link" data-scroll-target="#optimization-models-and-solvers"><span class="header-section-number">3</span> Optimization Models and Solvers</a>
+  <ul class="collapse">
+  <li><a href="#what-is-a-solver" id="toc-what-is-a-solver" class="nav-link" data-scroll-target="#what-is-a-solver"><span class="header-section-number">3.1</span> What Is a Solver?</a></li>
+  <li><a href="#gurobi-overview" id="toc-gurobi-overview" class="nav-link" data-scroll-target="#gurobi-overview"><span class="header-section-number">3.2</span> Gurobi Overview</a></li>
+  <li><a href="#python-as-a-modeling-language" id="toc-python-as-a-modeling-language" class="nav-link" data-scroll-target="#python-as-a-modeling-language"><span class="header-section-number">3.3</span> Python as a Modeling Language</a></li>
+  <li><a href="#installing-and-configuring-gurobi" id="toc-installing-and-configuring-gurobi" class="nav-link" data-scroll-target="#installing-and-configuring-gurobi"><span class="header-section-number">3.4</span> Installing and Configuring Gurobi</a></li>
+  </ul></li>
+  <li><a href="#the-gurobi-python-api-core-concepts" id="toc-the-gurobi-python-api-core-concepts" class="nav-link" data-scroll-target="#the-gurobi-python-api-core-concepts"><span class="header-section-number">4</span> The Gurobi Python API: Core Concepts</a>
+  <ul class="collapse">
+  <li><a href="#typical-modeling-pattern" id="toc-typical-modeling-pattern" class="nav-link" data-scroll-target="#typical-modeling-pattern"><span class="header-section-number">4.1</span> Typical Modeling Pattern</a></li>
+  <li><a href="#from-math-to-code-a-reusable-skeleton" id="toc-from-math-to-code-a-reusable-skeleton" class="nav-link" data-scroll-target="#from-math-to-code-a-reusable-skeleton"><span class="header-section-number">4.2</span> From Math to Code: A Reusable Skeleton</a></li>
+  <li><a href="#example-1-solving-a-linear-program" id="toc-example-1-solving-a-linear-program" class="nav-link" data-scroll-target="#example-1-solving-a-linear-program"><span class="header-section-number">4.3</span> Example 1: Solving a Linear Program</a></li>
+  <li><a href="#example-2-integer-programming-with-binary-variables" id="toc-example-2-integer-programming-with-binary-variables" class="nav-link" data-scroll-target="#example-2-integer-programming-with-binary-variables"><span class="header-section-number">4.4</span> Example 2: Integer Programming with Binary Variables</a></li>
+  <li><a href="#example-3-a-simple-milp-with-activation" id="toc-example-3-a-simple-milp-with-activation" class="nav-link" data-scroll-target="#example-3-a-simple-milp-with-activation"><span class="header-section-number">4.5</span> Example 3: A Simple MILP with Activation</a></li>
+  <li><a href="#solver-output-and-status-codes" id="toc-solver-output-and-status-codes" class="nav-link" data-scroll-target="#solver-output-and-status-codes"><span class="header-section-number">4.6</span> Solver Output and Status Codes</a></li>
+  <li><a href="#status-aware-solution-handling-recommended-pattern" id="toc-status-aware-solution-handling-recommended-pattern" class="nav-link" data-scroll-target="#status-aware-solution-handling-recommended-pattern"><span class="header-section-number">4.7</span> Status-Aware Solution Handling (Recommended Pattern)</a></li>
+  <li><a href="#modeling-errors-and-debugging" id="toc-modeling-errors-and-debugging" class="nav-link" data-scroll-target="#modeling-errors-and-debugging"><span class="header-section-number">4.8</span> Modeling Errors and Debugging</a></li>
+  <li><a href="#infeasibility-diagnosis-workflow" id="toc-infeasibility-diagnosis-workflow" class="nav-link" data-scroll-target="#infeasibility-diagnosis-workflow"><span class="header-section-number">4.9</span> Infeasibility Diagnosis Workflow</a></li>
+  <li><a href="#useful-gurobi-parameters-for-experiments" id="toc-useful-gurobi-parameters-for-experiments" class="nav-link" data-scroll-target="#useful-gurobi-parameters-for-experiments"><span class="header-section-number">4.10</span> Useful Gurobi Parameters for Experiments</a></li>
+  <li><a href="#best-practices-for-solver-based-modeling" id="toc-best-practices-for-solver-based-modeling" class="nav-link" data-scroll-target="#best-practices-for-solver-based-modeling"><span class="header-section-number">4.11</span> Best Practices for Solver-Based Modeling</a></li>
+  <li><a href="#takeaways" id="toc-takeaways" class="nav-link" data-scroll-target="#takeaways"><span class="header-section-number">4.12</span> Takeaways</a></li>
+  </ul></li>
+  <li><a href="#mini-exercises" id="toc-mini-exercises" class="nav-link" data-scroll-target="#mini-exercises"><span class="header-section-number">5</span> Mini Exercises</a></li>
+  <li><a href="#references-for-this-chapter" id="toc-references-for-this-chapter" class="nav-link" data-scroll-target="#references-for-this-chapter"><span class="header-section-number">6</span> References for This Chapter</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Lecture 2 — Mathematical Programming with Python and Gurobi</h1>
+<p class="subtitle lead">Exact solvers as baselines and evaluation tools</p>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<section id="learning-objectives" class="level2" data-number="1">
+<h2 data-number="1" class="anchored" data-anchor-id="learning-objectives"><span class="header-section-number">1</span> Learning Objectives</h2>
+<p>By the end of this lecture, students should be able to:</p>
+<ul>
+<li>understand the role of mathematical programming solvers in optimization<br>
+</li>
+<li>explain the architecture of a solver-based modeling workflow<br>
+</li>
+<li>install and configure Gurobi with Python<br>
+</li>
+<li>formulate and solve LP, ILP, and MILP models using the Gurobi Python API<br>
+</li>
+<li>interpret solver output and diagnose basic modeling issues<br>
+</li>
+<li>distinguish modeling concerns from algorithmic concerns</li>
+</ul>
+<hr>
+</section>
+<section id="lecture-roadmap" class="level2" data-number="2">
+<h2 data-number="2" class="anchored" data-anchor-id="lecture-roadmap"><span class="header-section-number">2</span> Lecture Roadmap</h2>
+<p>This lecture proceeds in six blocks:</p>
+<ol type="1">
+<li>the role of exact solvers in optimization workflows</li>
+<li>Gurobi + Python setup and verification</li>
+<li>the core Gurobi API modeling pattern</li>
+<li>worked LP, ILP, and MILP examples</li>
+<li>status-aware solution handling and debugging</li>
+<li>implementation best practices for reliable experiments</li>
+</ol>
+<hr>
+</section>
+<section id="optimization-models-and-solvers" class="level2" data-number="3">
+<h2 data-number="3" class="anchored" data-anchor-id="optimization-models-and-solvers"><span class="header-section-number">3</span> Optimization Models and Solvers</h2>
+<p>Mathematical optimization models such as LPs, ILPs, and MILPs are <strong>abstract mathematical formulations</strong> that precisely describe a decision problem in terms of variables, objectives, and constraints. By themselves, these models do not produce solutions. To compute optimal or near-optimal decisions in practice, a model must be processed by a <strong>solver</strong>.</p>
+<p>A solver is responsible for transforming the abstract mathematical description into concrete algorithmic steps that explore the feasible region, evaluate candidate solutions, and certify optimality or infeasibility.</p>
+<p>A modern optimization workflow therefore consists of two conceptually distinct but tightly connected layers:</p>
+<ul>
+<li><p><strong>Modeling layer</strong> The decision problem is formulated mathematically: decision variables are defined, objectives are specified, and constraints are expressed. At this stage, the focus is on correctness, clarity, and faithful representation of the real-world problem.</p></li>
+<li><p><strong>Solver layer</strong> The mathematical model is processed by algorithmic machinery that searches for optimal solutions. This layer is concerned with computational efficiency, numerical stability, and convergence guarantees.</p></li>
+</ul>
+<p>This separation of concerns is fundamental. It allows the same mathematical model to be solved using different algorithms or solvers, and enables the same solver to be applied across a wide range of application domains without changing the underlying algorithms.</p>
+<hr>
+<section id="what-is-a-solver" class="level3" data-number="3.1">
+<h3 data-number="3.1" class="anchored" data-anchor-id="what-is-a-solver"><span class="header-section-number">3.1</span> What Is a Solver?</h3>
+<p>An optimization solver is a complex software system that automates the solution of mathematical optimization problems. At a high level, a solver:</p>
+<ul>
+<li>accepts a formal mathematical model as input, including variables, objective functions, and constraints,</li>
+<li>applies sophisticated algorithmic techniques such as simplex, interior-point methods, branch-and-bound, branch-and-cut, and cutting-plane methods, and</li>
+<li>returns a solution together with detailed information about feasibility, optimality, bounds, and convergence status.</li>
+</ul>
+<p>Beyond computing solutions, modern solvers also provide diagnostic tools for detecting infeasibility, numerical issues, or modeling errors.</p>
+<p>Well-known optimization solvers include commercial solvers such as Gurobi and CPLEX, as well as open-source solvers such as GLPK and CBC. These solvers differ in performance, supported features, and licensing, but they all implement the same underlying mathematical programming paradigms.</p>
+<p>In this course, the primary solver used will be <strong>Gurobi</strong>, selected for its state-of-the-art performance, robustness, and comprehensive support for Python-based modeling.</p>
+<hr>
+</section>
+<section id="gurobi-overview" class="level3" data-number="3.2">
+<h3 data-number="3.2" class="anchored" data-anchor-id="gurobi-overview"><span class="header-section-number">3.2</span> Gurobi Overview</h3>
+<p>Gurobi is a commercial-grade optimization solver designed for solving linear, integer, and mixed-integer programming problems at scale. It is widely regarded as one of the fastest and most reliable solvers available for MILP.</p>
+<p>Key characteristics of Gurobi include:</p>
+<ul>
+<li>full support for LP, ILP, and MILP formulations,</li>
+<li>advanced presolve routines that simplify models before optimization,</li>
+<li>powerful cutting-plane strategies that strengthen LP relaxations,</li>
+<li>parallel branch-and-bound algorithms that exploit modern multi-core architectures, and</li>
+<li>well-designed application programming interfaces (APIs) for Python, C++, Java, and other languages.</li>
+</ul>
+<p>Gurobi is extensively used in industry for large-scale planning and optimization problems, and it is also widely adopted in academic research. Academic licenses are available free of charge, making it suitable for teaching and research purposes.</p>
+<hr>
+</section>
+<section id="python-as-a-modeling-language" class="level3" data-number="3.3">
+<h3 data-number="3.3" class="anchored" data-anchor-id="python-as-a-modeling-language"><span class="header-section-number">3.3</span> Python as a Modeling Language</h3>
+<p>In this course, Python is used as the primary <strong>modeling language</strong> for mathematical programming. Rather than writing models in a dedicated algebraic modeling language, optimization models are constructed programmatically using Python objects, expressions, and control structures.</p>
+<p>Python-based modeling offers several important advantages:</p>
+<ul>
+<li>seamless integration with data processing and scientific computing libraries such as NumPy and pandas,</li>
+<li>easy automation of experiments, parameter studies, and batch runs,</li>
+<li>natural integration with heuristics and metaheuristics implemented in Python, and</li>
+<li>improved reproducibility, readability, and extensibility of optimization code.</li>
+</ul>
+<p>Within this setup, Python acts as a <strong>high-level interface</strong> that expresses the optimization model, while the computationally intensive solution process is handled by Gurobi’s highly optimized solver core.</p>
+<hr>
+</section>
+<section id="installing-and-configuring-gurobi" class="level3" data-number="3.4">
+<h3 data-number="3.4" class="anchored" data-anchor-id="installing-and-configuring-gurobi"><span class="header-section-number">3.4</span> Installing and Configuring Gurobi</h3>
+<p>To use Gurobi with Python, the following steps are required:</p>
+<ol type="1">
+<li>Install the Gurobi Optimizer on the system.</li>
+<li>Obtain and activate an academic license.</li>
+<li>Install the Gurobi Python package (<code>gurobipy</code>).</li>
+<li>Verify that the installation is correctly configured.</li>
+</ol>
+<p>A successful installation can be verified by running the following command in Python:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1"></a><span class="im">import</span> gurobipy <span class="im">as</span> gp</span>
+<span id="cb1-2"><a href="#cb1-2"></a><span class="bu">print</span>(gp.gurobi.version())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>If this command executes without errors and prints the Gurobi version information, the solver and its Python interface are correctly installed and ready to use.</p>
+<hr>
+</section>
+</section>
+<section id="the-gurobi-python-api-core-concepts" class="level2" data-number="4">
+<h2 data-number="4" class="anchored" data-anchor-id="the-gurobi-python-api-core-concepts"><span class="header-section-number">4</span> The Gurobi Python API: Core Concepts</h2>
+<p>The Gurobi Python API provides a programmatic interface for building and solving mathematical optimization models. At its core, a Gurobi model is composed of a small number of fundamental objects that together define the optimization problem.</p>
+<p>The main building blocks are:</p>
+<ul>
+<li><p><strong>Model</strong> The central container that holds the entire optimization problem, including variables, objective, constraints, and solver parameters.</p></li>
+<li><p><strong>Variables</strong> Decision variables with specified domains (continuous, integer, binary), bounds, and optional names. Variables represent the unknown quantities the solver will determine.</p></li>
+<li><p><strong>Objective</strong> A linear expression in the decision variables that is either minimized or maximized.</p></li>
+<li><p><strong>Constraints</strong> Linear expressions that restrict the feasible values of the decision variables and encode the logical, physical, or resource limitations of the problem.</p></li>
+</ul>
+<p>These objects interact through a well-defined modeling workflow that is largely independent of the specific problem being solved.</p>
+<hr>
+<section id="typical-modeling-pattern" class="level3" data-number="4.1">
+<h3 data-number="4.1" class="anchored" data-anchor-id="typical-modeling-pattern"><span class="header-section-number">4.1</span> Typical Modeling Pattern</h3>
+<p>Most optimization models built with Gurobi follow the same high-level sequence:</p>
+<ol type="1">
+<li><strong>Create a model</strong> to serve as the container for all components.</li>
+<li><strong>Add decision variables</strong>, specifying bounds and variable types.</li>
+<li><strong>Set the objective function</strong>, indicating whether it is a minimization or maximization problem.</li>
+<li><strong>Add constraints</strong> that define feasibility.</li>
+<li><strong>Optimize</strong> the model by invoking the solver.</li>
+<li><strong>Inspect the solution</strong>, including variable values, objective value, and solver status.</li>
+</ol>
+<p>This pattern applies uniformly to LPs, ILPs, and MILPs.</p>
+<hr>
+</section>
+<section id="from-math-to-code-a-reusable-skeleton" class="level3" data-number="4.2">
+<h3 data-number="4.2" class="anchored" data-anchor-id="from-math-to-code-a-reusable-skeleton"><span class="header-section-number">4.2</span> From Math to Code: A Reusable Skeleton</h3>
+<p>A reliable way to avoid implementation errors is to keep a fixed code structure and only replace data, variables, objective, and constraints for each new model.</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1"></a><span class="im">import</span> gurobipy <span class="im">as</span> gp</span>
+<span id="cb2-2"><a href="#cb2-2"></a><span class="im">from</span> gurobipy <span class="im">import</span> GRB</span>
+<span id="cb2-3"><a href="#cb2-3"></a></span>
+<span id="cb2-4"><a href="#cb2-4"></a><span class="kw">def</span> solve_template(cost, A, b):</span>
+<span id="cb2-5"><a href="#cb2-5"></a>    m <span class="op">=</span> gp.Model(<span class="st">"template"</span>)</span>
+<span id="cb2-6"><a href="#cb2-6"></a>    m.Params.OutputFlag <span class="op">=</span> <span class="dv">0</span>  <span class="co"># keep logs quiet for scripted runs</span></span>
+<span id="cb2-7"><a href="#cb2-7"></a></span>
+<span id="cb2-8"><a href="#cb2-8"></a>    n <span class="op">=</span> <span class="bu">len</span>(cost)</span>
+<span id="cb2-9"><a href="#cb2-9"></a>    x <span class="op">=</span> m.addVars(n, lb<span class="op">=</span><span class="fl">0.0</span>, name<span class="op">=</span><span class="st">"x"</span>)</span>
+<span id="cb2-10"><a href="#cb2-10"></a></span>
+<span id="cb2-11"><a href="#cb2-11"></a>    m.setObjective(gp.quicksum(cost[j] <span class="op">*</span> x[j] <span class="cf">for</span> j <span class="kw">in</span> <span class="bu">range</span>(n)), GRB.MINIMIZE)</span>
+<span id="cb2-12"><a href="#cb2-12"></a>    <span class="cf">for</span> i, row <span class="kw">in</span> <span class="bu">enumerate</span>(A):</span>
+<span id="cb2-13"><a href="#cb2-13"></a>        m.addConstr(gp.quicksum(row[j] <span class="op">*</span> x[j] <span class="cf">for</span> j <span class="kw">in</span> <span class="bu">range</span>(n)) <span class="op">&lt;=</span> b[i], name<span class="op">=</span><span class="ss">f"c_</span><span class="sc">{</span>i<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb2-14"><a href="#cb2-14"></a></span>
+<span id="cb2-15"><a href="#cb2-15"></a>    m.optimize()</span>
+<span id="cb2-16"><a href="#cb2-16"></a>    <span class="cf">return</span> m, x</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>This template highlights good habits: named constraints, explicit bounds, and centralized solve logic.</p>
+<hr>
+</section>
+<section id="example-1-solving-a-linear-program" class="level3" data-number="4.3">
+<h3 data-number="4.3" class="anchored" data-anchor-id="example-1-solving-a-linear-program"><span class="header-section-number">4.3</span> Example 1: Solving a Linear Program</h3>
+<p>Consider the following linear programming problem:</p>
+<p><span class="math display">\[
+\begin{aligned}
+\max\ \ &amp; 3x_1 + 5x_2 \\
+\text{s.t.}\ \ &amp; 2x_1 + 4x_2 \le 100, \\
+&amp; x_1, x_2 \ge 0.
+\end{aligned}
+\]</span></p>
+<p><strong>Python Implementation</strong></p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1"></a><span class="im">import</span> gurobipy <span class="im">as</span> gp</span>
+<span id="cb3-2"><a href="#cb3-2"></a><span class="im">from</span> gurobipy <span class="im">import</span> GRB</span>
+<span id="cb3-3"><a href="#cb3-3"></a></span>
+<span id="cb3-4"><a href="#cb3-4"></a>model <span class="op">=</span> gp.Model(<span class="st">"lp_example"</span>)</span>
+<span id="cb3-5"><a href="#cb3-5"></a></span>
+<span id="cb3-6"><a href="#cb3-6"></a>x1 <span class="op">=</span> model.addVar(lb<span class="op">=</span><span class="dv">0</span>, name<span class="op">=</span><span class="st">"x1"</span>)</span>
+<span id="cb3-7"><a href="#cb3-7"></a>x2 <span class="op">=</span> model.addVar(lb<span class="op">=</span><span class="dv">0</span>, name<span class="op">=</span><span class="st">"x2"</span>)</span>
+<span id="cb3-8"><a href="#cb3-8"></a></span>
+<span id="cb3-9"><a href="#cb3-9"></a>model.setObjective(<span class="dv">3</span><span class="op">*</span>x1 <span class="op">+</span> <span class="dv">5</span><span class="op">*</span>x2, GRB.MAXIMIZE)</span>
+<span id="cb3-10"><a href="#cb3-10"></a>model.addConstr(<span class="dv">2</span><span class="op">*</span>x1 <span class="op">+</span> <span class="dv">4</span><span class="op">*</span>x2 <span class="op">&lt;=</span> <span class="dv">100</span>)</span>
+<span id="cb3-11"><a href="#cb3-11"></a></span>
+<span id="cb3-12"><a href="#cb3-12"></a>model.optimize()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>In this code:</p>
+<ul>
+<li>a model object is created,</li>
+<li>two continuous nonnegative variables are added,</li>
+<li>a linear objective is defined, and</li>
+<li>a single linear constraint is introduced.</li>
+</ul>
+<p><strong>Inspecting the Solution</strong></p>
+<p>After optimization, solution information can be accessed directly from the model and variables:</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1"></a><span class="bu">print</span>(<span class="st">"x1 ="</span>, x1.X)</span>
+<span id="cb4-2"><a href="#cb4-2"></a><span class="bu">print</span>(<span class="st">"x2 ="</span>, x2.X)</span>
+<span id="cb4-3"><a href="#cb4-3"></a><span class="bu">print</span>(<span class="st">"Objective value ="</span>, model.ObjVal)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>The attributes <code>.X</code> and <code>.ObjVal</code> return the optimal variable values and objective value, respectively, provided that an optimal solution exists.</p>
+<hr>
+</section>
+<section id="example-2-integer-programming-with-binary-variables" class="level3" data-number="4.4">
+<h3 data-number="4.4" class="anchored" data-anchor-id="example-2-integer-programming-with-binary-variables"><span class="header-section-number">4.4</span> Example 2: Integer Programming with Binary Variables</h3>
+<p>Consider a simple knapsack problem with binary selection decisions:</p>
+<p><span class="math display">\[
+\begin{aligned}
+\max\ \ &amp; \sum_j v_j x_j \\
+\text{s.t.}\ \ &amp; \sum_j w_j x_j \le W, \\
+&amp; x_j \in \{0,1\}.
+\end{aligned}
+\]</span></p>
+<p>Here, each item <span class="math inline">\(j\)</span> is either selected or not, and the total weight must not exceed the capacity <span class="math inline">\(W\)</span>.</p>
+<p><strong>Python Implementation</strong></p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1"></a>v <span class="op">=</span> [<span class="dv">10</span>, <span class="dv">13</span>, <span class="dv">18</span>, <span class="dv">31</span>]</span>
+<span id="cb5-2"><a href="#cb5-2"></a>w <span class="op">=</span> [<span class="dv">5</span>, <span class="dv">8</span>, <span class="dv">12</span>, <span class="dv">20</span>]</span>
+<span id="cb5-3"><a href="#cb5-3"></a>W <span class="op">=</span> <span class="dv">30</span></span>
+<span id="cb5-4"><a href="#cb5-4"></a></span>
+<span id="cb5-5"><a href="#cb5-5"></a>model <span class="op">=</span> gp.Model(<span class="st">"knapsack"</span>)</span>
+<span id="cb5-6"><a href="#cb5-6"></a></span>
+<span id="cb5-7"><a href="#cb5-7"></a>x <span class="op">=</span> model.addVars(<span class="bu">len</span>(v), vtype<span class="op">=</span>GRB.BINARY, name<span class="op">=</span><span class="st">"x"</span>)</span>
+<span id="cb5-8"><a href="#cb5-8"></a></span>
+<span id="cb5-9"><a href="#cb5-9"></a>model.setObjective(gp.quicksum(v[j]<span class="op">*</span>x[j] <span class="cf">for</span> j <span class="kw">in</span> <span class="bu">range</span>(<span class="bu">len</span>(v))), GRB.MAXIMIZE)</span>
+<span id="cb5-10"><a href="#cb5-10"></a>model.addConstr(gp.quicksum(w[j]<span class="op">*</span>x[j] <span class="cf">for</span> j <span class="kw">in</span> <span class="bu">range</span>(<span class="bu">len</span>(w))) <span class="op">&lt;=</span> W)</span>
+<span id="cb5-11"><a href="#cb5-11"></a></span>
+<span id="cb5-12"><a href="#cb5-12"></a>model.optimize()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>This example illustrates how integer variables are introduced via the <code>vtype=GRB.BINARY</code> argument and how summations are conveniently expressed using <code>quicksum</code>.</p>
+<hr>
+</section>
+<section id="example-3-a-simple-milp-with-activation" class="level3" data-number="4.5">
+<h3 data-number="4.5" class="anchored" data-anchor-id="example-3-a-simple-milp-with-activation"><span class="header-section-number">4.5</span> Example 3: A Simple MILP with Activation</h3>
+<p>Consider a production decision with a fixed setup cost and a capacity limit that is active only when production is enabled:</p>
+<p><span class="math display">\[
+\begin{aligned}
+\min\ \ &amp; F y + c x \\
+\text{s.t.}\ \ &amp; x \le U y, \\
+&amp; x \ge 0,\quad y \in \{0,1\}.
+\end{aligned}
+\]</span></p>
+<p><strong>Python Implementation</strong></p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1"></a>F <span class="op">=</span> <span class="dv">100</span></span>
+<span id="cb6-2"><a href="#cb6-2"></a>c <span class="op">=</span> <span class="dv">2</span></span>
+<span id="cb6-3"><a href="#cb6-3"></a>U <span class="op">=</span> <span class="dv">50</span></span>
+<span id="cb6-4"><a href="#cb6-4"></a></span>
+<span id="cb6-5"><a href="#cb6-5"></a>model <span class="op">=</span> gp.Model(<span class="st">"milp_example"</span>)</span>
+<span id="cb6-6"><a href="#cb6-6"></a></span>
+<span id="cb6-7"><a href="#cb6-7"></a>x <span class="op">=</span> model.addVar(lb<span class="op">=</span><span class="dv">0</span>, name<span class="op">=</span><span class="st">"x"</span>)</span>
+<span id="cb6-8"><a href="#cb6-8"></a>y <span class="op">=</span> model.addVar(vtype<span class="op">=</span>GRB.BINARY, name<span class="op">=</span><span class="st">"y"</span>)</span>
+<span id="cb6-9"><a href="#cb6-9"></a></span>
+<span id="cb6-10"><a href="#cb6-10"></a>model.setObjective(F<span class="op">*</span>y <span class="op">+</span> c<span class="op">*</span>x, GRB.MINIMIZE)</span>
+<span id="cb6-11"><a href="#cb6-11"></a>model.addConstr(x <span class="op">&lt;=</span> U<span class="op">*</span>y)</span>
+<span id="cb6-12"><a href="#cb6-12"></a></span>
+<span id="cb6-13"><a href="#cb6-13"></a>model.optimize()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>This model demonstrates a typical <strong>on–off constraint</strong>, where a continuous variable is linked to a binary decision. Such patterns are central to MILP modeling.</p>
+<hr>
+</section>
+<section id="solver-output-and-status-codes" class="level3" data-number="4.6">
+<h3 data-number="4.6" class="anchored" data-anchor-id="solver-output-and-status-codes"><span class="header-section-number">4.6</span> Solver Output and Status Codes</h3>
+<p>After optimization, Gurobi reports detailed information about the outcome of the solve, including:</p>
+<ul>
+<li>the <strong>solver status</strong> (optimal, infeasible, unbounded, or other termination states),</li>
+<li>the <strong>objective value</strong> of the best solution found,</li>
+<li>the <strong>primal values</strong> of all decision variables, and</li>
+<li><strong>dual information</strong> for LPs, when applicable.</li>
+</ul>
+<p>It is good practice to always check the solver status before using solution values:</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1"></a><span class="cf">if</span> model.status <span class="op">==</span> GRB.OPTIMAL:</span>
+<span id="cb7-2"><a href="#cb7-2"></a>    <span class="bu">print</span>(<span class="st">"Optimal solution found"</span>)</span>
+<span id="cb7-3"><a href="#cb7-3"></a><span class="cf">elif</span> model.status <span class="op">==</span> GRB.INFEASIBLE:</span>
+<span id="cb7-4"><a href="#cb7-4"></a>    <span class="bu">print</span>(<span class="st">"Model is infeasible"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<hr>
+</section>
+<section id="status-aware-solution-handling-recommended-pattern" class="level3" data-number="4.7">
+<h3 data-number="4.7" class="anchored" data-anchor-id="status-aware-solution-handling-recommended-pattern"><span class="header-section-number">4.7</span> Status-Aware Solution Handling (Recommended Pattern)</h3>
+<p>For classroom examples, checking only <code>OPTIMAL</code> is enough. For real experiments, handle additional solver outcomes explicitly.</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1"></a><span class="cf">if</span> model.status <span class="op">==</span> GRB.OPTIMAL:</span>
+<span id="cb8-2"><a href="#cb8-2"></a>    <span class="bu">print</span>(<span class="st">"Optimal objective:"</span>, model.ObjVal)</span>
+<span id="cb8-3"><a href="#cb8-3"></a><span class="cf">elif</span> model.status <span class="op">==</span> GRB.TIME_LIMIT <span class="kw">and</span> model.SolCount <span class="op">&gt;</span> <span class="dv">0</span>:</span>
+<span id="cb8-4"><a href="#cb8-4"></a>    <span class="bu">print</span>(<span class="st">"Time limit reached; incumbent objective:"</span>, model.ObjVal)</span>
+<span id="cb8-5"><a href="#cb8-5"></a>    <span class="cf">if</span> model.IsMIP:</span>
+<span id="cb8-6"><a href="#cb8-6"></a>        <span class="bu">print</span>(<span class="st">"Best bound:"</span>, model.ObjBound)</span>
+<span id="cb8-7"><a href="#cb8-7"></a>        <span class="bu">print</span>(<span class="st">"MIP gap:"</span>, model.MIPGap)</span>
+<span id="cb8-8"><a href="#cb8-8"></a><span class="cf">elif</span> model.status <span class="op">==</span> GRB.INFEASIBLE:</span>
+<span id="cb8-9"><a href="#cb8-9"></a>    <span class="bu">print</span>(<span class="st">"Model infeasible; computing IIS..."</span>)</span>
+<span id="cb8-10"><a href="#cb8-10"></a>    model.computeIIS()</span>
+<span id="cb8-11"><a href="#cb8-11"></a>    model.write(<span class="st">"infeasible_model.ilp"</span>)</span>
+<span id="cb8-12"><a href="#cb8-12"></a><span class="cf">else</span>:</span>
+<span id="cb8-13"><a href="#cb8-13"></a>    <span class="bu">print</span>(<span class="st">"Solver ended with status code:"</span>, model.status)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>This pattern prevents accidental misuse of variable values when no feasible or optimal solution is available.</p>
+<hr>
+</section>
+<section id="modeling-errors-and-debugging" class="level3" data-number="4.8">
+<h3 data-number="4.8" class="anchored" data-anchor-id="modeling-errors-and-debugging"><span class="header-section-number">4.8</span> Modeling Errors and Debugging</h3>
+<p>Common sources of errors in solver-based modeling include:</p>
+<ul>
+<li>missing or incorrectly specified constraints,</li>
+<li>incorrect variable domains (e.g., using continuous variables instead of binaries),</li>
+<li>overly large big-<span class="math inline">\(M\)</span> values that weaken the formulation, and</li>
+<li>mutually contradictory constraints that make the model infeasible.</li>
+</ul>
+<p>Gurobi provides diagnostic tools such as <strong>Irreducible Infeasible Subsystem (IIS)</strong> computation, which helps identify minimal sets of conflicting constraints and is invaluable for debugging complex models.</p>
+<hr>
+</section>
+<section id="infeasibility-diagnosis-workflow" class="level3" data-number="4.9">
+<h3 data-number="4.9" class="anchored" data-anchor-id="infeasibility-diagnosis-workflow"><span class="header-section-number">4.9</span> Infeasibility Diagnosis Workflow</h3>
+<p>When a model is infeasible, use a repeatable debugging routine:</p>
+<ol type="1">
+<li>verify units and signs in every constraint</li>
+<li>check variable bounds for accidental contradictions</li>
+<li>compute and inspect IIS</li>
+<li>relax or correct the conflicting constraints</li>
+<li>rerun on a small test instance first</li>
+</ol>
+<p>Minimal IIS extraction code:</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1"></a><span class="cf">if</span> model.status <span class="op">==</span> GRB.INFEASIBLE:</span>
+<span id="cb9-2"><a href="#cb9-2"></a>    model.computeIIS()</span>
+<span id="cb9-3"><a href="#cb9-3"></a>    model.write(<span class="st">"model_iis.ilp"</span>)  <span class="co"># inspect this file to see conflicting rows/bounds</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<hr>
+</section>
+<section id="useful-gurobi-parameters-for-experiments" class="level3" data-number="4.10">
+<h3 data-number="4.10" class="anchored" data-anchor-id="useful-gurobi-parameters-for-experiments"><span class="header-section-number">4.10</span> Useful Gurobi Parameters for Experiments</h3>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Parameter</th>
+<th>Purpose</th>
+<th>Typical classroom use</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>TimeLimit</code></td>
+<td>Stops solve after a fixed time</td>
+<td>Compare solution quality under strict runtime budgets</td>
+</tr>
+<tr class="even">
+<td><code>MIPGap</code></td>
+<td>Accepts near-optimal MILP solutions</td>
+<td>Use when exact proof is too expensive</td>
+</tr>
+<tr class="odd">
+<td><code>Threads</code></td>
+<td>Controls CPU parallelism</td>
+<td>Ensure fair solver comparisons across runs</td>
+</tr>
+<tr class="even">
+<td><code>OutputFlag</code></td>
+<td>Enables/disables solver logs</td>
+<td>Set to <code>0</code> in scripts, <code>1</code> while debugging</td>
+</tr>
+</tbody>
+</table>
+<p>Example:</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1"></a>model.Params.TimeLimit <span class="op">=</span> <span class="dv">60</span></span>
+<span id="cb10-2"><a href="#cb10-2"></a>model.Params.MIPGap <span class="op">=</span> <span class="fl">0.01</span></span>
+<span id="cb10-3"><a href="#cb10-3"></a>model.Params.OutputFlag <span class="op">=</span> <span class="dv">1</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<hr>
+</section>
+<section id="best-practices-for-solver-based-modeling" class="level3" data-number="4.11">
+<h3 data-number="4.11" class="anchored" data-anchor-id="best-practices-for-solver-based-modeling"><span class="header-section-number">4.11</span> Best Practices for Solver-Based Modeling</h3>
+<p>Developing robust and efficient optimization models requires both sound mathematical formulation and disciplined implementation practices. The following guidelines help ensure correctness, interpretability, and computational efficiency.</p>
+<ul>
+<li><p><strong>Clearly separate data, model, and solution logic.</strong> Organize code so that problem data, model construction, and solution analysis are handled in distinct sections or modules. This separation improves readability, facilitates debugging, and makes it easier to modify or extend the model.</p></li>
+<li><p><strong>Start with small test instances.</strong> Begin with simplified or reduced-size instances where the expected solution can be reasoned about manually. This helps validate the formulation and identify modeling errors before scaling up to larger or more complex instances.</p></li>
+<li><p><strong>Verify LP relaxations before enforcing integrality.</strong> Solve the LP relaxation of an ILP or MILP to check feasibility, constraint logic, and objective behavior. A correct and well-behaved LP relaxation is a strong indicator that the integer model is formulated properly.</p></li>
+<li><p><strong>Always inspect solver status before using results.</strong> Never assume that a solver call returns an optimal solution. Check the solver status to confirm optimality or identify infeasibility, unboundedness, or early termination before interpreting variable values or objective outcomes.</p></li>
+</ul>
+<hr>
+</section>
+<section id="takeaways" class="level3" data-number="4.12">
+<h3 data-number="4.12" class="anchored" data-anchor-id="takeaways"><span class="header-section-number">4.12</span> Takeaways</h3>
+<ul>
+<li>Solvers are algorithmic engines that turn mathematical models into solutions</li>
+<li>Python provides a flexible and powerful modeling environment</li>
+<li>Gurobi supports LP, ILP, and MILP through a unified API</li>
+<li>Careful modeling is as important as solver choice</li>
+</ul>
+<hr>
+</section>
+</section>
+<section id="mini-exercises" class="level2" data-number="5">
+<h2 data-number="5" class="anchored" data-anchor-id="mini-exercises"><span class="header-section-number">5</span> Mini Exercises</h2>
+<ol type="1">
+<li><p><strong>Extending a linear program with an additional resource constraint.</strong> Starting from the LP example solved earlier, introduce a second resource constraint (for example, a limit on raw material or machine time).</p>
+<ul>
+<li>Formulate the new constraint mathematically.</li>
+<li>Update the Python implementation accordingly.</li>
+<li>Solve the modified model and compare the new optimal solution with the original one. <em>Question:</em> How does the additional constraint change the feasible region and the optimal solution?</li>
+</ul></li>
+<li><p><strong>Knapsack with a cardinality constraint.</strong> Extend the knapsack model by limiting the number of items that can be selected.</p>
+<ul>
+<li>Introduce a parameter <span class="math inline">\(p\)</span> representing the maximum number of items that may be chosen.</li>
+<li>Add a cardinality constraint of the form <span class="math inline">\(\sum_j x_j \le p\)</span>.</li>
+<li>Solve the resulting ILP and analyze how the optimal solution differs from the unconstrained knapsack. <em>Question:</em> Under what conditions does the cardinality constraint become binding?</li>
+</ul></li>
+<li><p><strong>Replacing big-<span class="math inline">\(M\)</span> with an indicator constraint.</strong> Consider the MILP example with a setup decision and production variable.</p>
+<ul>
+<li>Reformulate the constraint <span class="math inline">\(x \le U y\)</span> using an indicator constraint of the form “<span class="math inline">\(y = 0 \Rightarrow x = 0\)</span>”.</li>
+<li>Implement the indicator-based formulation in Gurobi’s Python API.</li>
+<li>Solve both formulations and compare solver behavior. <em>Question:</em> Do you observe any differences in model clarity, numerical stability, or solution time?</li>
+</ul></li>
+<li><p><strong>Diagnosing infeasibility with IIS.</strong> Construct a deliberately inconsistent model (for example, add both <span class="math inline">\(x \le 5\)</span> and <span class="math inline">\(x \ge 10\)</span> with tight bounds), solve it, and run IIS extraction.</p>
+<ul>
+<li>Print the returned status and verify that it is infeasible.</li>
+<li>Export the IIS file and inspect which constraints appear in it.</li>
+<li>Fix the inconsistency and re-solve the corrected model. <em>Question:</em> Which modeling mistake caused infeasibility, and how quickly did IIS reveal it?</li>
+</ul></li>
+</ol>
+<p>These exercises are designed to reinforce both <strong>modeling concepts</strong> and <strong>practical solver usage</strong>, and to highlight how small formulation changes can significantly affect model behavior.</p>
+<hr>
+</section>
+<section id="references-for-this-chapter" class="level2" data-number="6">
+<h2 data-number="6" class="anchored" data-anchor-id="references-for-this-chapter"><span class="header-section-number">6</span> References for This Chapter</h2>
+<ol type="1">
+<li>Gurobi Optimization, LLC. (2026). <em>Gurobi Optimizer Reference Manual</em>. URL: <a href="https://docs.gurobi.com/projects/optimizer/en/current/index.html">https://docs.gurobi.com/projects/optimizer/en/current/index.html</a></li>
+<li>Gurobi Optimization, LLC. (2026). <em>Python API Reference</em>. URL: <a href="https://docs.gurobi.com/projects/optimizer/en/current/reference/python.html">https://docs.gurobi.com/projects/optimizer/en/current/reference/python.html</a></li>
+<li>Gurobi Optimization, LLC. (2026). <em>Parameter Reference</em>. URL: <a href="https://docs.gurobi.com/projects/optimizer/en/current/reference/parameters.html">https://docs.gurobi.com/projects/optimizer/en/current/reference/parameters.html</a></li>
+<li>Gurobi Optimization, LLC. (2026). <em>Example Tour</em>. URL: <a href="https://docs.gurobi.com/projects/examples/en/current/overview/examplelist.html">https://docs.gurobi.com/projects/examples/en/current/overview/examplelist.html</a></li>
+<li>Achterberg, T. (2009). SCIP: Solving constraint integer programs. <em>Mathematical Programming Computation</em>, 1, 1-41. DOI: <a href="https://doi.org/10.1007/s12532-008-0001-1">10.1007/s12532-008-0001-1</a></li>
+<li>Bixby, R. E. (2012). A brief history of linear and mixed-integer programming computation. In <em>Documenta Mathematica, Extra Volume ISMP</em> (pp.&nbsp;107-121). DOI: <a href="https://doi.org/10.4171/DMS/6/16">10.4171/DMS/6/16</a></li>
+<li>Land, A. H., &amp; Doig, A. G. (1960). An automatic method of solving discrete programming problems. <em>Econometrica</em>, 28(3), 497-520. DOI: <a href="https://doi.org/10.2307/1910129">10.2307/1910129</a></li>
+</ol>
+
+
+</section>
+
+<a onclick="window.scrollTo(0, 0); return false;" role="button" id="quarto-back-to-top"><i class="bi bi-arrow-up"></i> Back to top</a></main> <!-- /main -->
+<div class="ui-controls" role="group" aria-label="Display controls">
+  <!-- Quarto already shows a light or dark toggle in the navbar when you set light and dark themes.
+       Here we only add font size. -->
+  <label for="fontSize" class="ui-label">A</label>
+  <select id="fontSize" aria-label="Font size">
+    <option value="16">A</option>
+    <option value="18">A+</option>
+    <option value="20">A++</option>
+  </select>
+</div>
+
+<script>
+(function () {
+  const KEY = "q_font_size_px";
+  const select = document.getElementById("fontSize");
+
+  function apply(px) {
+    document.documentElement.style.fontSize = px + "px";
+  }
+
+  // Load saved value or default to 16
+  const saved = localStorage.getItem(KEY) || "16";
+  select.value = saved;
+  apply(saved);
+
+  // Save on change
+  select.addEventListener("change", () => {
+    localStorage.setItem(KEY, select.value);
+    apply(select.value);
+  });
+})();
+</script>
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    // Ensure there is a toggle, if there isn't float one in the top right
+    if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
+      const a = window.document.createElement('a');
+      a.classList.add('top-right');
+      a.classList.add('quarto-color-scheme-toggle');
+      a.href = "";
+      a.onclick = function() { try { window.quartoToggleColorScheme(); } catch {} return false; };
+      const i = window.document.createElement("i");
+      i.classList.add('bi');
+      a.appendChild(i);
+      window.document.body.appendChild(a);
+    }
+    setColorSchemeToggle(hasAlternateSentinel())
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+        const codeEl = trigger.previousElementSibling.cloneNode(true);
+        for (const childEl of codeEl.children) {
+          if (isCodeAnnotation(childEl)) {
+            childEl.remove();
+          }
+        }
+        return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp("https:\/\/soumenatta\.github\.io\/selected_topics_in_soft_computing\/");
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+            // target, if specified
+            link.setAttribute("target", "_blank");
+            if (link.getAttribute("rel") === null) {
+              link.setAttribute("rel", "noopener");
+            }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">
+<p>© Dr.&nbsp;Soumen Atta, Ph.D.&nbsp;(2025)</p>
+</div>   
+    <div class="nav-footer-center">
+      &nbsp;
+    </div>
+    <div class="nav-footer-right">
+      &nbsp;
+    </div>
+  </div>
+</footer>
+
+
+
+
+<script src="../site_libs/quarto-html/zenscroll-min.js"></script>
+</body></html>

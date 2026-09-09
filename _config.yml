@@ -1,0 +1,64 @@
+title: "Dr. Soumen Atta, Ph.D."
+tagline: "Postdoctoral Researcher · Operations Research & Optimization"
+description: >-
+  Personal academic website of Dr. Soumen Atta — Postdoctoral Researcher at the
+  Faculty of Information Technology, University of Jyväskylä, Finland. Research in
+  facility location, hub location-allocation, home healthcare routing and
+  scheduling, and metaheuristic optimization.
+url: "https://www.soumenatta.com"
+baseurl: ""
+
+author:
+  name: "Soumen Atta"
+  email: "soumen.atta@gmail.com"
+  email_work: "soumen.s.atta@jyu.fi"
+
+markdown: kramdown
+kramdown:
+  input: GFM
+  hard_wrap: false
+
+sass:
+  sass_dir: _sass
+  style: compressed
+
+plugins:
+  - jekyll-sitemap
+  - jekyll-seo-tag
+
+exclude:
+  - Gemfile
+  - Gemfile.lock
+  - README.md
+  - vendor
+  - node_modules
+  - "*.gemspec"
+
+# Primary navigation, in order
+nav:
+  - title: Home
+    url: /
+  - title: Academics
+    url: /academics
+  - title: Publications
+    url: /publications
+    children:
+      - title: Journals
+        url: /publications/journals
+      - title: Conferences
+        url: /publications/conferences
+  - title: Experiences
+    url: /experiences
+    children:
+      - title: Research Experiences
+        url: /experiences/research_experiences
+      - title: Teaching Experiences
+        url: /experiences/teaching_experiences
+  - title: Courses
+    url: /experiences/teaching_experiences/courses
+  - title: Data Sets
+    url: /datasets
+  - title: Blogs
+    url: /blogs
+  - title: Contact
+    url: /contact

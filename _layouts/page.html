@@ -1,0 +1,17 @@
+---
+layout: default
+---
+<div class="container">
+  <h1 class="page-title">{{ page.title }}</h1>
+  {% if page.lede %}<p class="page-lede">{{ page.lede }}</p>{% endif %}
+
+  {% if page.subnav %}
+  <nav class="subnav">
+    {% for item in page.subnav %}
+    <a href="{{ item.url | relative_url }}"{% if page.url == item.url %} class="active"{% endif %}>{{ item.title }}</a>
+    {% endfor %}
+  </nav>
+  {% endif %}
+
+  {{ content }}
+</div>

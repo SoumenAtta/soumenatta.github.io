@@ -1,0 +1,1484 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.7.33">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>Lecture 6 — Hill Climbing, Descent Methods, and Local Optima – Selected Topics in Soft Computing</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<script src="../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-ea385d0e468b0dd5ea5bf0780b1290d9.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-dark-bc185b5c5bdbcb35c2eb49d8a876ef70.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-ea385d0e468b0dd5ea5bf0780b1290d9.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap-376eda28aa9f89c8ff844ce97b1c8190.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/bootstrap/bootstrap-dark-e9bb19cd34d53f25e420f2fd1f8a3f86.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<link href="../site_libs/bootstrap/bootstrap-376eda28aa9f89c8ff844ce97b1c8190.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<style>html{ scroll-behavior: smooth; }</style>
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+<link rel="stylesheet" href="../assets/site.css">
+</head>
+
+<body class="nav-fixed quarto-light"><script id="quarto-html-before-body" type="application/javascript">
+    const toggleBodyColorMode = (bsSheetEl) => {
+      const mode = bsSheetEl.getAttribute("data-mode");
+      const bodyEl = window.document.querySelector("body");
+      if (mode === "dark") {
+        bodyEl.classList.add("quarto-dark");
+        bodyEl.classList.remove("quarto-light");
+      } else {
+        bodyEl.classList.add("quarto-light");
+        bodyEl.classList.remove("quarto-dark");
+      }
+    }
+    const toggleBodyColorPrimary = () => {
+      const bsSheetEl = window.document.querySelector("link#quarto-bootstrap:not([rel=disabled-stylesheet])");
+      if (bsSheetEl) {
+        toggleBodyColorMode(bsSheetEl);
+      }
+    }
+    const setColorSchemeToggle = (alternate) => {
+      const toggles = window.document.querySelectorAll('.quarto-color-scheme-toggle');
+      for (let i=0; i < toggles.length; i++) {
+        const toggle = toggles[i];
+        if (toggle) {
+          if (alternate) {
+            toggle.classList.add("alternate");
+          } else {
+            toggle.classList.remove("alternate");
+          }
+        }
+      }
+    };
+    const toggleColorMode = (alternate) => {
+      // Switch the stylesheets
+      const primaryStylesheets = window.document.querySelectorAll('link.quarto-color-scheme:not(.quarto-color-alternate)');
+      const alternateStylesheets = window.document.querySelectorAll('link.quarto-color-scheme.quarto-color-alternate');
+      manageTransitions('#quarto-margin-sidebar .nav-link', false);
+      if (alternate) {
+        // note: dark is layered on light, we don't disable primary!
+        enableStylesheet(alternateStylesheets);
+        for (const sheetNode of alternateStylesheets) {
+          if (sheetNode.id === "quarto-bootstrap") {
+            toggleBodyColorMode(sheetNode);
+          }
+        }
+      } else {
+        disableStylesheet(alternateStylesheets);
+        enableStylesheet(primaryStylesheets)
+        toggleBodyColorPrimary();
+      }
+      manageTransitions('#quarto-margin-sidebar .nav-link', true);
+      // Switch the toggles
+      setColorSchemeToggle(alternate)
+      // Hack to workaround the fact that safari doesn't
+      // properly recolor the scrollbar when toggling (#1455)
+      if (navigator.userAgent.indexOf('Safari') > 0 && navigator.userAgent.indexOf('Chrome') == -1) {
+        manageTransitions("body", false);
+        window.scrollTo(0, 1);
+        setTimeout(() => {
+          window.scrollTo(0, 0);
+          manageTransitions("body", true);
+        }, 40);
+      }
+    }
+    const disableStylesheet = (stylesheets) => {
+      for (let i=0; i < stylesheets.length; i++) {
+        const stylesheet = stylesheets[i];
+        stylesheet.rel = 'disabled-stylesheet';
+      }
+    }
+    const enableStylesheet = (stylesheets) => {
+      for (let i=0; i < stylesheets.length; i++) {
+        const stylesheet = stylesheets[i];
+        if(stylesheet.rel !== 'stylesheet') { // for Chrome, which will still FOUC without this check
+          stylesheet.rel = 'stylesheet';
+        }
+      }
+    }
+    const manageTransitions = (selector, allowTransitions) => {
+      const els = window.document.querySelectorAll(selector);
+      for (let i=0; i < els.length; i++) {
+        const el = els[i];
+        if (allowTransitions) {
+          el.classList.remove('notransition');
+        } else {
+          el.classList.add('notransition');
+        }
+      }
+    }
+    const isFileUrl = () => {
+      return window.location.protocol === 'file:';
+    }
+    const hasAlternateSentinel = () => {
+      let styleSentinel = getColorSchemeSentinel();
+      if (styleSentinel !== null) {
+        return styleSentinel === "alternate";
+      } else {
+        return false;
+      }
+    }
+    const setStyleSentinel = (alternate) => {
+      const value = alternate ? "alternate" : "default";
+      if (!isFileUrl()) {
+        window.localStorage.setItem("quarto-color-scheme", value);
+      } else {
+        localAlternateSentinel = value;
+      }
+    }
+    const getColorSchemeSentinel = () => {
+      if (!isFileUrl()) {
+        const storageValue = window.localStorage.getItem("quarto-color-scheme");
+        return storageValue != null ? storageValue : localAlternateSentinel;
+      } else {
+        return localAlternateSentinel;
+      }
+    }
+    const toggleGiscusIfUsed = (isAlternate, darkModeDefault) => {
+      const baseTheme = document.querySelector('#giscus-base-theme')?.value ?? 'light';
+      const alternateTheme = document.querySelector('#giscus-alt-theme')?.value ?? 'dark';
+      let newTheme = '';
+      if(authorPrefersDark) {
+        newTheme = isAlternate ? baseTheme : alternateTheme;
+      } else {
+        newTheme = isAlternate ? alternateTheme : baseTheme;
+      }
+      const changeGiscusTheme = () => {
+        // From: https://github.com/giscus/giscus/issues/336
+        const sendMessage = (message) => {
+          const iframe = document.querySelector('iframe.giscus-frame');
+          if (!iframe) return;
+          iframe.contentWindow.postMessage({ giscus: message }, 'https://giscus.app');
+        }
+        sendMessage({
+          setConfig: {
+            theme: newTheme
+          }
+        });
+      }
+      const isGiscussLoaded = window.document.querySelector('iframe.giscus-frame') !== null;
+      if (isGiscussLoaded) {
+        changeGiscusTheme();
+      }
+    };
+    const authorPrefersDark = false;
+    const darkModeDefault = authorPrefersDark;
+      document.querySelector('link#quarto-text-highlighting-styles.quarto-color-scheme-extra').rel = 'disabled-stylesheet';
+      document.querySelector('link#quarto-bootstrap.quarto-color-scheme-extra').rel = 'disabled-stylesheet';
+    let localAlternateSentinel = darkModeDefault ? 'alternate' : 'default';
+    // Dark / light mode switch
+    window.quartoToggleColorScheme = () => {
+      // Read the current dark / light value
+      let toAlternate = !hasAlternateSentinel();
+      toggleColorMode(toAlternate);
+      setStyleSentinel(toAlternate);
+      toggleGiscusIfUsed(toAlternate, darkModeDefault);
+      window.dispatchEvent(new Event('resize'));
+    };
+    // Switch to dark mode if need be
+    if (hasAlternateSentinel()) {
+      toggleColorMode(true);
+    } else {
+      toggleColorMode(false);
+    }
+  </script>
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="../index.html">
+    <span class="navbar-title">Selected Topics in Soft Computing</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../index.html"> 
+<span class="menu-text">Home</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../schedule.html"> 
+<span class="menu-text">Schedule</span></a>
+  </li>  
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-lectures" role="link" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">Lectures</span>
+    </a>
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-lectures">    
+        <li>
+    <a class="dropdown-item" href="../lectures/lecture0.html">
+ <span class="dropdown-text">Lecture 0 - Course Introduction</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../lectures/lecture1.html">
+ <span class="dropdown-text">Lecture 1 — Introduction to Optimization</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../lectures/lecture2.html">
+ <span class="dropdown-text">Lecture 2 — Mathematical Programming with Python and Gurobi</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../lectures/lecture3.html">
+ <span class="dropdown-text">Lecture 3 — Why Exact Methods Fail: Complexity, Scalability, and Motivation for Soft Computing</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../lectures/lecture4.html">
+ <span class="dropdown-text">Lecture 4 — Introduction to Heuristics and Metaheuristics</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../lectures/lecture5.html">
+ <span class="dropdown-text">Lecture 5 — Local Search and Neighborhood Structures</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../lectures/lecture6.html">
+ <span class="dropdown-text">Lecture 6 — Hill Climbing, Descent Methods, and Local Optima</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../lectures/lecture7.html">
+ <span class="dropdown-text">Lecture 7 — Simulated Annealing and Probabilistic Local Search</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../lectures/lecture8.html">
+ <span class="dropdown-text">Lecture 8 — Tabu Search and Memory-Based Heuristics</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../lectures/lecture9.html">
+ <span class="dropdown-text">Lecture 9 — Population-Based Metaheuristics: Genetic Algorithms</span></a>
+  </li>  
+    </ul>
+  </li>
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+  <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#learning-objectives" id="toc-learning-objectives" class="nav-link active" data-scroll-target="#learning-objectives"><span class="header-section-number">1</span> Learning Objectives</a></li>
+  <li><a href="#lecture-roadmap" id="toc-lecture-roadmap" class="nav-link" data-scroll-target="#lecture-roadmap"><span class="header-section-number">2</span> Lecture Roadmap</a></li>
+  <li><a href="#hill-climbing-the-simplest-local-search" id="toc-hill-climbing-the-simplest-local-search" class="nav-link" data-scroll-target="#hill-climbing-the-simplest-local-search"><span class="header-section-number">3</span> Hill Climbing: The Simplest Local Search</a>
+  <ul class="collapse">
+  <li><a href="#basic-idea" id="toc-basic-idea" class="nav-link" data-scroll-target="#basic-idea"><span class="header-section-number">3.1</span> Basic Idea</a></li>
+  <li><a href="#generic-hill-climbing-algorithm" id="toc-generic-hill-climbing-algorithm" class="nav-link" data-scroll-target="#generic-hill-climbing-algorithm"><span class="header-section-number">3.2</span> Generic Hill Climbing Algorithm</a></li>
+  <li><a href="#runtime-profile-of-hill-climbing" id="toc-runtime-profile-of-hill-climbing" class="nav-link" data-scroll-target="#runtime-profile-of-hill-climbing"><span class="header-section-number">3.3</span> Runtime Profile of Hill Climbing</a></li>
+  <li><a href="#key-properties" id="toc-key-properties" class="nav-link" data-scroll-target="#key-properties"><span class="header-section-number">3.4</span> Key Properties</a></li>
+  <li><a href="#characteristics-of-hill-climbing" id="toc-characteristics-of-hill-climbing" class="nav-link" data-scroll-target="#characteristics-of-hill-climbing"><span class="header-section-number">3.5</span> Characteristics of Hill Climbing</a></li>
+  <li><a href="#when-hill-climbing-is-useful" id="toc-when-hill-climbing-is-useful" class="nav-link" data-scroll-target="#when-hill-climbing-is-useful"><span class="header-section-number">3.6</span> When Hill Climbing Is Useful</a></li>
+  </ul></li>
+  <li><a href="#descent-methods" id="toc-descent-methods" class="nav-link" data-scroll-target="#descent-methods"><span class="header-section-number">4</span> Descent Methods</a>
+  <ul class="collapse">
+  <li><a href="#what-is-a-descent-method" id="toc-what-is-a-descent-method" class="nav-link" data-scroll-target="#what-is-a-descent-method"><span class="header-section-number">4.1</span> What Is a Descent Method?</a></li>
+  <li><a href="#key-characteristics-of-descent-methods" id="toc-key-characteristics-of-descent-methods" class="nav-link" data-scroll-target="#key-characteristics-of-descent-methods"><span class="header-section-number">4.2</span> Key Characteristics of Descent Methods</a></li>
+  <li><a href="#common-descent-variants" id="toc-common-descent-variants" class="nav-link" data-scroll-target="#common-descent-variants"><span class="header-section-number">4.3</span> Common Descent Variants</a></li>
+  <li><a href="#descent-variants-at-a-glance" id="toc-descent-variants-at-a-glance" class="nav-link" data-scroll-target="#descent-variants-at-a-glance"><span class="header-section-number">4.4</span> Descent Variants at a Glance</a></li>
+  <li><a href="#comparison-and-practical-insight" id="toc-comparison-and-practical-insight" class="nav-link" data-scroll-target="#comparison-and-practical-insight"><span class="header-section-number">4.5</span> Comparison and Practical Insight</a></li>
+  </ul></li>
+  <li><a href="#local-optima" id="toc-local-optima" class="nav-link" data-scroll-target="#local-optima"><span class="header-section-number">5</span> Local Optima</a>
+  <ul class="collapse">
+  <li><a href="#definition" id="toc-definition" class="nav-link" data-scroll-target="#definition"><span class="header-section-number">5.1</span> Definition</a></li>
+  <li><a href="#local-vs-global-optimum" id="toc-local-vs-global-optimum" class="nav-link" data-scroll-target="#local-vs-global-optimum"><span class="header-section-number">5.2</span> Local vs Global Optimum</a></li>
+  <li><a href="#basins-of-attraction" id="toc-basins-of-attraction" class="nav-link" data-scroll-target="#basins-of-attraction"><span class="header-section-number">5.3</span> Basins of Attraction</a></li>
+  </ul></li>
+  <li><a href="#landscape-traps-in-local-search" id="toc-landscape-traps-in-local-search" class="nav-link" data-scroll-target="#landscape-traps-in-local-search"><span class="header-section-number">6</span> Landscape Traps in Local Search</a>
+  <ul class="collapse">
+  <li><a href="#plateaus" id="toc-plateaus" class="nav-link" data-scroll-target="#plateaus"><span class="header-section-number">6.1</span> Plateaus</a></li>
+  <li><a href="#ridges-and-narrow-valleys" id="toc-ridges-and-narrow-valleys" class="nav-link" data-scroll-target="#ridges-and-narrow-valleys"><span class="header-section-number">6.2</span> Ridges and Narrow Valleys</a></li>
+  <li><a href="#deceptive-local-optima" id="toc-deceptive-local-optima" class="nav-link" data-scroll-target="#deceptive-local-optima"><span class="header-section-number">6.3</span> Deceptive Local Optima</a></li>
+  <li><a href="#implications-for-algorithm-design" id="toc-implications-for-algorithm-design" class="nav-link" data-scroll-target="#implications-for-algorithm-design"><span class="header-section-number">6.4</span> Implications for Algorithm Design</a></li>
+  </ul></li>
+  <li><a href="#why-greedy-search-fails" id="toc-why-greedy-search-fails" class="nav-link" data-scroll-target="#why-greedy-search-fails"><span class="header-section-number">7</span> Why Greedy Search Fails</a></li>
+  <li><a href="#diversification-issues" id="toc-diversification-issues" class="nav-link" data-scroll-target="#diversification-issues"><span class="header-section-number">8</span> Diversification Issues</a>
+  <ul class="collapse">
+  <li><a href="#lack-of-diversification-in-hill-climbing" id="toc-lack-of-diversification-in-hill-climbing" class="nav-link" data-scroll-target="#lack-of-diversification-in-hill-climbing"><span class="header-section-number">8.1</span> Lack of Diversification in Hill Climbing</a></li>
+  <li><a href="#common-symptoms-of-poor-diversification" id="toc-common-symptoms-of-poor-diversification" class="nav-link" data-scroll-target="#common-symptoms-of-poor-diversification"><span class="header-section-number">8.2</span> Common Symptoms of Poor Diversification</a></li>
+  <li><a href="#diagnostics-to-monitor-in-experiments" id="toc-diagnostics-to-monitor-in-experiments" class="nav-link" data-scroll-target="#diagnostics-to-monitor-in-experiments"><span class="header-section-number">8.3</span> Diagnostics to Monitor in Experiments</a></li>
+  </ul></li>
+  <li><a href="#practical-enhancements-to-hill-climbing" id="toc-practical-enhancements-to-hill-climbing" class="nav-link" data-scroll-target="#practical-enhancements-to-hill-climbing"><span class="header-section-number">9</span> Practical Enhancements to Hill Climbing</a>
+  <ul class="collapse">
+  <li><a href="#a-budgeted-multi-start-template" id="toc-a-budgeted-multi-start-template" class="nav-link" data-scroll-target="#a-budgeted-multi-start-template"><span class="header-section-number">9.1</span> A Budgeted Multi-Start Template</a></li>
+  </ul></li>
+  <li><a href="#role-of-hill-climbing-in-soft-computing" id="toc-role-of-hill-climbing-in-soft-computing" class="nav-link" data-scroll-target="#role-of-hill-climbing-in-soft-computing"><span class="header-section-number">10</span> Role of Hill Climbing in Soft Computing</a>
+  <ul class="collapse">
+  <li><a href="#transition-map-weakness-to-remedy" id="toc-transition-map-weakness-to-remedy" class="nav-link" data-scroll-target="#transition-map-weakness-to-remedy"><span class="header-section-number">10.1</span> Transition Map: Weakness to Remedy</a></li>
+  <li><a href="#key-takeaways" id="toc-key-takeaways" class="nav-link" data-scroll-target="#key-takeaways"><span class="header-section-number">10.2</span> Key Takeaways</a></li>
+  </ul></li>
+  <li><a href="#mini-exercises" id="toc-mini-exercises" class="nav-link" data-scroll-target="#mini-exercises"><span class="header-section-number">11</span> Mini Exercises</a></li>
+  <li><a href="#references-for-this-chapter" id="toc-references-for-this-chapter" class="nav-link" data-scroll-target="#references-for-this-chapter"><span class="header-section-number">12</span> References for This Chapter</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Lecture 6 — Hill Climbing, Descent Methods, and Local Optima</h1>
+<p class="subtitle lead">Greedy search, traps, plateaus, diversification issues</p>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<section id="learning-objectives" class="level2" data-number="1">
+<h2 data-number="1" class="anchored" data-anchor-id="learning-objectives"><span class="header-section-number">1</span> Learning Objectives</h2>
+<p>By the end of this lecture, you should be able to:</p>
+<ul>
+<li>understand hill climbing as a fundamental local search method</li>
+<li>distinguish different descent strategies and their behavior</li>
+<li>explain what local optima, plateaus, and ridges are</li>
+<li>analyze why greedy improvement can fail</li>
+<li>recognize the need for diversification mechanisms</li>
+</ul>
+<hr>
+</section>
+<section id="lecture-roadmap" class="level2" data-number="2">
+<h2 data-number="2" class="anchored" data-anchor-id="lecture-roadmap"><span class="header-section-number">2</span> Lecture Roadmap</h2>
+<p>This lecture proceeds in seven blocks:</p>
+<ol type="1">
+<li>hill climbing as the simplest local search method</li>
+<li>descent variants and their computational trade-offs</li>
+<li>local versus global optimality</li>
+<li>landscape traps: plateaus, ridges, and deceptive basins</li>
+<li>why strict greedy search fails on hard instances</li>
+<li>practical diversification enhancements</li>
+<li>how hill climbing connects to modern metaheuristics</li>
+</ol>
+<hr>
+</section>
+<section id="hill-climbing-the-simplest-local-search" class="level2" data-number="3">
+<h2 data-number="3" class="anchored" data-anchor-id="hill-climbing-the-simplest-local-search"><span class="header-section-number">3</span> Hill Climbing: The Simplest Local Search</h2>
+<section id="basic-idea" class="level3" data-number="3.1">
+<h3 data-number="3.1" class="anchored" data-anchor-id="basic-idea"><span class="header-section-number">3.1</span> Basic Idea</h3>
+<p><strong>Hill climbing</strong> is one of the simplest, most intuitive, and historically earliest local search algorithms. It is grounded in a strictly greedy improvement principle:</p>
+<blockquote class="blockquote">
+<p>Always move to a neighboring solution that improves the objective value.</p>
+</blockquote>
+<p>The algorithm views the objective function as a <strong>search landscape</strong>, where each solution corresponds to a point and its objective value represents elevation. Hill climbing repeatedly moves “uphill” (for maximization) or “downhill” (for minimization) in this landscape until no further improvement is possible.</p>
+<p>This myopic behavior makes hill climbing easy to understand and implement, but also fundamentally limits its robustness.</p>
+<hr>
+</section>
+<section id="generic-hill-climbing-algorithm" class="level3" data-number="3.2">
+<h3 data-number="3.2" class="anchored" data-anchor-id="generic-hill-climbing-algorithm"><span class="header-section-number">3.2</span> Generic Hill Climbing Algorithm</h3>
+<p>A generic hill climbing procedure can be described as follows:</p>
+<ol type="1">
+<li>generate an initial feasible solution <span class="math inline">\(s\)</span></li>
+<li>define and evaluate the neighborhood <span class="math inline">\(\mathcal{N}(s)\)</span></li>
+<li>select an improving neighbor <span class="math inline">\(s' \in \mathcal{N}(s)\)</span></li>
+<li>replace <span class="math inline">\(s\)</span> by <span class="math inline">\(s'\)</span></li>
+<li>repeat until no improving neighbor exists</li>
+</ol>
+<p>At termination, the algorithm halts at a <strong>local optimum</strong> with respect to the chosen neighborhood structure.</p>
+<hr>
+</section>
+<section id="runtime-profile-of-hill-climbing" class="level3" data-number="3.3">
+<h3 data-number="3.3" class="anchored" data-anchor-id="runtime-profile-of-hill-climbing"><span class="header-section-number">3.3</span> Runtime Profile of Hill Climbing</h3>
+<p>The runtime of hill climbing is determined by two factors:</p>
+<ul>
+<li><strong>cost per iteration</strong>, dominated by neighborhood evaluation</li>
+<li><strong>number of iterations</strong>, determined by landscape structure and move quality</li>
+</ul>
+<p>If evaluating one neighbor costs <span class="math inline">\(T_{\text{eval}}\)</span> and the neighborhood size is <span class="math inline">\(|\mathcal{N}(s)|\)</span>:</p>
+<ul>
+<li>steepest descent typically costs about <span class="math inline">\(|\mathcal{N}(s)| \cdot T_{\text{eval}}\)</span> per iteration</li>
+<li>first-improvement may terminate earlier and can be much cheaper in practice</li>
+</ul>
+<p>This explains a common empirical result: first-improvement often performs worse per move but better per unit time.</p>
+<hr>
+</section>
+<section id="key-properties" class="level3" data-number="3.4">
+<h3 data-number="3.4" class="anchored" data-anchor-id="key-properties"><span class="header-section-number">3.4</span> Key Properties</h3>
+<ul>
+<li>hill climbing is <strong>iterative and deterministic</strong> if the neighborhood scanning order and tie-breaking rules are fixed</li>
+<li>improvement is <strong>monotonic</strong>, as the objective value strictly improves at each accepted move</li>
+<li>feasibility is preserved throughout the search if the neighborhood is defined over feasible solutions</li>
+</ul>
+<p>These properties ensure fast convergence but also restrict the algorithm’s ability to explore alternative regions.</p>
+<hr>
+</section>
+<section id="characteristics-of-hill-climbing" class="level3" data-number="3.5">
+<h3 data-number="3.5" class="anchored" data-anchor-id="characteristics-of-hill-climbing"><span class="header-section-number">3.5</span> Characteristics of Hill Climbing</h3>
+<ul>
+<li><p><strong>Simplicity</strong></p>
+<ul>
+<li>minimal algorithmic structure</li>
+<li>few parameters and implementation effort</li>
+</ul></li>
+<li><p><strong>Fast convergence</strong></p>
+<ul>
+<li>rapid improvement in early iterations</li>
+<li>often reaches a local optimum in a small number of steps</li>
+</ul></li>
+<li><p><strong>Purely greedy behavior</strong></p>
+<ul>
+<li>only improving moves are accepted</li>
+<li>worsening moves are never considered</li>
+</ul></li>
+<li><p><strong>Sensitivity to neighborhood and initialization</strong></p>
+<ul>
+<li>final solution quality depends heavily on the initial solution</li>
+<li>different neighborhoods can lead to very different local optima</li>
+</ul></li>
+</ul>
+<p>Hill climbing represents <strong>pure exploitation</strong> in the exploration–exploitation spectrum. It intensively refines the current solution but has no mechanism to escape local optima or explore new regions of the solution space.</p>
+<hr>
+</section>
+<section id="when-hill-climbing-is-useful" class="level3" data-number="3.6">
+<h3 data-number="3.6" class="anchored" data-anchor-id="when-hill-climbing-is-useful"><span class="header-section-number">3.6</span> When Hill Climbing Is Useful</h3>
+<p>Despite its limitations, hill climbing is valuable in practice:</p>
+<ul>
+<li>as a <strong>baseline algorithm</strong> for comparison</li>
+<li>as a <strong>local improvement component</strong> inside more advanced metaheuristics</li>
+<li>for <strong>small or well-structured problems</strong> with few local optima</li>
+<li>when fast, approximate solutions are sufficient</li>
+</ul>
+<p>Understanding hill climbing is essential, as many sophisticated soft computing techniques can be viewed as controlled extensions of this simple greedy search principle.</p>
+<hr>
+</section>
+</section>
+<section id="descent-methods" class="level2" data-number="4">
+<h2 data-number="4" class="anchored" data-anchor-id="descent-methods"><span class="header-section-number">4</span> Descent Methods</h2>
+<p>Hill climbing belongs to a broader and fundamental class of local search algorithms known as <strong>descent methods</strong>. These methods form the backbone of many optimization techniques in both continuous and discrete settings.</p>
+<hr>
+<section id="what-is-a-descent-method" class="level3" data-number="4.1">
+<h3 data-number="4.1" class="anchored" data-anchor-id="what-is-a-descent-method"><span class="header-section-number">4.1</span> What Is a Descent Method?</h3>
+<p>A <strong>descent method</strong> is any iterative optimization algorithm that improves a solution monotonically by repeatedly applying improving moves. More precisely, a descent method:</p>
+<ul>
+<li>starts from a feasible solution, and</li>
+<li>repeatedly moves to a neighboring solution with a strictly better objective value.</li>
+</ul>
+<p>Formally, if <span class="math inline">\(f(s)\)</span> denotes the objective value of solution <span class="math inline">\(s\)</span>, then for a minimization problem a descent method enforces:</p>
+<p><span class="math display">\[
+f(s_{k+1}) &lt; f(s_k)
+\]</span></p>
+<p>at every iteration <span class="math inline">\(k\)</span>.</p>
+<p>This strict improvement property guarantees termination in a finite number of steps when the solution space is finite. However, it also implies that descent methods inevitably stop at a <strong>local optimum</strong>.</p>
+<hr>
+</section>
+<section id="key-characteristics-of-descent-methods" class="level3" data-number="4.2">
+<h3 data-number="4.2" class="anchored" data-anchor-id="key-characteristics-of-descent-methods"><span class="header-section-number">4.2</span> Key Characteristics of Descent Methods</h3>
+<ul>
+<li><p><strong>Monotonic improvement</strong> The objective value improves at every accepted move.</p></li>
+<li><p><strong>Feasibility preservation</strong> If neighborhoods are defined over feasible solutions, all intermediate solutions remain feasible.</p></li>
+<li><p><strong>Deterministic or stochastic behavior</strong> Depending on how neighbors are selected, descent methods may be fully deterministic or incorporate randomness.</p></li>
+<li><p><strong>Sensitivity to local structure</strong> Performance depends heavily on the neighborhood definition and the landscape of the objective function.</p></li>
+</ul>
+<p>Descent methods emphasize <strong>intensification</strong> and are purely exploitative in nature.</p>
+<hr>
+</section>
+<section id="common-descent-variants" class="level3" data-number="4.3">
+<h3 data-number="4.3" class="anchored" data-anchor-id="common-descent-variants"><span class="header-section-number">4.3</span> Common Descent Variants</h3>
+<p>Different descent strategies differ in how the improving neighbor is selected from the neighborhood.</p>
+<hr>
+<section id="steepest-descent-best-improvement" class="level4" data-number="4.3.1">
+<h4 data-number="4.3.1" class="anchored" data-anchor-id="steepest-descent-best-improvement"><span class="header-section-number">4.3.1</span> Steepest Descent (Best-Improvement)</h4>
+<ul>
+<li>evaluates all neighbors in <span class="math inline">\(\mathcal{N}(s)\)</span>,</li>
+<li>selects the neighbor that yields the largest improvement in objective value,</li>
+<li>moves deterministically to the best available option.</li>
+</ul>
+<p><strong>Pros</strong></p>
+<ul>
+<li>strong improvement per iteration,</li>
+<li>stable and predictable convergence behavior,</li>
+<li>often reaches high-quality local optima.</li>
+</ul>
+<p><strong>Cons</strong></p>
+<ul>
+<li>expensive neighborhood evaluation,</li>
+<li>poor scalability for large neighborhoods or costly objective evaluations.</li>
+</ul>
+<p>Steepest descent is well suited for small or moderately sized neighborhoods.</p>
+<hr>
+</section>
+<section id="first-improvement-descent" class="level4" data-number="4.3.2">
+<h4 data-number="4.3.2" class="anchored" data-anchor-id="first-improvement-descent"><span class="header-section-number">4.3.2</span> First-Improvement Descent</h4>
+<ul>
+<li>scans neighbors sequentially in a predefined or random order,</li>
+<li>moves to the first neighbor that improves the objective value,</li>
+<li>stops scanning as soon as an improving move is found.</li>
+</ul>
+<p><strong>Pros</strong></p>
+<ul>
+<li>much faster per iteration,</li>
+<li>scalable to large neighborhoods,</li>
+<li>often superior in wall-clock time.</li>
+</ul>
+<p><strong>Cons</strong></p>
+<ul>
+<li>final solution quality depends on scanning order,</li>
+<li>more variability across runs.</li>
+</ul>
+<p>First-improvement is widely used in large-scale combinatorial optimization.</p>
+<hr>
+</section>
+<section id="random-descent" class="level4" data-number="4.3.3">
+<h4 data-number="4.3.3" class="anchored" data-anchor-id="random-descent"><span class="header-section-number">4.3.3</span> Random Descent</h4>
+<ul>
+<li>identifies all improving neighbors,</li>
+<li>selects one of them uniformly at random.</li>
+</ul>
+<p><strong>Pros</strong></p>
+<ul>
+<li>introduces mild diversification without accepting worsening moves,</li>
+<li>reduces bias caused by fixed scanning orders.</li>
+</ul>
+<p><strong>Cons</strong></p>
+<ul>
+<li>weaker and less predictable convergence,</li>
+<li>may miss strong improving moves.</li>
+</ul>
+<p>Random descent represents a small step toward stochastic search while preserving the descent property.</p>
+<hr>
+</section>
+</section>
+<section id="descent-variants-at-a-glance" class="level3" data-number="4.4">
+<h3 data-number="4.4" class="anchored" data-anchor-id="descent-variants-at-a-glance"><span class="header-section-number">4.4</span> Descent Variants at a Glance</h3>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 20%">
+<col style="width: 20%">
+<col style="width: 20%">
+<col style="width: 20%">
+<col style="width: 20%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Variant</th>
+<th>Neighborhood evaluation</th>
+<th>Move chosen</th>
+<th>Typical strength</th>
+<th>Typical weakness</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Steepest descent</td>
+<td>Full neighborhood</td>
+<td>Best improving neighbor</td>
+<td>High quality per iteration</td>
+<td>Expensive on large neighborhoods</td>
+</tr>
+<tr class="even">
+<td>First-improvement</td>
+<td>Partial/early-stop scan</td>
+<td>First improving neighbor</td>
+<td>Fast wall-clock progress</td>
+<td>Sensitive to scan order</td>
+</tr>
+<tr class="odd">
+<td>Random descent</td>
+<td>Improvers identified, one sampled</td>
+<td>Random improving neighbor</td>
+<td>Reduces deterministic bias</td>
+<td>Variable and less stable convergence</td>
+</tr>
+</tbody>
+</table>
+<hr>
+</section>
+<section id="comparison-and-practical-insight" class="level3" data-number="4.5">
+<h3 data-number="4.5" class="anchored" data-anchor-id="comparison-and-practical-insight"><span class="header-section-number">4.5</span> Comparison and Practical Insight</h3>
+<ul>
+<li><strong>Steepest descent</strong> emphasizes quality per move.</li>
+<li><strong>First-improvement descent</strong> emphasizes speed and scalability.</li>
+<li><strong>Random descent</strong> adds limited diversity while remaining greedy.</li>
+</ul>
+<p>In practice, first-improvement and random descent are preferred for large problems, while steepest descent is useful when neighborhoods are small or when strong local refinement is required.</p>
+<p>All descent variants share a fundamental limitation: once no improving move exists, the search halts. Overcoming this limitation requires mechanisms that relax the strict descent rule, which motivates the metaheuristic techniques introduced in subsequent lectures.</p>
+<hr>
+</section>
+</section>
+<section id="local-optima" class="level2" data-number="5">
+<h2 data-number="5" class="anchored" data-anchor-id="local-optima"><span class="header-section-number">5</span> Local Optima</h2>
+<section id="definition" class="level3" data-number="5.1">
+<h3 data-number="5.1" class="anchored" data-anchor-id="definition"><span class="header-section-number">5.1</span> Definition</h3>
+<p>A solution <span class="math inline">\(s^*\)</span> is a <strong>local optimum</strong> with respect to a given neighborhood <span class="math inline">\(\mathcal{N}\)</span> if no neighboring solution improves the objective value. Formally, for a minimization problem:</p>
+<p><span class="math display">\[
+f(s^*) \le f(s), \quad \forall s \in \mathcal{N}(s^*)
+\]</span></p>
+<p>This definition highlights a crucial point: <strong>local optimality is not an absolute property</strong>, but one that depends entirely on the chosen neighborhood structure. Changing the neighborhood can change which solutions are considered locally optimal.</p>
+<hr>
+</section>
+<section id="local-vs-global-optimum" class="level3" data-number="5.2">
+<h3 data-number="5.2" class="anchored" data-anchor-id="local-vs-global-optimum"><span class="header-section-number">5.2</span> Local vs Global Optimum</h3>
+<p>It is important to clearly distinguish between two fundamentally different notions of optimality:</p>
+<ul>
+<li><p><strong>Global optimum</strong></p>
+<ul>
+<li>a solution with the best objective value over the entire solution space</li>
+<li>represents the true optimal solution of the problem</li>
+</ul></li>
+<li><p><strong>Local optimum</strong></p>
+<ul>
+<li>a solution that cannot be improved using the current neighborhood</li>
+<li>may be far from the global optimum</li>
+</ul></li>
+</ul>
+<p>A key insight in local search is:</p>
+<blockquote class="blockquote">
+<p>A solution can be locally optimal yet globally very poor.</p>
+</blockquote>
+<p>Hill climbing and other descent methods have no inherent mechanism to determine whether a local optimum is also global. Once a local optimum is reached, the algorithm terminates regardless of solution quality.</p>
+<hr>
+</section>
+<section id="basins-of-attraction" class="level3" data-number="5.3">
+<h3 data-number="5.3" class="anchored" data-anchor-id="basins-of-attraction"><span class="header-section-number">5.3</span> Basins of Attraction</h3>
+<p>A useful way to interpret initialization sensitivity is through <strong>basins of attraction</strong>:</p>
+<ul>
+<li>each local optimum has a set of starting solutions that eventually converge to it</li>
+<li>different basins can vary greatly in size and quality</li>
+<li>random restarts sample multiple basins, increasing the chance of finding a better one</li>
+</ul>
+<p>This perspective explains why two runs of the same hill climber can produce very different final outcomes.</p>
+<hr>
+</section>
+</section>
+<section id="landscape-traps-in-local-search" class="level2" data-number="6">
+<h2 data-number="6" class="anchored" data-anchor-id="landscape-traps-in-local-search"><span class="header-section-number">6</span> Landscape Traps in Local Search</h2>
+<p>The limitations of hill climbing and descent methods are best understood by visualizing the objective function as a <strong>search landscape</strong>, where solutions correspond to points and objective values correspond to elevations.</p>
+<p>Different landscape structures give rise to characteristic failure modes.</p>
+<hr>
+<section id="plateaus" class="level3" data-number="6.1">
+<h3 data-number="6.1" class="anchored" data-anchor-id="plateaus"><span class="header-section-number">6.1</span> Plateaus</h3>
+<p>A <strong>plateau</strong> is a region of the search landscape where many neighboring solutions share the same objective value.</p>
+<p>Typical characteristics include:</p>
+<ul>
+<li>no strictly improving moves exist,</li>
+<li>greedy descent cannot make progress,</li>
+<li>the search may terminate prematurely or perform ineffective random motion.</li>
+</ul>
+<p>Plateaus are especially common in combinatorial optimization problems with discrete objective values, where small changes often do not affect the objective. Without special mechanisms, hill climbing stalls immediately upon encountering a plateau.</p>
+<hr>
+</section>
+<section id="ridges-and-narrow-valleys" class="level3" data-number="6.2">
+<h3 data-number="6.2" class="anchored" data-anchor-id="ridges-and-narrow-valleys"><span class="header-section-number">6.2</span> Ridges and Narrow Valleys</h3>
+<p>Some landscapes contain <strong>ridges</strong> or <strong>narrow valleys</strong>, which pose additional challenges:</p>
+<ul>
+<li><p><strong>Ridges</strong></p>
+<ul>
+<li>improving directions exist but are not aligned with simple neighborhood moves,</li>
+<li>progress requires a sequence of carefully coordinated steps.</li>
+</ul></li>
+<li><p><strong>Narrow valleys</strong></p>
+<ul>
+<li>improvements require simultaneous changes in multiple variables,</li>
+<li>single-variable moves are insufficient to descend.</li>
+</ul></li>
+</ul>
+<p>In such landscapes, simple hill climbing fails because the neighborhood is too restrictive to capture meaningful improvement directions.</p>
+<hr>
+</section>
+<section id="deceptive-local-optima" class="level3" data-number="6.3">
+<h3 data-number="6.3" class="anchored" data-anchor-id="deceptive-local-optima"><span class="header-section-number">6.3</span> Deceptive Local Optima</h3>
+<p>In more complex landscapes, <strong>deceptive local optima</strong> may arise:</p>
+<ul>
+<li>locally improving moves lead the search away from the global optimum,</li>
+<li>greedy decisions reinforce poor structural choices,</li>
+<li>escaping requires accepting temporary worsening moves.</li>
+</ul>
+<p>These deceptive structures are often deliberately embedded in benchmark instances to expose the weaknesses of greedy algorithms. They demonstrate that local improvement alone is not a reliable indicator of global progress.</p>
+<hr>
+</section>
+<section id="implications-for-algorithm-design" class="level3" data-number="6.4">
+<h3 data-number="6.4" class="anchored" data-anchor-id="implications-for-algorithm-design"><span class="header-section-number">6.4</span> Implications for Algorithm Design</h3>
+<p>The prevalence of local optima, plateaus, and deceptive structures explains why pure descent methods are insufficient for complex optimization problems. Overcoming these landscape traps requires mechanisms that allow the search to:</p>
+<ul>
+<li>accept non-improving moves,</li>
+<li>explore alternative regions of the solution space, and</li>
+<li>adaptively change neighborhoods or search behavior.</li>
+</ul>
+<p>These considerations directly motivate the metaheuristic strategies introduced in subsequent lectures.</p>
+<hr>
+</section>
+</section>
+<section id="why-greedy-search-fails" class="level2" data-number="7">
+<h2 data-number="7" class="anchored" data-anchor-id="why-greedy-search-fails"><span class="header-section-number">7</span> Why Greedy Search Fails</h2>
+<p>Pure greedy descent methods such as hill climbing fail to solve complex optimization problems reliably due to several fundamental limitations:</p>
+<ul>
+<li><p><strong>Inability to accept worsening moves</strong> Greedy search enforces strict improvement at every step. Once all improving moves are exhausted, the search halts, even if escaping the current solution requires a temporary degradation in objective value.</p></li>
+<li><p><strong>Lack of memory or history</strong> Hill climbing has no mechanism to remember where it has been before. As a result, it cannot avoid revisiting similar solutions across different runs or guide the search based on past experience.</p></li>
+<li><p><strong>Sensitivity to initial solutions</strong> The final solution quality depends strongly on the starting point. Different initial solutions may lead to completely different local optima, with no guarantee that any of them are near-optimal.</p></li>
+<li><p><strong>Rigid neighborhood definitions</strong> Fixed neighborhoods restrict the types of structural changes that can be made. If the neighborhood does not align well with the problem structure, the search becomes ineffective.</p></li>
+</ul>
+<p>As problem size and combinatorial complexity increase, these issues become increasingly severe, making pure greedy descent unsuitable as a standalone optimization method.</p>
+<hr>
+</section>
+<section id="diversification-issues" class="level2" data-number="8">
+<h2 data-number="8" class="anchored" data-anchor-id="diversification-issues"><span class="header-section-number">8</span> Diversification Issues</h2>
+<section id="lack-of-diversification-in-hill-climbing" class="level3" data-number="8.1">
+<h3 data-number="8.1" class="anchored" data-anchor-id="lack-of-diversification-in-hill-climbing"><span class="header-section-number">8.1</span> Lack of Diversification in Hill Climbing</h3>
+<p>Diversification refers to the ability of an algorithm to explore <strong>different regions</strong> of the solution space. Hill climbing lacks such capability by design:</p>
+<ul>
+<li>it explores only a narrow region around the current solution,</li>
+<li>it ignores unexplored areas once no improvement is possible, and</li>
+<li>it repeatedly converges to structurally similar local optima across runs.</li>
+</ul>
+<p>This behavior severely limits robustness and solution quality in complex optimization landscapes.</p>
+<hr>
+</section>
+<section id="common-symptoms-of-poor-diversification" class="level3" data-number="8.2">
+<h3 data-number="8.2" class="anchored" data-anchor-id="common-symptoms-of-poor-diversification"><span class="header-section-number">8.2</span> Common Symptoms of Poor Diversification</h3>
+<p>The absence of diversification mechanisms typically manifests as:</p>
+<ul>
+<li>repeated convergence to the same or very similar solutions,</li>
+<li>strong dependence on the initial solution, and</li>
+<li>rapid stagnation with negligible improvement after early iterations.</li>
+</ul>
+<p>These symptoms are collectively referred to as <strong>premature convergence</strong> and are a clear indication that the search process is insufficiently exploratory.</p>
+<hr>
+</section>
+<section id="diagnostics-to-monitor-in-experiments" class="level3" data-number="8.3">
+<h3 data-number="8.3" class="anchored" data-anchor-id="diagnostics-to-monitor-in-experiments"><span class="header-section-number">8.3</span> Diagnostics to Monitor in Experiments</h3>
+<p>To detect poor diversification early, track:</p>
+<ul>
+<li>number of distinct local optima reached across runs</li>
+<li>variance of final objective values over random starts</li>
+<li>fraction of runtime spent without improvement</li>
+<li>repeat frequency of identical or near-identical solutions</li>
+</ul>
+<p>These metrics are simple to log and are often more informative than a single best objective value.</p>
+<hr>
+</section>
+</section>
+<section id="practical-enhancements-to-hill-climbing" class="level2" data-number="9">
+<h2 data-number="9" class="anchored" data-anchor-id="practical-enhancements-to-hill-climbing"><span class="header-section-number">9</span> Practical Enhancements to Hill Climbing</h2>
+<p>Although basic hill climbing is limited, several simple extensions can significantly improve its robustness:</p>
+<ul>
+<li><p><strong>Random restarts</strong></p>
+<ul>
+<li>repeatedly generate new initial solutions and apply hill climbing,</li>
+<li>increase the probability of discovering better local optima.</li>
+</ul></li>
+<li><p><strong>Multi-start hill climbing</strong></p>
+<ul>
+<li>run hill climbing from multiple starting points in parallel or sequentially,</li>
+<li>retain the best solution found across all runs.</li>
+</ul></li>
+<li><p><strong>Perturbation moves</strong></p>
+<ul>
+<li>apply random or structured modifications when the search becomes stuck,</li>
+<li>allow the algorithm to escape shallow local optima or plateaus.</li>
+</ul></li>
+</ul>
+<p>These enhancements preserve the simplicity of hill climbing while introducing minimal diversification. They also serve as conceptual stepping stones toward more advanced metaheuristic techniques.</p>
+<hr>
+<section id="a-budgeted-multi-start-template" class="level3" data-number="9.1">
+<h3 data-number="9.1" class="anchored" data-anchor-id="a-budgeted-multi-start-template"><span class="header-section-number">9.1</span> A Budgeted Multi-Start Template</h3>
+<p>A practical improvement is to allocate a fixed computational budget across multiple hill-climbing runs:</p>
+<ol type="1">
+<li>define total budget (time or evaluations)</li>
+<li>generate a new start solution</li>
+<li>run hill climbing until local optimum or per-run cap</li>
+<li>keep the best solution found</li>
+<li>repeat until budget exhaustion</li>
+</ol>
+<p>This converts hill climbing into an <strong>anytime</strong> procedure with improved robustness under strict runtime limits.</p>
+<hr>
+</section>
+</section>
+<section id="role-of-hill-climbing-in-soft-computing" class="level2" data-number="10">
+<h2 data-number="10" class="anchored" data-anchor-id="role-of-hill-climbing-in-soft-computing"><span class="header-section-number">10</span> Role of Hill Climbing in Soft Computing</h2>
+<p>Despite its limitations, hill climbing plays a foundational role in soft computing:</p>
+<ul>
+<li>it represents the simplest form of local improvement,</li>
+<li>it provides a clear baseline for evaluating more advanced methods,</li>
+<li>it is embedded within most modern metaheuristics, and</li>
+<li>it offers fast and effective intensification around high-quality solutions.</li>
+</ul>
+<p>A solid understanding of hill climbing is essential before studying more sophisticated approaches such as:</p>
+<ul>
+<li>simulated annealing,</li>
+<li>tabu search,</li>
+<li>variable neighborhood search, and</li>
+<li>evolutionary algorithms with local improvement.</li>
+</ul>
+<p>These methods can be viewed as controlled extensions of hill climbing that address its weaknesses by introducing diversification, memory, and adaptive search control.</p>
+<hr>
+<section id="transition-map-weakness-to-remedy" class="level3" data-number="10.1">
+<h3 data-number="10.1" class="anchored" data-anchor-id="transition-map-weakness-to-remedy"><span class="header-section-number">10.1</span> Transition Map: Weakness to Remedy</h3>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Hill-climbing weakness</th>
+<th>Lightweight remedy</th>
+<th>Metaheuristic realization</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>trapped in local optimum</td>
+<td>random restart / perturbation</td>
+<td>simulated annealing, iterated local search</td>
+</tr>
+<tr class="even">
+<td>cycling or repeated structures</td>
+<td>short-term memory</td>
+<td>tabu search</td>
+</tr>
+<tr class="odd">
+<td>neighborhood too restrictive</td>
+<td>variable neighborhoods</td>
+<td>VNS/LNS</td>
+</tr>
+<tr class="even">
+<td>high initialization sensitivity</td>
+<td>multi-start strategy</td>
+<td>population-based methods</td>
+</tr>
+</tbody>
+</table>
+<p>This map is the conceptual bridge from pure descent methods to modern soft computing algorithms.</p>
+<hr>
+</section>
+<section id="key-takeaways" class="level3" data-number="10.2">
+<h3 data-number="10.2" class="anchored" data-anchor-id="key-takeaways"><span class="header-section-number">10.2</span> Key Takeaways</h3>
+<ul>
+<li>hill climbing is a greedy local search method</li>
+<li>descent methods always accept improving moves</li>
+<li>local optima, plateaus, and ridges limit greedy search</li>
+<li>lack of diversification is the core weakness</li>
+<li>advanced metaheuristics build on and extend hill climbing</li>
+</ul>
+<hr>
+</section>
+</section>
+<section id="mini-exercises" class="level2" data-number="11">
+<h2 data-number="11" class="anchored" data-anchor-id="mini-exercises"><span class="header-section-number">11</span> Mini Exercises</h2>
+<ol type="1">
+<li><p><strong>Implementation and experimentation</strong> Implement a simple hill climbing algorithm for a binary optimization problem (for example, a small knapsack or selection problem).</p>
+<ul>
+<li>Test the algorithm using different initial solutions.</li>
+<li>Observe how the choice of starting point affects the final solution quality and runtime.</li>
+</ul></li>
+<li><p><strong>Plateaus in combinatorial landscapes</strong> Identify a combinatorial optimization problem that exhibits plateaus in its objective landscape.</p>
+<ul>
+<li>Describe a specific situation where multiple neighboring solutions have the same objective value.</li>
+<li>Explain why hill climbing fails to make progress on such a plateau.</li>
+</ul></li>
+<li><p><strong>Comparison of descent strategies</strong> Compare <strong>first-improvement</strong> and <strong>steepest-descent</strong> hill climbing strategies.</p>
+<ul>
+<li>Analyze their runtime behavior for large neighborhoods.</li>
+<li>Discuss differences in convergence speed and final solution quality.</li>
+</ul></li>
+<li><p><strong>Random restarts and their limitations</strong> Discuss how random restarts can improve the performance of hill climbing.</p>
+<ul>
+<li>Explain why random restarts increase the chance of finding better local optima.</li>
+<li>Discuss their limitations, particularly in very large or highly deceptive search spaces.</li>
+</ul></li>
+<li><p><strong>Budget allocation for multi-start hill climbing</strong> You have a total budget of 300 seconds and two options:</p>
+<ol type="A">
+<li>3 long runs of 100 seconds each, or</li>
+<li>30 short runs of 10 seconds each.</li>
+</ol>
+<ul>
+<li>Discuss which option is likely to explore more basins of attraction.</li>
+<li>Explain when long runs may still be preferable.</li>
+<li>Propose a hybrid allocation strategy and justify it.</li>
+</ul></li>
+</ol>
+<hr>
+</section>
+<section id="references-for-this-chapter" class="level2" data-number="12">
+<h2 data-number="12" class="anchored" data-anchor-id="references-for-this-chapter"><span class="header-section-number">12</span> References for This Chapter</h2>
+<ol type="1">
+<li>Nocedal, J., &amp; Wright, S. J. (2006). <em>Numerical Optimization</em> (2nd ed.). Springer. DOI: <a href="https://doi.org/10.1007/978-0-387-40065-5">10.1007/978-0-387-40065-5</a></li>
+<li>Boyd, S., &amp; Vandenberghe, L. (2004). <em>Convex Optimization</em>. Cambridge University Press. DOI: <a href="https://doi.org/10.1017/CBO9780511804441">10.1017/CBO9780511804441</a></li>
+<li>Hoos, H. H., &amp; Stutzle, T. (2005). <em>Stochastic Local Search: Foundations and Applications</em>. Morgan Kaufmann. URL: <a href="https://www.cs.ubc.ca/~hoos/SLS-Book/about.html">https://www.cs.ubc.ca/~hoos/SLS-Book/about.html</a></li>
+<li>Johnson, D. S., Aragon, C. R., McGeoch, L. A., &amp; Schevon, C. (1989). Optimization by simulated annealing: An experimental evaluation; part I, graph partitioning. <em>Operations Research</em>, 37(6), 865-892. DOI: <a href="https://doi.org/10.1287/opre.37.6.865">10.1287/opre.37.6.865</a></li>
+<li>Johnson, D. S., Aragon, C. R., McGeoch, L. A., &amp; Schevon, C. (1991). Optimization by simulated annealing: An experimental evaluation; part II, graph coloring and number partitioning. <em>Operations Research</em>, 39(3), 378-406. DOI: <a href="https://doi.org/10.1287/opre.39.3.378">10.1287/opre.39.3.378</a></li>
+<li>Mladenovic, N., &amp; Hansen, P. (1997). Variable neighborhood search. <em>Computers &amp; Operations Research</em>, 24(11), 1097-1100. DOI: <a href="https://doi.org/10.1016/S0305-0548(97)00031-2">10.1016/S0305-0548(97)00031-2</a></li>
+<li>Russell, S., &amp; Norvig, P. (2020). <em>Artificial Intelligence: A Modern Approach</em> (4th ed.). Pearson. URL: <a href="https://aima.cs.berkeley.edu/">https://aima.cs.berkeley.edu/</a></li>
+</ol>
+
+
+</section>
+
+<a onclick="window.scrollTo(0, 0); return false;" role="button" id="quarto-back-to-top"><i class="bi bi-arrow-up"></i> Back to top</a></main> <!-- /main -->
+<div class="ui-controls" role="group" aria-label="Display controls">
+  <!-- Quarto already shows a light or dark toggle in the navbar when you set light and dark themes.
+       Here we only add font size. -->
+  <label for="fontSize" class="ui-label">A</label>
+  <select id="fontSize" aria-label="Font size">
+    <option value="16">A</option>
+    <option value="18">A+</option>
+    <option value="20">A++</option>
+  </select>
+</div>
+
+<script>
+(function () {
+  const KEY = "q_font_size_px";
+  const select = document.getElementById("fontSize");
+
+  function apply(px) {
+    document.documentElement.style.fontSize = px + "px";
+  }
+
+  // Load saved value or default to 16
+  const saved = localStorage.getItem(KEY) || "16";
+  select.value = saved;
+  apply(saved);
+
+  // Save on change
+  select.addEventListener("change", () => {
+    localStorage.setItem(KEY, select.value);
+    apply(select.value);
+  });
+})();
+</script>
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    // Ensure there is a toggle, if there isn't float one in the top right
+    if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
+      const a = window.document.createElement('a');
+      a.classList.add('top-right');
+      a.classList.add('quarto-color-scheme-toggle');
+      a.href = "";
+      a.onclick = function() { try { window.quartoToggleColorScheme(); } catch {} return false; };
+      const i = window.document.createElement("i");
+      i.classList.add('bi');
+      a.appendChild(i);
+      window.document.body.appendChild(a);
+    }
+    setColorSchemeToggle(hasAlternateSentinel())
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+        const codeEl = trigger.previousElementSibling.cloneNode(true);
+        for (const childEl of codeEl.children) {
+          if (isCodeAnnotation(childEl)) {
+            childEl.remove();
+          }
+        }
+        return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp("https:\/\/soumenatta\.github\.io\/selected_topics_in_soft_computing\/");
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+            // target, if specified
+            link.setAttribute("target", "_blank");
+            if (link.getAttribute("rel") === null) {
+              link.setAttribute("rel", "noopener");
+            }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">
+<p>© Dr.&nbsp;Soumen Atta, Ph.D.&nbsp;(2025)</p>
+</div>   
+    <div class="nav-footer-center">
+      &nbsp;
+    </div>
+    <div class="nav-footer-right">
+      &nbsp;
+    </div>
+  </div>
+</footer>
+
+
+
+
+<script src="../site_libs/quarto-html/zenscroll-min.js"></script>
+</body></html>
