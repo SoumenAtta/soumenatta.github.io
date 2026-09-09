@@ -2,8 +2,9 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
-{% assign page_title = page.title | default: site.title %}
-{% if page.title and page.title != site.title %}
+{% if page.layout == "home" %}
+<title>{{ site.title }} — {{ site.tagline }}</title>
+{% elsif page.title %}
 <title>{{ page.title }} · {{ site.title }}</title>
 {% else %}
 <title>{{ site.title }} — {{ site.tagline }}</title>
