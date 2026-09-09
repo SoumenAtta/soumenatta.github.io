@@ -33,25 +33,4 @@ He is currently a **<a href="https://www.jyu.fi/en/people/soumen-atta" target="_
   <li>Theoretical computer science</li>
 </ul>
 
-## Education
-
-<ul class="timeline">
-  <li>
-    <div class="timeline__dates">2013 – 2018</div>
-    <div class="timeline__role">Ph.D. in Computer Science &amp; Engineering</div>
-    <div class="timeline__place">University of Kalyani, West Bengal, India</div>
-    <div class="timeline__note">Part of the research was conducted at the University of Łódź, Poland, as an Erasmus+ Exchange Ph.D. Student. <strong>Habilitation in Computer Science (Docent)</strong> subsequently earned from the University of Nova Gorica, Slovenia, in 2023.</div>
-  </li>
-  <li>
-    <div class="timeline__dates">2010 – 2012</div>
-    <div class="timeline__role">M.Tech. in Computer Science &amp; Engineering</div>
-    <div class="timeline__place">University of Kalyani, West Bengal, India</div>
-  </li>
-  <li>
-    <div class="timeline__dates">2006 – 2010</div>
-    <div class="timeline__role">B.Tech. in Information Technology</div>
-    <div class="timeline__place">Calcutta Institute of Engineering &amp; Management, West Bengal University of Technology, India</div>
-  </li>
-</ul>
-
 See the full [Academics](/academics) page for a complete list of qualifications and achievements.
