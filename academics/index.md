@@ -32,6 +32,12 @@ lede: "Educational qualifications and academic achievements."
 <ol class="entry-list">
   <li class="entry">
     <div class="entry__body">
+      <div class="entry__title">Postdoctoral Researcher (Career Stage II) in Well-being and Multiobjective Optimization</div>
+      <div class="entry__meta">Faculty of Information Technology, University of Jyväskylä, Finland · Aug 2024 – present</div>
+    </div>
+  </li>
+  <li class="entry">
+    <div class="entry__body">
       <div class="entry__title">Habilitation in Computer Science for Assistant Professorship (Docent)</div>
       <div class="entry__meta">University of Nova Gorica, Slovenia · 2023</div>
     </div>
