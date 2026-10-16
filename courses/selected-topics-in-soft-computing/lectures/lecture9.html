@@ -1,0 +1,1998 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.7.33">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>Lecture 9 — Population-Based Metaheuristics: Genetic Algorithms – Selected Topics in Soft Computing</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<script src="../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-ea385d0e468b0dd5ea5bf0780b1290d9.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-dark-bc185b5c5bdbcb35c2eb49d8a876ef70.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-ea385d0e468b0dd5ea5bf0780b1290d9.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap-376eda28aa9f89c8ff844ce97b1c8190.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/bootstrap/bootstrap-dark-e9bb19cd34d53f25e420f2fd1f8a3f86.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<link href="../site_libs/bootstrap/bootstrap-376eda28aa9f89c8ff844ce97b1c8190.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<style>html{ scroll-behavior: smooth; }</style>
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+<link rel="stylesheet" href="../assets/site.css">
+</head>
+
+<body class="nav-fixed quarto-light"><script id="quarto-html-before-body" type="application/javascript">
+    const toggleBodyColorMode = (bsSheetEl) => {
+      const mode = bsSheetEl.getAttribute("data-mode");
+      const bodyEl = window.document.querySelector("body");
+      if (mode === "dark") {
+        bodyEl.classList.add("quarto-dark");
+        bodyEl.classList.remove("quarto-light");
+      } else {
+        bodyEl.classList.add("quarto-light");
+        bodyEl.classList.remove("quarto-dark");
+      }
+    }
+    const toggleBodyColorPrimary = () => {
+      const bsSheetEl = window.document.querySelector("link#quarto-bootstrap:not([rel=disabled-stylesheet])");
+      if (bsSheetEl) {
+        toggleBodyColorMode(bsSheetEl);
+      }
+    }
+    const setColorSchemeToggle = (alternate) => {
+      const toggles = window.document.querySelectorAll('.quarto-color-scheme-toggle');
+      for (let i=0; i < toggles.length; i++) {
+        const toggle = toggles[i];
+        if (toggle) {
+          if (alternate) {
+            toggle.classList.add("alternate");
+          } else {
+            toggle.classList.remove("alternate");
+          }
+        }
+      }
+    };
+    const toggleColorMode = (alternate) => {
+      // Switch the stylesheets
+      const primaryStylesheets = window.document.querySelectorAll('link.quarto-color-scheme:not(.quarto-color-alternate)');
+      const alternateStylesheets = window.document.querySelectorAll('link.quarto-color-scheme.quarto-color-alternate');
+      manageTransitions('#quarto-margin-sidebar .nav-link', false);
+      if (alternate) {
+        // note: dark is layered on light, we don't disable primary!
+        enableStylesheet(alternateStylesheets);
+        for (const sheetNode of alternateStylesheets) {
+          if (sheetNode.id === "quarto-bootstrap") {
+            toggleBodyColorMode(sheetNode);
+          }
+        }
+      } else {
+        disableStylesheet(alternateStylesheets);
+        enableStylesheet(primaryStylesheets)
+        toggleBodyColorPrimary();
+      }
+      manageTransitions('#quarto-margin-sidebar .nav-link', true);
+      // Switch the toggles
+      setColorSchemeToggle(alternate)
+      // Hack to workaround the fact that safari doesn't
+      // properly recolor the scrollbar when toggling (#1455)
+      if (navigator.userAgent.indexOf('Safari') > 0 && navigator.userAgent.indexOf('Chrome') == -1) {
+        manageTransitions("body", false);
+        window.scrollTo(0, 1);
+        setTimeout(() => {
+          window.scrollTo(0, 0);
+          manageTransitions("body", true);
+        }, 40);
+      }
+    }
+    const disableStylesheet = (stylesheets) => {
+      for (let i=0; i < stylesheets.length; i++) {
+        const stylesheet = stylesheets[i];
+        stylesheet.rel = 'disabled-stylesheet';
+      }
+    }
+    const enableStylesheet = (stylesheets) => {
+      for (let i=0; i < stylesheets.length; i++) {
+        const stylesheet = stylesheets[i];
+        if(stylesheet.rel !== 'stylesheet') { // for Chrome, which will still FOUC without this check
+          stylesheet.rel = 'stylesheet';
+        }
+      }
+    }
+    const manageTransitions = (selector, allowTransitions) => {
+      const els = window.document.querySelectorAll(selector);
+      for (let i=0; i < els.length; i++) {
+        const el = els[i];
+        if (allowTransitions) {
+          el.classList.remove('notransition');
+        } else {
+          el.classList.add('notransition');
+        }
+      }
+    }
+    const isFileUrl = () => {
+      return window.location.protocol === 'file:';
+    }
+    const hasAlternateSentinel = () => {
+      let styleSentinel = getColorSchemeSentinel();
+      if (styleSentinel !== null) {
+        return styleSentinel === "alternate";
+      } else {
+        return false;
+      }
+    }
+    const setStyleSentinel = (alternate) => {
+      const value = alternate ? "alternate" : "default";
+      if (!isFileUrl()) {
+        window.localStorage.setItem("quarto-color-scheme", value);
+      } else {
+        localAlternateSentinel = value;
+      }
+    }
+    const getColorSchemeSentinel = () => {
+      if (!isFileUrl()) {
+        const storageValue = window.localStorage.getItem("quarto-color-scheme");
+        return storageValue != null ? storageValue : localAlternateSentinel;
+      } else {
+        return localAlternateSentinel;
+      }
+    }
+    const toggleGiscusIfUsed = (isAlternate, darkModeDefault) => {
+      const baseTheme = document.querySelector('#giscus-base-theme')?.value ?? 'light';
+      const alternateTheme = document.querySelector('#giscus-alt-theme')?.value ?? 'dark';
+      let newTheme = '';
+      if(authorPrefersDark) {
+        newTheme = isAlternate ? baseTheme : alternateTheme;
+      } else {
+        newTheme = isAlternate ? alternateTheme : baseTheme;
+      }
+      const changeGiscusTheme = () => {
+        // From: https://github.com/giscus/giscus/issues/336
+        const sendMessage = (message) => {
+          const iframe = document.querySelector('iframe.giscus-frame');
+          if (!iframe) return;
+          iframe.contentWindow.postMessage({ giscus: message }, 'https://giscus.app');
+        }
+        sendMessage({
+          setConfig: {
+            theme: newTheme
+          }
+        });
+      }
+      const isGiscussLoaded = window.document.querySelector('iframe.giscus-frame') !== null;
+      if (isGiscussLoaded) {
+        changeGiscusTheme();
+      }
+    };
+    const authorPrefersDark = false;
+    const darkModeDefault = authorPrefersDark;
+      document.querySelector('link#quarto-text-highlighting-styles.quarto-color-scheme-extra').rel = 'disabled-stylesheet';
+      document.querySelector('link#quarto-bootstrap.quarto-color-scheme-extra').rel = 'disabled-stylesheet';
+    let localAlternateSentinel = darkModeDefault ? 'alternate' : 'default';
+    // Dark / light mode switch
+    window.quartoToggleColorScheme = () => {
+      // Read the current dark / light value
+      let toAlternate = !hasAlternateSentinel();
+      toggleColorMode(toAlternate);
+      setStyleSentinel(toAlternate);
+      toggleGiscusIfUsed(toAlternate, darkModeDefault);
+      window.dispatchEvent(new Event('resize'));
+    };
+    // Switch to dark mode if need be
+    if (hasAlternateSentinel()) {
+      toggleColorMode(true);
+    } else {
+      toggleColorMode(false);
+    }
+  </script>
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="../index.html">
+    <span class="navbar-title">Selected Topics in Soft Computing</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../index.html"> 
+<span class="menu-text">Home</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../schedule.html"> 
+<span class="menu-text">Schedule</span></a>
+  </li>  
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-lectures" role="link" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">Lectures</span>
+    </a>
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-lectures">    
+        <li>
+    <a class="dropdown-item" href="../lectures/lecture0.html">
+ <span class="dropdown-text">Lecture 0 - Course Introduction</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../lectures/lecture1.html">
+ <span class="dropdown-text">Lecture 1 — Introduction to Optimization</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../lectures/lecture2.html">
+ <span class="dropdown-text">Lecture 2 — Mathematical Programming with Python and Gurobi</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../lectures/lecture3.html">
+ <span class="dropdown-text">Lecture 3 — Why Exact Methods Fail: Complexity, Scalability, and Motivation for Soft Computing</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../lectures/lecture4.html">
+ <span class="dropdown-text">Lecture 4 — Introduction to Heuristics and Metaheuristics</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../lectures/lecture5.html">
+ <span class="dropdown-text">Lecture 5 — Local Search and Neighborhood Structures</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../lectures/lecture6.html">
+ <span class="dropdown-text">Lecture 6 — Hill Climbing, Descent Methods, and Local Optima</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../lectures/lecture7.html">
+ <span class="dropdown-text">Lecture 7 — Simulated Annealing and Probabilistic Local Search</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../lectures/lecture8.html">
+ <span class="dropdown-text">Lecture 8 — Tabu Search and Memory-Based Heuristics</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../lectures/lecture9.html">
+ <span class="dropdown-text">Lecture 9 — Population-Based Metaheuristics: Genetic Algorithms</span></a>
+  </li>  
+    </ul>
+  </li>
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+  <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#learning-objectives" id="toc-learning-objectives" class="nav-link active" data-scroll-target="#learning-objectives"><span class="header-section-number">1</span> Learning Objectives</a></li>
+  <li><a href="#lecture-roadmap" id="toc-lecture-roadmap" class="nav-link" data-scroll-target="#lecture-roadmap"><span class="header-section-number">2</span> Lecture Roadmap</a></li>
+  <li><a href="#population-based-metaheuristics-genetic-algorithms" id="toc-population-based-metaheuristics-genetic-algorithms" class="nav-link" data-scroll-target="#population-based-metaheuristics-genetic-algorithms"><span class="header-section-number">3</span> Population-Based Metaheuristics: Genetic Algorithms</a>
+  <ul class="collapse">
+  <li><a href="#key-idea-of-population-based-search" id="toc-key-idea-of-population-based-search" class="nav-link" data-scroll-target="#key-idea-of-population-based-search"><span class="header-section-number">3.1</span> Key Idea of Population-Based Search</a></li>
+  <li><a href="#genetic-algorithms-in-soft-computing" id="toc-genetic-algorithms-in-soft-computing" class="nav-link" data-scroll-target="#genetic-algorithms-in-soft-computing"><span class="header-section-number">3.2</span> Genetic Algorithms in Soft Computing</a></li>
+  <li><a href="#why-genetic-algorithms-are-powerful" id="toc-why-genetic-algorithms-are-powerful" class="nav-link" data-scroll-target="#why-genetic-algorithms-are-powerful"><span class="header-section-number">3.3</span> Why Genetic Algorithms Are Powerful</a></li>
+  <li><a href="#position-of-genetic-algorithms-in-this-course" id="toc-position-of-genetic-algorithms-in-this-course" class="nav-link" data-scroll-target="#position-of-genetic-algorithms-in-this-course"><span class="header-section-number">3.4</span> Position of Genetic Algorithms in This Course</a></li>
+  </ul></li>
+  <li><a href="#motivation-for-population-based-search" id="toc-motivation-for-population-based-search" class="nav-link" data-scroll-target="#motivation-for-population-based-search"><span class="header-section-number">4</span> Motivation for Population-Based Search</a></li>
+  <li><a href="#biological-inspiration" id="toc-biological-inspiration" class="nav-link" data-scroll-target="#biological-inspiration"><span class="header-section-number">5</span> Biological Inspiration</a>
+  <ul class="collapse">
+  <li><a href="#evolution-as-an-optimization-process" id="toc-evolution-as-an-optimization-process" class="nav-link" data-scroll-target="#evolution-as-an-optimization-process"><span class="header-section-number">5.1</span> Evolution as an Optimization Process</a></li>
+  </ul></li>
+  <li><a href="#basic-structure-of-a-genetic-algorithm" id="toc-basic-structure-of-a-genetic-algorithm" class="nav-link" data-scroll-target="#basic-structure-of-a-genetic-algorithm"><span class="header-section-number">6</span> Basic Structure of a Genetic Algorithm</a>
+  <ul class="collapse">
+  <li><a href="#evolutionary-iteration" id="toc-evolutionary-iteration" class="nav-link" data-scroll-target="#evolutionary-iteration"><span class="header-section-number">6.1</span> Evolutionary Iteration</a></li>
+  <li><a href="#implementation-oriented-ga-skeleton" id="toc-implementation-oriented-ga-skeleton" class="nav-link" data-scroll-target="#implementation-oriented-ga-skeleton"><span class="header-section-number">6.2</span> Implementation-Oriented GA Skeleton</a></li>
+  </ul></li>
+  <li><a href="#solution-encoding-representation" id="toc-solution-encoding-representation" class="nav-link" data-scroll-target="#solution-encoding-representation"><span class="header-section-number">7</span> Solution Encoding (Representation)</a>
+  <ul class="collapse">
+  <li><a href="#why-encoding-matters" id="toc-why-encoding-matters" class="nav-link" data-scroll-target="#why-encoding-matters"><span class="header-section-number">7.1</span> Why Encoding Matters</a></li>
+  <li><a href="#common-encoding-schemes" id="toc-common-encoding-schemes" class="nav-link" data-scroll-target="#common-encoding-schemes"><span class="header-section-number">7.2</span> Common Encoding Schemes</a></li>
+  <li><a href="#encoding-design-principle" id="toc-encoding-design-principle" class="nav-link" data-scroll-target="#encoding-design-principle"><span class="header-section-number">7.3</span> Encoding Design Principle</a></li>
+  </ul></li>
+  <li><a href="#fitness-function" id="toc-fitness-function" class="nav-link" data-scroll-target="#fitness-function"><span class="header-section-number">8</span> Fitness Function</a>
+  <ul class="collapse">
+  <li><a href="#fitness-in-minimization-and-maximization-problems" id="toc-fitness-in-minimization-and-maximization-problems" class="nav-link" data-scroll-target="#fitness-in-minimization-and-maximization-problems"><span class="header-section-number">8.1</span> Fitness in Minimization and Maximization Problems</a></li>
+  <li><a href="#cost-of-fitness-evaluation" id="toc-cost-of-fitness-evaluation" class="nav-link" data-scroll-target="#cost-of-fitness-evaluation"><span class="header-section-number">8.2</span> Cost of Fitness Evaluation</a></li>
+  <li><a href="#feasibility-handling" id="toc-feasibility-handling" class="nav-link" data-scroll-target="#feasibility-handling"><span class="header-section-number">8.3</span> Feasibility Handling</a></li>
+  <li><a href="#fitness-scaling-and-selection-pressure" id="toc-fitness-scaling-and-selection-pressure" class="nav-link" data-scroll-target="#fitness-scaling-and-selection-pressure"><span class="header-section-number">8.4</span> Fitness Scaling and Selection Pressure</a></li>
+  <li><a href="#consistency-across-generations" id="toc-consistency-across-generations" class="nav-link" data-scroll-target="#consistency-across-generations"><span class="header-section-number">8.5</span> Consistency Across Generations</a></li>
+  <li><a href="#practical-insight" id="toc-practical-insight" class="nav-link" data-scroll-target="#practical-insight"><span class="header-section-number">8.6</span> Practical Insight</a></li>
+  <li><a href="#evaluation-budget-and-parallelism" id="toc-evaluation-budget-and-parallelism" class="nav-link" data-scroll-target="#evaluation-budget-and-parallelism"><span class="header-section-number">8.7</span> Evaluation Budget and Parallelism</a></li>
+  </ul></li>
+  <li><a href="#selection-mechanisms" id="toc-selection-mechanisms" class="nav-link" data-scroll-target="#selection-mechanisms"><span class="header-section-number">9</span> Selection Mechanisms</a>
+  <ul class="collapse">
+  <li><a href="#purpose-of-selection" id="toc-purpose-of-selection" class="nav-link" data-scroll-target="#purpose-of-selection"><span class="header-section-number">9.1</span> Purpose of Selection</a></li>
+  <li><a href="#common-selection-methods" id="toc-common-selection-methods" class="nav-link" data-scroll-target="#common-selection-methods"><span class="header-section-number">9.2</span> Common Selection Methods</a></li>
+  <li><a href="#practical-considerations" id="toc-practical-considerations" class="nav-link" data-scroll-target="#practical-considerations"><span class="header-section-number">9.3</span> Practical Considerations</a></li>
+  <li><a href="#key-insight" id="toc-key-insight" class="nav-link" data-scroll-target="#key-insight"><span class="header-section-number">9.4</span> Key Insight</a></li>
+  </ul></li>
+  <li><a href="#crossover-operators" id="toc-crossover-operators" class="nav-link" data-scroll-target="#crossover-operators"><span class="header-section-number">10</span> Crossover Operators</a>
+  <ul class="collapse">
+  <li><a href="#role-of-crossover" id="toc-role-of-crossover" class="nav-link" data-scroll-target="#role-of-crossover"><span class="header-section-number">10.1</span> Role of Crossover</a></li>
+  <li><a href="#crossover-for-binary-and-integer-encodings" id="toc-crossover-for-binary-and-integer-encodings" class="nav-link" data-scroll-target="#crossover-for-binary-and-integer-encodings"><span class="header-section-number">10.2</span> Crossover for Binary and Integer Encodings</a></li>
+  <li><a href="#crossover-for-permutation-encodings" id="toc-crossover-for-permutation-encodings" class="nav-link" data-scroll-target="#crossover-for-permutation-encodings"><span class="header-section-number">10.3</span> Crossover for Permutation Encodings</a></li>
+  <li><a href="#practical-insight-1" id="toc-practical-insight-1" class="nav-link" data-scroll-target="#practical-insight-1"><span class="header-section-number">10.4</span> Practical Insight</a></li>
+  </ul></li>
+  <li><a href="#mutation-operators" id="toc-mutation-operators" class="nav-link" data-scroll-target="#mutation-operators"><span class="header-section-number">11</span> Mutation Operators</a>
+  <ul class="collapse">
+  <li><a href="#role-of-mutation" id="toc-role-of-mutation" class="nav-link" data-scroll-target="#role-of-mutation"><span class="header-section-number">11.1</span> Role of Mutation</a></li>
+  <li><a href="#mutation-rate-and-its-effect" id="toc-mutation-rate-and-its-effect" class="nav-link" data-scroll-target="#mutation-rate-and-its-effect"><span class="header-section-number">11.2</span> Mutation Rate and Its Effect</a></li>
+  <li><a href="#common-mutation-operators" id="toc-common-mutation-operators" class="nav-link" data-scroll-target="#common-mutation-operators"><span class="header-section-number">11.3</span> Common Mutation Operators</a></li>
+  <li><a href="#practical-insight-2" id="toc-practical-insight-2" class="nav-link" data-scroll-target="#practical-insight-2"><span class="header-section-number">11.4</span> Practical Insight</a></li>
+  </ul></li>
+  <li><a href="#population-replacement-and-elitism" id="toc-population-replacement-and-elitism" class="nav-link" data-scroll-target="#population-replacement-and-elitism"><span class="header-section-number">12</span> Population Replacement and Elitism</a>
+  <ul class="collapse">
+  <li><a href="#population-replacement-strategies" id="toc-population-replacement-strategies" class="nav-link" data-scroll-target="#population-replacement-strategies"><span class="header-section-number">12.1</span> Population Replacement Strategies</a></li>
+  <li><a href="#elitism" id="toc-elitism" class="nav-link" data-scroll-target="#elitism"><span class="header-section-number">12.2</span> Elitism</a></li>
+  <li><a href="#practical-insight-3" id="toc-practical-insight-3" class="nav-link" data-scroll-target="#practical-insight-3"><span class="header-section-number">12.3</span> Practical Insight</a></li>
+  </ul></li>
+  <li><a href="#exploration-vs-exploitation-in-genetic-algorithms" id="toc-exploration-vs-exploitation-in-genetic-algorithms" class="nav-link" data-scroll-target="#exploration-vs-exploitation-in-genetic-algorithms"><span class="header-section-number">13</span> Exploration vs Exploitation in Genetic Algorithms</a>
+  <ul class="collapse">
+  <li><a href="#sources-of-exploration-in-genetic-algorithms" id="toc-sources-of-exploration-in-genetic-algorithms" class="nav-link" data-scroll-target="#sources-of-exploration-in-genetic-algorithms"><span class="header-section-number">13.1</span> Sources of Exploration in Genetic Algorithms</a></li>
+  <li><a href="#sources-of-exploitation-in-genetic-algorithms" id="toc-sources-of-exploitation-in-genetic-algorithms" class="nav-link" data-scroll-target="#sources-of-exploitation-in-genetic-algorithms"><span class="header-section-number">13.2</span> Sources of Exploitation in Genetic Algorithms</a></li>
+  <li><a href="#consequences-of-imbalance" id="toc-consequences-of-imbalance" class="nav-link" data-scroll-target="#consequences-of-imbalance"><span class="header-section-number">13.3</span> Consequences of Imbalance</a></li>
+  <li><a href="#achieving-balance-in-practice" id="toc-achieving-balance-in-practice" class="nav-link" data-scroll-target="#achieving-balance-in-practice"><span class="header-section-number">13.4</span> Achieving Balance in Practice</a></li>
+  <li><a href="#key-insight-1" id="toc-key-insight-1" class="nav-link" data-scroll-target="#key-insight-1"><span class="header-section-number">13.5</span> Key Insight</a></li>
+  <li><a href="#parameter-interaction-cheatsheet" id="toc-parameter-interaction-cheatsheet" class="nav-link" data-scroll-target="#parameter-interaction-cheatsheet"><span class="header-section-number">13.6</span> Parameter Interaction Cheatsheet</a></li>
+  </ul></li>
+  <li><a href="#strengths-of-genetic-algorithms" id="toc-strengths-of-genetic-algorithms" class="nav-link" data-scroll-target="#strengths-of-genetic-algorithms"><span class="header-section-number">14</span> Strengths of Genetic Algorithms</a></li>
+  <li><a href="#limitations-of-genetic-algorithms" id="toc-limitations-of-genetic-algorithms" class="nav-link" data-scroll-target="#limitations-of-genetic-algorithms"><span class="header-section-number">15</span> Limitations of Genetic Algorithms</a>
+  <ul class="collapse">
+  <li><a href="#diagnostics-and-common-failure-modes" id="toc-diagnostics-and-common-failure-modes" class="nav-link" data-scroll-target="#diagnostics-and-common-failure-modes"><span class="header-section-number">15.1</span> Diagnostics and Common Failure Modes</a></li>
+  </ul></li>
+  <li><a href="#genetic-algorithms-in-modern-soft-computing" id="toc-genetic-algorithms-in-modern-soft-computing" class="nav-link" data-scroll-target="#genetic-algorithms-in-modern-soft-computing"><span class="header-section-number">16</span> Genetic Algorithms in Modern Soft Computing</a></li>
+  <li><a href="#mini-exercises" id="toc-mini-exercises" class="nav-link" data-scroll-target="#mini-exercises"><span class="header-section-number">17</span> Mini Exercises</a></li>
+  <li><a href="#references-for-this-chapter" id="toc-references-for-this-chapter" class="nav-link" data-scroll-target="#references-for-this-chapter"><span class="header-section-number">18</span> References for This Chapter</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Lecture 9 — Population-Based Metaheuristics: Genetic Algorithms</h1>
+<p class="subtitle lead">Encoding, crossover, mutation, selection</p>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<section id="learning-objectives" class="level2" data-number="1">
+<h2 data-number="1" class="anchored" data-anchor-id="learning-objectives"><span class="header-section-number">1</span> Learning Objectives</h2>
+<p>By the end of this lecture, you should be able to:</p>
+<ul>
+<li>explain why population-based metaheuristics are effective for complex optimization problems</li>
+<li>describe the fundamental principles of genetic algorithms and their biological inspiration</li>
+<li>choose appropriate solution encodings for different problem types</li>
+<li>define and evaluate fitness functions for minimization and maximization problems</li>
+<li>explain and compare common selection mechanisms used in genetic algorithms</li>
+<li>design suitable crossover operators for binary, integer, and permutation representations</li>
+<li>implement mutation operators and understand their role in maintaining diversity</li>
+<li>analyze the exploration–exploitation balance in genetic algorithms</li>
+<li>identify the strengths and limitations of genetic algorithms in practice</li>
+<li>explain how genetic algorithms are combined with local search and exact methods in modern soft computing</li>
+</ul>
+<hr>
+</section>
+<section id="lecture-roadmap" class="level2" data-number="2">
+<h2 data-number="2" class="anchored" data-anchor-id="lecture-roadmap"><span class="header-section-number">2</span> Lecture Roadmap</h2>
+<p>This lecture proceeds in eight blocks:</p>
+<ol type="1">
+<li>why population-based search differs from trajectory-based metaheuristics</li>
+<li>GA core loop: initialization, selection, crossover, mutation, replacement</li>
+<li>representation and fitness design</li>
+<li>operator design for binary, integer, permutation, and real encodings</li>
+<li>replacement, elitism, and diversity management</li>
+<li>exploration-exploitation balance and parameter interactions</li>
+<li>practical limitations, diagnostics, and failure modes</li>
+<li>hybrid GA roles in modern soft computing</li>
+</ol>
+<hr>
+</section>
+<section id="population-based-metaheuristics-genetic-algorithms" class="level2" data-number="3">
+<h2 data-number="3" class="anchored" data-anchor-id="population-based-metaheuristics-genetic-algorithms"><span class="header-section-number">3</span> Population-Based Metaheuristics: Genetic Algorithms</h2>
+<p>Population-based metaheuristics adopt a fundamentally different search philosophy compared with trajectory-based methods such as hill climbing, simulated annealing, and tabu search. While trajectory-based methods iteratively improve <strong>a single incumbent solution</strong>, population-based approaches maintain and evolve <strong>a collection of solutions simultaneously</strong>.</p>
+<p>This population-centric view enables:</p>
+<ul>
+<li><strong>parallel exploration</strong> of multiple regions of the solution space,</li>
+<li>natural <strong>diversification</strong>, reducing dependence on any single starting solution, and</li>
+<li><strong>information sharing</strong> between high-quality solutions through recombination.</li>
+</ul>
+<p>As a result, population-based methods are particularly effective for problems with complex, multimodal, or rugged search landscapes, where single-solution methods are prone to premature convergence.</p>
+<hr>
+<section id="key-idea-of-population-based-search" class="level3" data-number="3.1">
+<h3 data-number="3.1" class="anchored" data-anchor-id="key-idea-of-population-based-search"><span class="header-section-number">3.1</span> Key Idea of Population-Based Search</h3>
+<p>At any point in time, the algorithm maintains a population:</p>
+<p><span class="math display">\[
+\mathcal{P} = \{ s^{(1)}, s^{(2)}, \dots, s^{(N)} \},
+\]</span></p>
+<p>where each individual <span class="math inline">\(s^{(i)}\)</span> represents a feasible or candidate solution. Instead of moving along a single search path, the algorithm evolves this set over time, balancing:</p>
+<ul>
+<li><strong>exploration</strong>, by maintaining diversity across individuals, and</li>
+<li><strong>exploitation</strong>, by favoring higher-quality solutions during selection.</li>
+</ul>
+<p>The population itself acts as an implicit memory of the search history.</p>
+<hr>
+</section>
+<section id="genetic-algorithms-in-soft-computing" class="level3" data-number="3.2">
+<h3 data-number="3.2" class="anchored" data-anchor-id="genetic-algorithms-in-soft-computing"><span class="header-section-number">3.2</span> Genetic Algorithms in Soft Computing</h3>
+<p>Among population-based metaheuristics, <strong>genetic algorithms (GAs)</strong> are the most widely studied and applied. They are inspired by principles of natural evolution and genetics, such as:</p>
+<ul>
+<li>survival of the fittest,</li>
+<li>reproduction and inheritance,</li>
+<li>variation through mutation.</li>
+</ul>
+<p>In a GA, solutions evolve over successive generations, gradually improving their quality through selection, recombination, and mutation. This evolutionary view follows the foundational line of work established in classical GA literature (Holland, 1992; Mitchell, 1996).</p>
+<hr>
+</section>
+<section id="why-genetic-algorithms-are-powerful" class="level3" data-number="3.3">
+<h3 data-number="3.3" class="anchored" data-anchor-id="why-genetic-algorithms-are-powerful"><span class="header-section-number">3.3</span> Why Genetic Algorithms Are Powerful</h3>
+<p>Genetic algorithms offer several distinctive advantages:</p>
+<ul>
+<li>they explore multiple regions of the solution space in parallel,</li>
+<li>they are less sensitive to initial solutions than local search methods,</li>
+<li>they naturally handle discrete, continuous, and mixed decision variables, and</li>
+<li>they are highly flexible and easily hybridized with local search and exact optimization.</li>
+</ul>
+<p>Because of these properties, GAs are particularly effective for large-scale, highly nonlinear, or combinatorial optimization problems where exact methods and single-solution heuristics struggle.</p>
+<hr>
+</section>
+<section id="position-of-genetic-algorithms-in-this-course" class="level3" data-number="3.4">
+<h3 data-number="3.4" class="anchored" data-anchor-id="position-of-genetic-algorithms-in-this-course"><span class="header-section-number">3.4</span> Position of Genetic Algorithms in This Course</h3>
+<p>In the context of <strong>Selected Topics in Soft Computing</strong>, genetic algorithms represent a key paradigm shift:</p>
+<ul>
+<li>from deterministic to population-driven search,</li>
+<li>from local improvement to global exploration, and</li>
+<li>from handcrafted heuristics to adaptive evolutionary processes.</li>
+</ul>
+<p>Understanding genetic algorithms provides the foundation for more advanced evolutionary and hybrid optimization methods studied later in the course.</p>
+<hr>
+</section>
+</section>
+<section id="motivation-for-population-based-search" class="level2" data-number="4">
+<h2 data-number="4" class="anchored" data-anchor-id="motivation-for-population-based-search"><span class="header-section-number">4</span> Motivation for Population-Based Search</h2>
+<p>Trajectory-based local search methods explore the solution space by iteratively modifying a <strong>single incumbent solution</strong>. While highly effective for intensification, this sequential search paradigm exhibits several structural weaknesses:</p>
+<ul>
+<li><p><strong>Strong dependence on the initial solution</strong> The quality of the final solution is often determined by the starting point, with poor initial solutions leading to poor local optima.</p></li>
+<li><p><strong>Limited exploration of distant regions</strong> Local moves restrict the search to neighborhoods of the current solution, making it difficult to reach far-away but potentially superior regions of the solution space.</p></li>
+<li><p><strong>Premature convergence to local optima</strong> Once trapped in a local optimum, single-solution methods require external mechanisms such as restarts or perturbations to continue meaningful exploration.</p></li>
+</ul>
+<p>These limitations become increasingly severe as problem size and landscape complexity grow.</p>
+<hr>
+<p>Population-based methods overcome these issues by fundamentally changing how the solution space is explored:</p>
+<ul>
+<li><p><strong>Maintaining diversity through multiple solutions</strong> A population naturally represents different regions of the solution space, reducing the risk of stagnation.</p></li>
+<li><p><strong>Parallel exploration</strong> Multiple candidate solutions evolve simultaneously, allowing the algorithm to investigate distant regions in parallel rather than sequentially.</p></li>
+<li><p><strong>Information sharing and recombination</strong> High-quality partial structures from different solutions can be combined, enabling the discovery of solutions that are difficult to reach through local moves alone.</p></li>
+</ul>
+<p>Because of these properties, population-based search is particularly effective for <strong>complex, multimodal, and highly nonconvex landscapes</strong>, where local search and greedy improvement strategies are insufficient.</p>
+<hr>
+</section>
+<section id="biological-inspiration" class="level2" data-number="5">
+<h2 data-number="5" class="anchored" data-anchor-id="biological-inspiration"><span class="header-section-number">5</span> Biological Inspiration</h2>
+<p>Genetic algorithms are inspired by the fundamental principles of <strong>Darwinian evolution</strong> and population genetics. The central idea is that complex, well-adapted structures can emerge over time through simple, decentralized mechanisms driven by selection and variation.</p>
+<p>In the context of optimization, the biological analogy is interpreted as follows:</p>
+<ul>
+<li><p><strong>Individuals represent candidate solutions</strong> Each individual in the population encodes a possible solution to the optimization problem, analogous to an organism in a biological population.</p></li>
+<li><p><strong>Fitness measures solution quality</strong> A fitness function evaluates how well an individual solves the problem. Higher fitness corresponds to better adaptation to the environment, that is, higher-quality solutions.</p></li>
+<li><p><strong>Selection favors better individuals</strong> Individuals with higher fitness are more likely to be selected for reproduction, reflecting the principle of survival of the fittest. This introduces exploitation by biasing the search toward promising regions.</p></li>
+<li><p><strong>Crossover combines genetic material from parents</strong> Offspring are created by recombining parts of two or more parent solutions. This mechanism allows useful partial structures, or building blocks, to be inherited and combined, enabling effective global exploration.</p></li>
+<li><p><strong>Mutation introduces random variation</strong> Small random changes are applied to individuals to maintain diversity and introduce new genetic material. Mutation prevents the population from becoming too homogeneous and helps explore unexplored regions of the solution space.</p></li>
+</ul>
+<hr>
+<section id="evolution-as-an-optimization-process" class="level3" data-number="5.1">
+<h3 data-number="5.1" class="anchored" data-anchor-id="evolution-as-an-optimization-process"><span class="header-section-number">5.1</span> Evolution as an Optimization Process</h3>
+<p>Over successive generations, the combined effect of selection, crossover, and mutation causes the population to <strong>evolve toward higher-quality solutions</strong>. Poor solutions gradually disappear, while good solution components propagate and recombine.</p>
+<p>From an optimization perspective, this evolutionary process provides:</p>
+<ul>
+<li>a balance between <strong>exploitation</strong> (via selection of good solutions), and</li>
+<li><strong>exploration</strong> (via crossover and mutation).</li>
+</ul>
+<p>This biologically inspired mechanism allows genetic algorithms to search large and complex spaces effectively without requiring gradient information, convexity, or problem-specific structure, making them a central tool in soft computing.</p>
+<hr>
+</section>
+</section>
+<section id="basic-structure-of-a-genetic-algorithm" class="level2" data-number="6">
+<h2 data-number="6" class="anchored" data-anchor-id="basic-structure-of-a-genetic-algorithm"><span class="header-section-number">6</span> Basic Structure of a Genetic Algorithm</h2>
+<p>A genetic algorithm operates by evolving a population of candidate solutions over a sequence of generations. Each generation applies biologically inspired operators that gradually improve solution quality while maintaining diversity.</p>
+<p>A generic genetic algorithm follows this high-level structure:</p>
+<ol type="1">
+<li><p><strong>Initialize a population of solutions</strong></p>
+<ul>
+<li>Generate an initial set of individuals, often at random or using simple heuristics.</li>
+<li>The population size is typically fixed and chosen to balance diversity and computational cost.</li>
+</ul></li>
+<li><p><strong>Evaluate the fitness of each individual</strong></p>
+<ul>
+<li>Compute the fitness value for every solution in the population using a predefined fitness function.</li>
+<li>Fitness evaluation often dominates the computational effort of the algorithm.</li>
+</ul></li>
+<li><p><strong>Repeat until a termination criterion is met</strong></p>
+<ul>
+<li><p><strong>Select parent individuals</strong> Choose individuals from the current population based on their fitness, favoring higher-quality solutions while retaining some diversity.</p></li>
+<li><p><strong>Apply crossover to generate offspring</strong> Recombine genetic material from selected parents to produce new candidate solutions that inherit traits from both.</p></li>
+<li><p><strong>Apply mutation to offspring</strong> Introduce small random changes to offspring to maintain diversity and explore new regions of the solution space.</p></li>
+<li><p><strong>Evaluate new individuals</strong> Compute the fitness of the newly generated offspring.</p></li>
+<li><p><strong>Select individuals for the next generation</strong> Form the next population by choosing from parents and offspring according to a replacement strategy, often incorporating elitism.</p></li>
+</ul></li>
+<li><p><strong>Return the best solution found</strong></p>
+<ul>
+<li>Track and return the highest-quality solution encountered across all generations, not only the final population.</li>
+</ul></li>
+</ol>
+<hr>
+<section id="evolutionary-iteration" class="level3" data-number="6.1">
+<h3 data-number="6.1" class="anchored" data-anchor-id="evolutionary-iteration"><span class="header-section-number">6.1</span> Evolutionary Iteration</h3>
+<p>One full execution of the selection, crossover, mutation, and replacement steps constitutes an <strong>evolutionary iteration</strong>, commonly referred to as a <strong>generation</strong>. Over successive generations, the population evolves toward better solutions as favorable genetic material spreads through the population.</p>
+<p>This iterative evolutionary process is the core mechanism that enables genetic algorithms to perform robust global search in complex optimization landscapes.</p>
+<hr>
+</section>
+<section id="implementation-oriented-ga-skeleton" class="level3" data-number="6.2">
+<h3 data-number="6.2" class="anchored" data-anchor-id="implementation-oriented-ga-skeleton"><span class="header-section-number">6.2</span> Implementation-Oriented GA Skeleton</h3>
+<div class="sourceCode" id="cb1"><pre class="sourceCode numberSource text number-lines code-with-copy"><code class="sourceCode"><span id="cb1-1"><a href="#cb1-1"></a>Input: population size N, crossover rate pc, mutation rate pm, stopping criterion</span>
+<span id="cb1-2"><a href="#cb1-2"></a>Initialize population P with N individuals</span>
+<span id="cb1-3"><a href="#cb1-3"></a>Evaluate fitness of all individuals in P</span>
+<span id="cb1-4"><a href="#cb1-4"></a>best &lt;- best individual in P</span>
+<span id="cb1-5"><a href="#cb1-5"></a>while not stop:</span>
+<span id="cb1-6"><a href="#cb1-6"></a>  Select parent set from P</span>
+<span id="cb1-7"><a href="#cb1-7"></a>  Apply crossover (rate pc) to generate offspring</span>
+<span id="cb1-8"><a href="#cb1-8"></a>  Apply mutation (rate pm) to offspring</span>
+<span id="cb1-9"><a href="#cb1-9"></a>  Evaluate offspring fitness</span>
+<span id="cb1-10"><a href="#cb1-10"></a>  Build next population using replacement + elitism</span>
+<span id="cb1-11"><a href="#cb1-11"></a>  Update best-so-far solution</span>
+<span id="cb1-12"><a href="#cb1-12"></a>return best</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>This template exposes the main design levers clearly: encoding, operator choices, replacement policy, and evaluation budget.</p>
+<hr>
+</section>
+</section>
+<section id="solution-encoding-representation" class="level2" data-number="7">
+<h2 data-number="7" class="anchored" data-anchor-id="solution-encoding-representation"><span class="header-section-number">7</span> Solution Encoding (Representation)</h2>
+<section id="why-encoding-matters" class="level3" data-number="7.1">
+<h3 data-number="7.1" class="anchored" data-anchor-id="why-encoding-matters"><span class="header-section-number">7.1</span> Why Encoding Matters</h3>
+<p>The <strong>solution encoding</strong>, also called the chromosome representation, specifies how candidate solutions are stored and manipulated inside a genetic algorithm. It is one of the most critical design choices because it determines:</p>
+<ul>
+<li><p><strong>feasibility of generated solutions</strong> Poor encodings may frequently produce infeasible offspring, requiring costly repair or penalization mechanisms.</p></li>
+<li><p><strong>design of crossover and mutation operators</strong> Operators must be compatible with the encoding; otherwise, offspring may violate problem structure or constraints.</p></li>
+<li><p><strong>efficiency of evaluation and modification</strong> Well-chosen representations allow fast fitness evaluation and incremental updates.</p></li>
+<li><p><strong>search landscape induced by genetic operators</strong> The encoding implicitly defines which solutions are “close” and how information is recombined.</p></li>
+</ul>
+<p>A poorly chosen encoding can severely limit performance, regardless of population size, crossover rate, or mutation rate.</p>
+<hr>
+</section>
+<section id="common-encoding-schemes" class="level3" data-number="7.2">
+<h3 data-number="7.2" class="anchored" data-anchor-id="common-encoding-schemes"><span class="header-section-number">7.2</span> Common Encoding Schemes</h3>
+<p>Different optimization problems naturally lend themselves to different representations. The choice should reflect the <strong>combinatorial structure</strong> of the problem.</p>
+<hr>
+<section id="binary-encoding" class="level4" data-number="7.2.1">
+<h4 data-number="7.2.1" class="anchored" data-anchor-id="binary-encoding"><span class="header-section-number">7.2.1</span> Binary Encoding</h4>
+<ul>
+<li><strong>Structure:</strong> chromosome is a binary string <span class="math inline">\(x \in \{0,1\}^n\)</span></li>
+<li><strong>Typical applications:</strong> selection problems, knapsack, set covering, facility location</li>
+<li><strong>Advantages:</strong> simple, compact, easy to manipulate</li>
+</ul>
+<p>Example:</p>
+<pre><code>1 0 1 1 0 0 1</code></pre>
+<p>Each bit typically encodes a yes–no decision, such as selecting an item or opening a facility. Binary encoding is highly flexible and often serves as a default choice for combinatorial problems.</p>
+<hr>
+</section>
+<section id="integer-encoding" class="level4" data-number="7.2.2">
+<h4 data-number="7.2.2" class="anchored" data-anchor-id="integer-encoding"><span class="header-section-number">7.2.2</span> Integer Encoding</h4>
+<ul>
+<li><strong>Structure:</strong> genes take integer values from a finite domain</li>
+<li><strong>Typical applications:</strong> assignment, allocation, scheduling with multiple categories</li>
+</ul>
+<p>Example:</p>
+<pre><code>[2, 1, 3, 3, 2]</code></pre>
+<p>Here, each gene may represent an assignment, such as allocating a job to a machine. Integer encodings are more expressive than binary ones but require carefully designed operators to avoid infeasible assignments.</p>
+<hr>
+</section>
+<section id="permutation-encoding" class="level4" data-number="7.2.3">
+<h4 data-number="7.2.3" class="anchored" data-anchor-id="permutation-encoding"><span class="header-section-number">7.2.3</span> Permutation Encoding</h4>
+<ul>
+<li><strong>Structure:</strong> chromosome is a permutation of elements</li>
+<li><strong>Typical applications:</strong> sequencing, scheduling, routing, traveling salesman problem</li>
+</ul>
+<p>Example:</p>
+<pre><code>[4, 1, 3, 2, 5]</code></pre>
+<p>Each element appears exactly once, representing an ordering. Standard crossover and mutation operators cannot be applied directly, as they may violate the permutation property. Specialized operators are therefore required to preserve feasibility.</p>
+<hr>
+</section>
+<section id="real-valued-encoding" class="level4" data-number="7.2.4">
+<h4 data-number="7.2.4" class="anchored" data-anchor-id="real-valued-encoding"><span class="header-section-number">7.2.4</span> Real-Valued Encoding</h4>
+<ul>
+<li><strong>Structure:</strong> genes are continuous variables</li>
+<li><strong>Typical applications:</strong> continuous optimization, parameter tuning, control problems</li>
+</ul>
+<p>Example:</p>
+<pre><code>[1.42, -0.7, 3.05]</code></pre>
+<p>Real-valued encodings allow smooth search and are often paired with arithmetic crossover and Gaussian mutation.</p>
+<hr>
+</section>
+</section>
+<section id="encoding-design-principle" class="level3" data-number="7.3">
+<h3 data-number="7.3" class="anchored" data-anchor-id="encoding-design-principle"><span class="header-section-number">7.3</span> Encoding Design Principle</h3>
+<p>An effective encoding should:</p>
+<ul>
+<li>reflect the natural structure of the problem,</li>
+<li>minimize the creation of infeasible solutions, and</li>
+<li>support meaningful recombination of solution components.</li>
+</ul>
+<p>In genetic algorithms, <strong>representation is often more important than parameter tuning</strong>. A well-designed encoding can dramatically improve performance, while a poor one can render the algorithm ineffective.</p>
+<hr>
+</section>
+</section>
+<section id="fitness-function" class="level2" data-number="8">
+<h2 data-number="8" class="anchored" data-anchor-id="fitness-function"><span class="header-section-number">8</span> Fitness Function</h2>
+<p>The <strong>fitness function</strong> quantifies the quality of each individual in the population and drives the evolutionary process. It provides the criterion by which solutions are compared, selected, and propagated across generations.</p>
+<p>In essence, the fitness function establishes the link between the <strong>optimization model</strong> and the <strong>evolutionary dynamics</strong> of the genetic algorithm.</p>
+<hr>
+<section id="fitness-in-minimization-and-maximization-problems" class="level3" data-number="8.1">
+<h3 data-number="8.1" class="anchored" data-anchor-id="fitness-in-minimization-and-maximization-problems"><span class="header-section-number">8.1</span> Fitness in Minimization and Maximization Problems</h3>
+<p>Genetic algorithms are naturally phrased as <strong>maximization</strong> processes. For minimization problems with objective function <span class="math inline">\(f(x)\)</span>, common transformations include:</p>
+<ul>
+<li><p><strong>Direct negation</strong> <span class="math display">\[
+\text{fitness}(x) = -f(x),
+\]</span> which preserves ordering but may cause scaling issues if objective values are large.</p></li>
+<li><p><strong>Shifted or scaled fitness</strong> <span class="math display">\[
+\text{fitness}(x) = C - f(x),
+\]</span> where <span class="math inline">\(C\)</span> is a sufficiently large constant ensuring nonnegative fitness values.</p></li>
+<li><p><strong>Rank-based fitness</strong></p>
+<ul>
+<li>individuals are ranked by objective value,</li>
+<li>fitness depends on rank rather than raw objective values,</li>
+<li>reduces sensitivity to outliers and extreme values.</li>
+</ul></li>
+</ul>
+<p>The choice of transformation affects selection pressure and population diversity.</p>
+<hr>
+</section>
+<section id="cost-of-fitness-evaluation" class="level3" data-number="8.2">
+<h3 data-number="8.2" class="anchored" data-anchor-id="cost-of-fitness-evaluation"><span class="header-section-number">8.2</span> Cost of Fitness Evaluation</h3>
+<p>Fitness evaluation is often the <strong>dominant computational cost</strong> in a genetic algorithm:</p>
+<ul>
+<li>complex constraints may require feasibility checks or repairs,</li>
+<li>simulation-based objectives may be expensive,</li>
+<li>hybrid methods may embed local search or exact solvers inside evaluation.</li>
+</ul>
+<p>For large-scale problems, careful implementation and incremental evaluation strategies are crucial for scalability.</p>
+<hr>
+</section>
+<section id="feasibility-handling" class="level3" data-number="8.3">
+<h3 data-number="8.3" class="anchored" data-anchor-id="feasibility-handling"><span class="header-section-number">8.3</span> Feasibility Handling</h3>
+<p>Many optimization problems impose hard constraints that crossover and mutation may violate. Common strategies include:</p>
+<ul>
+<li><p><strong>Penalty functions</strong></p>
+<ul>
+<li>infeasible solutions are penalized in fitness,</li>
+<li>penalties may be static or adaptive.</li>
+</ul></li>
+<li><p><strong>Repair mechanisms</strong></p>
+<ul>
+<li>infeasible individuals are modified to restore feasibility,</li>
+<li>preserves meaningful genetic material.</li>
+</ul></li>
+<li><p><strong>Feasibility-preserving encodings</strong></p>
+<ul>
+<li>representation and operators are designed to generate only feasible solutions.</li>
+</ul></li>
+</ul>
+<p>The choice depends on problem structure and computational cost.</p>
+<hr>
+</section>
+<section id="fitness-scaling-and-selection-pressure" class="level3" data-number="8.4">
+<h3 data-number="8.4" class="anchored" data-anchor-id="fitness-scaling-and-selection-pressure"><span class="header-section-number">8.4</span> Fitness Scaling and Selection Pressure</h3>
+<p>Without proper scaling, a small number of highly fit individuals may dominate selection, leading to premature convergence.</p>
+<p>Common remedies include:</p>
+<ul>
+<li>fitness normalization or scaling,</li>
+<li>rank-based selection,</li>
+<li>tournament selection with controlled size.</li>
+</ul>
+<p>The goal is to maintain sufficient selection pressure while preserving population diversity.</p>
+<hr>
+</section>
+<section id="consistency-across-generations" class="level3" data-number="8.5">
+<h3 data-number="8.5" class="anchored" data-anchor-id="consistency-across-generations"><span class="header-section-number">8.5</span> Consistency Across Generations</h3>
+<p>For evolutionary progress to be meaningful, fitness values must be:</p>
+<ul>
+<li><strong>comparable across generations</strong>, and</li>
+<li><strong>stable with respect to small solution changes</strong>.</li>
+</ul>
+<p>Inconsistent or noisy fitness evaluations can mislead selection and degrade performance.</p>
+<hr>
+</section>
+<section id="practical-insight" class="level3" data-number="8.6">
+<h3 data-number="8.6" class="anchored" data-anchor-id="practical-insight"><span class="header-section-number">8.6</span> Practical Insight</h3>
+<p>Designing an effective fitness function is as important as choosing the encoding or genetic operators. A well-designed fitness function:</p>
+<ul>
+<li>accurately reflects solution quality,</li>
+<li>handles infeasibility gracefully, and</li>
+<li>provides a smooth gradient for evolutionary improvement.</li>
+</ul>
+<p>In practice, <strong>fitness function design often determines the success or failure of a genetic algorithm</strong>.</p>
+<hr>
+</section>
+<section id="evaluation-budget-and-parallelism" class="level3" data-number="8.7">
+<h3 data-number="8.7" class="anchored" data-anchor-id="evaluation-budget-and-parallelism"><span class="header-section-number">8.7</span> Evaluation Budget and Parallelism</h3>
+<p>In many real applications, GA runtime is dominated by fitness evaluation rather than evolutionary operators.</p>
+<p>Practical implications:</p>
+<ul>
+<li>when evaluations are expensive, reducing the number of evaluations is often more impactful than operator micro-optimizations,</li>
+<li>when evaluations are independent, population fitness computation is naturally parallelizable,</li>
+<li>noisy objectives typically require repeated evaluations or robust ranking strategies.</li>
+</ul>
+<p>A strong GA implementation therefore treats evaluation count and evaluation parallelism as first-class design constraints.</p>
+<hr>
+</section>
+</section>
+<section id="selection-mechanisms" class="level2" data-number="9">
+<h2 data-number="9" class="anchored" data-anchor-id="selection-mechanisms"><span class="header-section-number">9</span> Selection Mechanisms</h2>
+<p>Selection determines <strong>which individuals are chosen as parents</strong> for reproduction and is one of the primary drivers of evolutionary progress in genetic algorithms. Through selection, the algorithm decides <strong>which genetic material is propagated</strong> and which is discarded.</p>
+<p>Selection directly controls the balance between:</p>
+<ul>
+<li><strong>exploitation</strong>: favoring high-quality solutions so that good traits spread, and</li>
+<li><strong>exploration</strong>: maintaining diversity to avoid premature convergence to suboptimal regions.</li>
+</ul>
+<p>A poorly designed selection mechanism can either stall progress (too weak selection) or destroy diversity (too strong selection).</p>
+<hr>
+<section id="purpose-of-selection" class="level3" data-number="9.1">
+<h3 data-number="9.1" class="anchored" data-anchor-id="purpose-of-selection"><span class="header-section-number">9.1</span> Purpose of Selection</h3>
+<p>The goals of selection are twofold:</p>
+<ul>
+<li><p><strong>Favor high-quality solutions (exploitation)</strong> Better individuals should have a higher chance of producing offspring, ensuring steady improvement of the population.</p></li>
+<li><p><strong>Preserve population diversity (exploration)</strong> Weaker individuals should still have a nonzero chance of selection, allowing alternative genetic material to survive and recombine.</p></li>
+</ul>
+<p>Effective selection strikes a careful balance between these competing objectives.</p>
+<hr>
+</section>
+<section id="common-selection-methods" class="level3" data-number="9.2">
+<h3 data-number="9.2" class="anchored" data-anchor-id="common-selection-methods"><span class="header-section-number">9.2</span> Common Selection Methods</h3>
+<p>Different selection strategies implement this balance in different ways.</p>
+<hr>
+<section id="roulette-wheel-selection-fitness-proportionate-selection" class="level4" data-number="9.2.1">
+<h4 data-number="9.2.1" class="anchored" data-anchor-id="roulette-wheel-selection-fitness-proportionate-selection"><span class="header-section-number">9.2.1</span> Roulette-Wheel Selection (Fitness-Proportionate Selection)</h4>
+<p>In roulette-wheel selection, the probability of selecting an individual is proportional to its fitness:</p>
+<p><span class="math display">\[
+P(i) = \frac{\text{fitness}(i)}{\sum_j \text{fitness}(j)}.
+\]</span></p>
+<p><strong>Characteristics:</strong></p>
+<ul>
+<li>simple and intuitive,</li>
+<li>directly reflects fitness differences,</li>
+<li>highly sensitive to scaling and outliers.</li>
+</ul>
+<p><strong>Limitations:</strong></p>
+<ul>
+<li>a few highly fit individuals may dominate selection,</li>
+<li>fitness scaling is often required to prevent premature convergence.</li>
+</ul>
+<p>This method is conceptually appealing but less robust for difficult optimization problems.</p>
+<hr>
+</section>
+<section id="tournament-selection" class="level4" data-number="9.2.2">
+<h4 data-number="9.2.2" class="anchored" data-anchor-id="tournament-selection"><span class="header-section-number">9.2.2</span> Tournament Selection</h4>
+<p>Tournament selection randomly samples a subset of individuals and selects the best among them.</p>
+<p><strong>Procedure:</strong></p>
+<ol type="1">
+<li>randomly select <span class="math inline">\(k\)</span> individuals from the population,</li>
+<li>choose the individual with the best fitness as a parent.</li>
+</ol>
+<p><strong>Properties:</strong></p>
+<ul>
+<li>easy to implement,</li>
+<li>independent of fitness scaling,</li>
+<li>selection pressure controlled by tournament size <span class="math inline">\(k\)</span>.</li>
+</ul>
+<p><strong>Behavior:</strong></p>
+<ul>
+<li>small <span class="math inline">\(k\)</span> → weak selection pressure, high diversity,</li>
+<li>large <span class="math inline">\(k\)</span> → strong selection pressure, fast convergence.</li>
+</ul>
+<p>Tournament selection is one of the most widely used methods due to its robustness and simplicity. Its pressure-control behavior is analyzed in detail in classic selection studies (Goldberg and Deb, 1991; Blickle and Thiele, 1996).</p>
+<hr>
+</section>
+<section id="rank-based-selection" class="level4" data-number="9.2.3">
+<h4 data-number="9.2.3" class="anchored" data-anchor-id="rank-based-selection"><span class="header-section-number">9.2.3</span> Rank-Based Selection</h4>
+<p>In rank-based selection, individuals are sorted by fitness and assigned selection probabilities based on their <strong>rank</strong>, not their absolute fitness value.</p>
+<p><strong>Key features:</strong></p>
+<ul>
+<li>reduces sensitivity to extreme fitness values,</li>
+<li>prevents domination by a few individuals,</li>
+<li>provides stable and predictable selection pressure.</li>
+</ul>
+<p>This method is particularly useful when fitness values vary widely or change significantly across generations.</p>
+<hr>
+</section>
+</section>
+<section id="practical-considerations" class="level3" data-number="9.3">
+<h3 data-number="9.3" class="anchored" data-anchor-id="practical-considerations"><span class="header-section-number">9.3</span> Practical Considerations</h3>
+<p>In practice:</p>
+<ul>
+<li>tournament selection is often preferred for its robustness,</li>
+<li>rank-based selection is useful for maintaining diversity,</li>
+<li>roulette-wheel selection requires careful fitness scaling.</li>
+</ul>
+<p>Selection should always be designed together with crossover, mutation, and population size to achieve a stable evolutionary process.</p>
+<hr>
+</section>
+<section id="key-insight" class="level3" data-number="9.4">
+<h3 data-number="9.4" class="anchored" data-anchor-id="key-insight"><span class="header-section-number">9.4</span> Key Insight</h3>
+<p>Selection is the <strong>primary exploitation mechanism</strong> in genetic algorithms. While crossover and mutation introduce variation, selection determines which variation survives. An effective selection strategy ensures progress toward high-quality solutions <strong>without sacrificing diversity</strong>, which is essential for long-term performance.</p>
+<hr>
+</section>
+</section>
+<section id="crossover-operators" class="level2" data-number="10">
+<h2 data-number="10" class="anchored" data-anchor-id="crossover-operators"><span class="header-section-number">10</span> Crossover Operators</h2>
+<section id="role-of-crossover" class="level3" data-number="10.1">
+<h3 data-number="10.1" class="anchored" data-anchor-id="role-of-crossover"><span class="header-section-number">10.1</span> Role of Crossover</h3>
+<p>Crossover is the defining operator of genetic algorithms. It generates new candidate solutions by <strong>recombining genetic material</strong> from two parent individuals.</p>
+<p>The central idea behind crossover is:</p>
+<blockquote class="blockquote">
+<p>High-quality solutions often consist of useful partial structures, called <em>building blocks</em>, that can be combined to form even better solutions.</p>
+</blockquote>
+<p>By exchanging parts of parent chromosomes, crossover enables <strong>global exploration</strong> of the solution space while exploiting information already discovered by the population.</p>
+<p>Crossover is therefore the primary mechanism for <strong>structured exploration and information sharing</strong> in genetic algorithms.</p>
+<hr>
+</section>
+<section id="crossover-for-binary-and-integer-encodings" class="level3" data-number="10.2">
+<h3 data-number="10.2" class="anchored" data-anchor-id="crossover-for-binary-and-integer-encodings"><span class="header-section-number">10.2</span> Crossover for Binary and Integer Encodings</h3>
+<p>For binary and integer representations, chromosomes are typically treated as sequences, and crossover operates on contiguous or independent gene positions.</p>
+<hr>
+<section id="one-point-crossover" class="level4" data-number="10.2.1">
+<h4 data-number="10.2.1" class="anchored" data-anchor-id="one-point-crossover"><span class="header-section-number">10.2.1</span> One-Point Crossover</h4>
+<ul>
+<li>select a single crossover position at random,</li>
+<li>exchange the tails of the two parent chromosomes.</li>
+</ul>
+<p><strong>Properties:</strong></p>
+<ul>
+<li>simple and fast,</li>
+<li>preserves large contiguous blocks of genes,</li>
+<li>may disrupt interactions between distant genes.</li>
+</ul>
+<p>This operator works well when meaningful solution components are spatially clustered in the encoding.</p>
+<hr>
+</section>
+<section id="two-point-crossover" class="level4" data-number="10.2.2">
+<h4 data-number="10.2.2" class="anchored" data-anchor-id="two-point-crossover"><span class="header-section-number">10.2.2</span> Two-Point Crossover</h4>
+<ul>
+<li>select two crossover positions,</li>
+<li>exchange the segment between them.</li>
+</ul>
+<p><strong>Properties:</strong></p>
+<ul>
+<li>more disruptive than one-point crossover,</li>
+<li>allows mixing of middle segments,</li>
+<li>increases exploration at the cost of stability.</li>
+</ul>
+<p>Two-point crossover provides a better balance between preservation and disruption than one-point crossover.</p>
+<hr>
+</section>
+<section id="uniform-crossover" class="level4" data-number="10.2.3">
+<h4 data-number="10.2.3" class="anchored" data-anchor-id="uniform-crossover"><span class="header-section-number">10.2.3</span> Uniform Crossover</h4>
+<ul>
+<li>for each gene, independently select the gene from either parent,</li>
+<li>typically controlled by a mixing probability.</li>
+</ul>
+<p><strong>Properties:</strong></p>
+<ul>
+<li>high level of mixing,</li>
+<li>strong exploration capability,</li>
+<li>may destroy building blocks if gene interactions are important.</li>
+</ul>
+<p>Uniform crossover is effective when genes contribute relatively independently to solution quality.</p>
+<hr>
+</section>
+</section>
+<section id="crossover-for-permutation-encodings" class="level3" data-number="10.3">
+<h3 data-number="10.3" class="anchored" data-anchor-id="crossover-for-permutation-encodings"><span class="header-section-number">10.3</span> Crossover for Permutation Encodings</h3>
+<p>For permutation-based problems, standard crossover operators cannot be used directly because they may produce invalid permutations. Specialized operators are required to preserve feasibility.</p>
+<hr>
+<section id="partially-matched-crossover-pmx" class="level4" data-number="10.3.1">
+<h4 data-number="10.3.1" class="anchored" data-anchor-id="partially-matched-crossover-pmx"><span class="header-section-number">10.3.1</span> Partially Matched Crossover (PMX)</h4>
+<ul>
+<li>exchanges a segment between parents,</li>
+<li>uses a mapping to resolve duplicate elements,</li>
+<li>preserves relative position information.</li>
+</ul>
+<p>PMX is commonly used in routing and assignment problems.</p>
+<hr>
+</section>
+<section id="order-crossover-ox" class="level4" data-number="10.3.2">
+<h4 data-number="10.3.2" class="anchored" data-anchor-id="order-crossover-ox"><span class="header-section-number">10.3.2</span> Order Crossover (OX)</h4>
+<ul>
+<li>copies a subsequence from one parent,</li>
+<li>fills remaining positions using the order from the other parent.</li>
+</ul>
+<p>OX preserves relative ordering, which is crucial in sequencing problems.</p>
+<hr>
+</section>
+<section id="cycle-crossover-cx" class="level4" data-number="10.3.3">
+<h4 data-number="10.3.3" class="anchored" data-anchor-id="cycle-crossover-cx"><span class="header-section-number">10.3.3</span> Cycle Crossover (CX)</h4>
+<ul>
+<li>identifies cycles between parents,</li>
+<li>alternates inheritance of cycles.</li>
+</ul>
+<p>CX preserves absolute positions of elements and maintains permutation feasibility.</p>
+<hr>
+</section>
+</section>
+<section id="practical-insight-1" class="level3" data-number="10.4">
+<h3 data-number="10.4" class="anchored" data-anchor-id="practical-insight-1"><span class="header-section-number">10.4</span> Practical Insight</h3>
+<p>The choice of crossover operator must align with:</p>
+<ul>
+<li>the solution encoding,</li>
+<li>the problem structure, and</li>
+<li>the nature of interactions between decision variables.</li>
+</ul>
+<p>An effective crossover operator recombines meaningful solution components rather than disrupting them arbitrarily. In practice, crossover design often has a greater impact on performance than crossover probability tuning.</p>
+<hr>
+</section>
+</section>
+<section id="mutation-operators" class="level2" data-number="11">
+<h2 data-number="11" class="anchored" data-anchor-id="mutation-operators"><span class="header-section-number">11</span> Mutation Operators</h2>
+<section id="role-of-mutation" class="level3" data-number="11.1">
+<h3 data-number="11.1" class="anchored" data-anchor-id="role-of-mutation"><span class="header-section-number">11.1</span> Role of Mutation</h3>
+<p>Mutation introduces <strong>random variation</strong> into the population by making small, stochastic changes to individual solutions. Unlike crossover, which recombines existing information, mutation is responsible for injecting <strong>new genetic material</strong> into the search process.</p>
+<p>The main purposes of mutation are:</p>
+<ul>
+<li><p><strong>Maintain population diversity</strong> Prevents the population from becoming too homogeneous due to strong selection and crossover.</p></li>
+<li><p><strong>Reintroduce lost genetic material</strong> Useful traits that disappeared in earlier generations can reappear through mutation.</p></li>
+<li><p><strong>Prevent premature convergence</strong> Enables the search to escape stagnation around suboptimal regions of the solution space.</p></li>
+</ul>
+<p>Mutation typically operates with a <strong>low probability</strong> and acts as a background exploration mechanism rather than the primary driver of search.</p>
+<hr>
+</section>
+<section id="mutation-rate-and-its-effect" class="level3" data-number="11.2">
+<h3 data-number="11.2" class="anchored" data-anchor-id="mutation-rate-and-its-effect"><span class="header-section-number">11.2</span> Mutation Rate and Its Effect</h3>
+<p>The mutation probability <span class="math inline">\(p_m\)</span> controls how frequently mutations occur:</p>
+<ul>
+<li><p>very low <span class="math inline">\(p_m\)</span></p>
+<ul>
+<li>slow introduction of new variation,</li>
+<li>risk of premature convergence.</li>
+</ul></li>
+<li><p>very high <span class="math inline">\(p_m\)</span></p>
+<ul>
+<li>excessive randomness,</li>
+<li>behavior approaches random search.</li>
+</ul></li>
+</ul>
+<p>In practice, mutation rates are chosen to be small, ensuring that mutation complements rather than disrupts crossover and selection.</p>
+<hr>
+</section>
+<section id="common-mutation-operators" class="level3" data-number="11.3">
+<h3 data-number="11.3" class="anchored" data-anchor-id="common-mutation-operators"><span class="header-section-number">11.3</span> Common Mutation Operators</h3>
+<p>The design of mutation operators depends on the solution encoding.</p>
+<hr>
+<section id="binary-mutation" class="level4" data-number="11.3.1">
+<h4 data-number="11.3.1" class="anchored" data-anchor-id="binary-mutation"><span class="header-section-number">11.3.1</span> Binary Mutation</h4>
+<ul>
+<li><strong>Operation:</strong> flip a bit from 0 to 1 or from 1 to 0,</li>
+<li><strong>Probability:</strong> each bit is flipped independently with probability <span class="math inline">\(p_m\)</span>.</li>
+</ul>
+<p><strong>Characteristics:</strong></p>
+<ul>
+<li>simple and efficient,</li>
+<li>suitable for selection and knapsack-type problems,</li>
+<li>enables local exploration around a solution.</li>
+</ul>
+<p>Binary mutation is often interpreted as a small neighborhood move embedded within a population-based framework.</p>
+<hr>
+</section>
+<section id="integer-mutation" class="level4" data-number="11.3.2">
+<h4 data-number="11.3.2" class="anchored" data-anchor-id="integer-mutation"><span class="header-section-number">11.3.2</span> Integer Mutation</h4>
+<ul>
+<li><strong>Operation:</strong> randomly change a gene to another valid integer value within its domain.</li>
+</ul>
+<p>Examples include:</p>
+<ul>
+<li>assigning a job to a different machine,</li>
+<li>reallocating a resource to another category.</li>
+</ul>
+<p><strong>Key consideration:</strong> mutation must respect domain bounds and, where possible, preserve feasibility.</p>
+<hr>
+</section>
+<section id="permutation-mutation" class="level4" data-number="11.3.3">
+<h4 data-number="11.3.3" class="anchored" data-anchor-id="permutation-mutation"><span class="header-section-number">11.3.3</span> Permutation Mutation</h4>
+<p>Permutation encodings require specialized mutation operators that preserve the permutation property.</p>
+<p>Common operators include:</p>
+<ul>
+<li><p><strong>Swap mutation</strong></p>
+<ul>
+<li>exchange two randomly chosen positions.</li>
+</ul></li>
+<li><p><strong>Insertion mutation</strong></p>
+<ul>
+<li>remove an element and insert it at another position.</li>
+</ul></li>
+<li><p><strong>Inversion (subsequence reversal)</strong></p>
+<ul>
+<li>reverse the order of a contiguous subsequence.</li>
+</ul></li>
+</ul>
+<p>These operators are widely used in routing, scheduling, and sequencing problems and act as local reordering moves.</p>
+<hr>
+</section>
+<section id="real-valued-mutation" class="level4" data-number="11.3.4">
+<h4 data-number="11.3.4" class="anchored" data-anchor-id="real-valued-mutation"><span class="header-section-number">11.3.4</span> Real-Valued Mutation</h4>
+<ul>
+<li><strong>Operation:</strong> add a small random perturbation to a gene, often drawn from a Gaussian distribution.</li>
+</ul>
+<p>Example: <span class="math display">\[
+x_i \leftarrow x_i + \epsilon, \quad \epsilon \sim \mathcal{N}(0,\sigma^2)
+\]</span></p>
+<p><strong>Properties:</strong></p>
+<ul>
+<li>enables smooth exploration of continuous spaces,</li>
+<li>mutation strength controlled by variance <span class="math inline">\(\sigma^2\)</span>,</li>
+<li>commonly used in continuous optimization and parameter tuning.</li>
+</ul>
+<hr>
+</section>
+</section>
+<section id="practical-insight-2" class="level3" data-number="11.4">
+<h3 data-number="11.4" class="anchored" data-anchor-id="practical-insight-2"><span class="header-section-number">11.4</span> Practical Insight</h3>
+<p>Mutation should be viewed as a <strong>diversification safeguard</strong>, not as the main optimization engine. Effective genetic algorithms rely on:</p>
+<ul>
+<li>crossover to exploit and recombine good structures, and</li>
+<li>mutation to maintain diversity and long-term exploration.</li>
+</ul>
+<p>A well-calibrated mutation strategy ensures that the population remains adaptable throughout the evolutionary process without degenerating into random search.</p>
+<hr>
+</section>
+</section>
+<section id="population-replacement-and-elitism" class="level2" data-number="12">
+<h2 data-number="12" class="anchored" data-anchor-id="population-replacement-and-elitism"><span class="header-section-number">12</span> Population Replacement and Elitism</h2>
+<p>After offspring have been generated through crossover and mutation, the genetic algorithm must decide <strong>which individuals survive into the next generation</strong>. This step, known as <strong>population replacement</strong>, has a major impact on convergence speed, diversity, and robustness.</p>
+<p>Population replacement defines how information flows over generations and how quickly the algorithm forgets past solutions.</p>
+<hr>
+<section id="population-replacement-strategies" class="level3" data-number="12.1">
+<h3 data-number="12.1" class="anchored" data-anchor-id="population-replacement-strategies"><span class="header-section-number">12.1</span> Population Replacement Strategies</h3>
+<p>Two broad classes of replacement strategies are commonly used.</p>
+<hr>
+<section id="generational-replacement" class="level4" data-number="12.1.1">
+<h4 data-number="12.1.1" class="anchored" data-anchor-id="generational-replacement"><span class="header-section-number">12.1.1</span> Generational Replacement</h4>
+<p>In <strong>generational replacement</strong>:</p>
+<ul>
+<li>the entire population is replaced by newly generated offspring at each generation,</li>
+<li>parents do not survive unless explicitly preserved via elitism.</li>
+</ul>
+<p><strong>Characteristics:</strong></p>
+<ul>
+<li>conceptually simple and widely used,</li>
+<li>clear notion of generations,</li>
+<li>strong generational turnover encourages exploration.</li>
+</ul>
+<p><strong>Limitations:</strong></p>
+<ul>
+<li>good solutions may be lost without elitism,</li>
+<li>convergence can be unstable if offspring quality fluctuates.</li>
+</ul>
+<p>Generational replacement is often paired with elitism to ensure stability.</p>
+<hr>
+</section>
+<section id="steady-state-replacement" class="level4" data-number="12.1.2">
+<h4 data-number="12.1.2" class="anchored" data-anchor-id="steady-state-replacement"><span class="header-section-number">12.1.2</span> Steady-State Replacement</h4>
+<p>In <strong>steady-state replacement</strong>:</p>
+<ul>
+<li>only a small number of individuals are replaced at each iteration,</li>
+<li>offspring immediately compete with existing individuals for survival.</li>
+</ul>
+<p><strong>Characteristics:</strong></p>
+<ul>
+<li>smoother evolution of the population,</li>
+<li>faster propagation of good solutions,</li>
+<li>less disruptive than full replacement.</li>
+</ul>
+<p><strong>Limitations:</strong></p>
+<ul>
+<li>weaker diversity if replacement is too aggressive,</li>
+<li>less clear notion of generations.</li>
+</ul>
+<p>Steady-state strategies are common in real-time and hybrid optimization settings.</p>
+<hr>
+</section>
+</section>
+<section id="elitism" class="level3" data-number="12.2">
+<h3 data-number="12.2" class="anchored" data-anchor-id="elitism"><span class="header-section-number">12.2</span> Elitism</h3>
+<p><strong>Elitism</strong> is a mechanism that explicitly preserves high-quality solutions across generations.</p>
+<p>The most common elitist strategy is:</p>
+<ul>
+<li>copy the best <span class="math inline">\(k\)</span> individuals from the current population directly into the next generation,</li>
+<li>fill the remaining population slots using standard selection and reproduction.</li>
+</ul>
+<hr>
+<section id="benefits-of-elitism" class="level4" data-number="12.2.1">
+<h4 data-number="12.2.1" class="anchored" data-anchor-id="benefits-of-elitism"><span class="header-section-number">12.2.1</span> Benefits of Elitism</h4>
+<p>Elitism provides several important guarantees:</p>
+<ul>
+<li><p><strong>monotonic improvement</strong> The best fitness found so far never degrades across generations.</p></li>
+<li><p><strong>robust convergence</strong> High-quality solutions are protected from being destroyed by crossover or mutation.</p></li>
+<li><p><strong>faster progress</strong> Good genetic material is always retained and reused.</p></li>
+</ul>
+<p>Because of these properties, elitism is considered a best practice in most genetic algorithm implementations.</p>
+<hr>
+</section>
+<section id="risks-of-over-elitism" class="level4" data-number="12.2.2">
+<h4 data-number="12.2.2" class="anchored" data-anchor-id="risks-of-over-elitism"><span class="header-section-number">12.2.2</span> Risks of Over-Elitism</h4>
+<p>Despite its advantages, elitism must be used carefully:</p>
+<ul>
+<li>excessive elitism reduces population diversity,</li>
+<li>too many elites can dominate reproduction,</li>
+<li>the population may converge prematurely to suboptimal regions.</li>
+</ul>
+<p>Typical values of <span class="math inline">\(k\)</span> are small (often 1 to 5 percent of the population size) to balance robustness and diversity.</p>
+<hr>
+</section>
+</section>
+<section id="practical-insight-3" class="level3" data-number="12.3">
+<h3 data-number="12.3" class="anchored" data-anchor-id="practical-insight-3"><span class="header-section-number">12.3</span> Practical Insight</h3>
+<p>Population replacement and elitism together determine the <strong>memory and stability</strong> of a genetic algorithm:</p>
+<ul>
+<li>replacement controls how fast the population changes,</li>
+<li>elitism controls how much high-quality information is retained.</li>
+</ul>
+<p>An effective genetic algorithm carefully balances:</p>
+<ul>
+<li><strong>exploration</strong> through replacement and mutation, and</li>
+<li><strong>exploitation</strong> through elitism and selection.</li>
+</ul>
+<p>Poor choices in this step can negate the benefits of well-designed encodings and operators, making population management a central design decision in evolutionary optimization.</p>
+<hr>
+</section>
+</section>
+<section id="exploration-vs-exploitation-in-genetic-algorithms" class="level2" data-number="13">
+<h2 data-number="13" class="anchored" data-anchor-id="exploration-vs-exploitation-in-genetic-algorithms"><span class="header-section-number">13</span> Exploration vs Exploitation in Genetic Algorithms</h2>
+<p>A central challenge in designing effective genetic algorithms is achieving the right balance between <strong>exploration</strong> and <strong>exploitation</strong>. These two forces govern how the population evolves and determine whether the algorithm converges to high-quality solutions or stagnates prematurely.</p>
+<hr>
+<section id="sources-of-exploration-in-genetic-algorithms" class="level3" data-number="13.1">
+<h3 data-number="13.1" class="anchored" data-anchor-id="sources-of-exploration-in-genetic-algorithms"><span class="header-section-number">13.1</span> Sources of Exploration in Genetic Algorithms</h3>
+<p>Exploration enables the algorithm to investigate new and diverse regions of the solution space. In genetic algorithms, exploration is primarily driven by:</p>
+<ul>
+<li><p><strong>Population diversity</strong> Maintaining a heterogeneous population ensures that multiple regions of the search space are explored in parallel.</p></li>
+<li><p><strong>Mutation operators</strong> Random gene modifications introduce new genetic material and allow the population to escape from previously explored regions.</p></li>
+<li><p><strong>Recombination across distant individuals</strong> Crossover between genetically different parents can produce novel offspring that lie far from existing solutions.</p></li>
+</ul>
+<p>Exploration is essential for avoiding premature convergence and discovering globally competitive solutions.</p>
+<hr>
+</section>
+<section id="sources-of-exploitation-in-genetic-algorithms" class="level3" data-number="13.2">
+<h3 data-number="13.2" class="anchored" data-anchor-id="sources-of-exploitation-in-genetic-algorithms"><span class="header-section-number">13.2</span> Sources of Exploitation in Genetic Algorithms</h3>
+<p>Exploitation focuses the search on promising regions identified so far. In genetic algorithms, exploitation is promoted by:</p>
+<ul>
+<li><p><strong>Selection pressure</strong> Favoring fitter individuals increases the probability that high-quality genetic material is propagated.</p></li>
+<li><p><strong>Elitism</strong> Preserving the best individuals ensures that good solutions are retained and refined over generations.</p></li>
+<li><p><strong>Crossover of similar individuals</strong> Recombining solutions from the same high-quality region intensifies the search locally.</p></li>
+</ul>
+<p>Exploitation is responsible for refining solutions and accelerating convergence.</p>
+<hr>
+</section>
+<section id="consequences-of-imbalance" class="level3" data-number="13.3">
+<h3 data-number="13.3" class="anchored" data-anchor-id="consequences-of-imbalance"><span class="header-section-number">13.3</span> Consequences of Imbalance</h3>
+<p>An inappropriate balance between exploration and exploitation leads to characteristic failure modes:</p>
+<ul>
+<li><p><strong>Too much exploitation</strong></p>
+<ul>
+<li>rapid loss of diversity,</li>
+<li>premature convergence to suboptimal solutions,</li>
+<li>inability to escape local optima.</li>
+</ul></li>
+<li><p><strong>Too much exploration</strong></p>
+<ul>
+<li>excessive randomness,</li>
+<li>slow or unstable convergence,</li>
+<li>inefficient use of computational resources.</li>
+</ul></li>
+</ul>
+<hr>
+</section>
+<section id="achieving-balance-in-practice" class="level3" data-number="13.4">
+<h3 data-number="13.4" class="anchored" data-anchor-id="achieving-balance-in-practice"><span class="header-section-number">13.4</span> Achieving Balance in Practice</h3>
+<p>Effective genetic algorithms carefully tune and coordinate:</p>
+<ul>
+<li>population size,</li>
+<li>selection method and intensity,</li>
+<li>crossover and mutation rates, and</li>
+<li>elitism level.</li>
+</ul>
+<p>In modern implementations, adaptive mechanisms are often used to dynamically adjust these components during the run (for example, adaptive operator probabilities).</p>
+<hr>
+</section>
+<section id="key-insight-1" class="level3" data-number="13.5">
+<h3 data-number="13.5" class="anchored" data-anchor-id="key-insight-1"><span class="header-section-number">13.5</span> Key Insight</h3>
+<p>Genetic algorithms succeed not because they optimize aggressively at every step, but because they <strong>orchestrate exploration and exploitation over time</strong>. Maintaining this balance is the primary design challenge and the key to robust performance in complex optimization landscapes.</p>
+<hr>
+</section>
+<section id="parameter-interaction-cheatsheet" class="level3" data-number="13.6">
+<h3 data-number="13.6" class="anchored" data-anchor-id="parameter-interaction-cheatsheet"><span class="header-section-number">13.6</span> Parameter Interaction Cheatsheet</h3>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 25%">
+<col style="width: 25%">
+<col style="width: 25%">
+<col style="width: 25%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Parameter</th>
+<th>If too low</th>
+<th>If too high</th>
+<th>Typical effect</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Population size</td>
+<td>weak diversity, premature convergence</td>
+<td>high evaluation cost</td>
+<td>controls exploration breadth</td>
+</tr>
+<tr class="even">
+<td>Crossover rate</td>
+<td>weak recombination of building blocks</td>
+<td>disruptive turnover</td>
+<td>controls information mixing</td>
+</tr>
+<tr class="odd">
+<td>Mutation rate</td>
+<td>diversity collapse</td>
+<td>near-random search behavior</td>
+<td>controls long-term exploration</td>
+</tr>
+<tr class="even">
+<td>Tournament size / selection pressure</td>
+<td>slow progress</td>
+<td>over-exploitation</td>
+<td>controls exploitation intensity</td>
+</tr>
+<tr class="odd">
+<td>Elitism level</td>
+<td>loss of strong solutions</td>
+<td>diversity collapse</td>
+<td>controls convergence stability</td>
+</tr>
+</tbody>
+</table>
+<p>Parameter tuning should be done jointly; changing one parameter often changes the effective role of the others.</p>
+<hr>
+</section>
+</section>
+<section id="strengths-of-genetic-algorithms" class="level2" data-number="14">
+<h2 data-number="14" class="anchored" data-anchor-id="strengths-of-genetic-algorithms"><span class="header-section-number">14</span> Strengths of Genetic Algorithms</h2>
+<p>Genetic algorithms possess several strengths that make them a central tool in soft computing and heuristic optimization:</p>
+<ul>
+<li><p><strong>Parallel exploration of the solution space</strong> By evolving a population of solutions, genetic algorithms naturally explore multiple regions of the search space at the same time, reducing the risk of getting trapped in a single local optimum.</p></li>
+<li><p><strong>Flexibility across problem types</strong> Genetic algorithms are largely problem-agnostic and can be applied to combinatorial, continuous, mixed, and even black-box optimization problems with minimal structural assumptions.</p></li>
+<li><p><strong>Natural handling of discrete and continuous variables</strong> Through appropriate encoding and operators, genetic algorithms can seamlessly accommodate binary, integer, permutation, and real-valued decision variables.</p></li>
+<li><p><strong>Strong hybridization potential</strong> Genetic algorithms integrate easily with local search, exact solvers, and problem-specific heuristics, enabling powerful hybrid and matheuristic designs.</p></li>
+</ul>
+<p>Because of these properties, genetic algorithms are particularly effective for <strong>large-scale, rugged, and multimodal optimization landscapes</strong>, where exact methods and single-solution heuristics often fail.</p>
+<hr>
+</section>
+<section id="limitations-of-genetic-algorithms" class="level2" data-number="15">
+<h2 data-number="15" class="anchored" data-anchor-id="limitations-of-genetic-algorithms"><span class="header-section-number">15</span> Limitations of Genetic Algorithms</h2>
+<p>Despite their broad applicability, genetic algorithms also exhibit important limitations:</p>
+<ul>
+<li><p><strong>Many parameters to tune</strong> Population size, selection method, crossover rate, mutation rate, and elitism level all influence performance and often require empirical tuning.</p></li>
+<li><p><strong>Potentially slow convergence</strong> Without additional intensification mechanisms, genetic algorithms may require many generations to achieve high-quality solutions.</p></li>
+<li><p><strong>Complex feasibility handling</strong> Constraints may be violated by crossover or mutation, necessitating penalty functions, repair strategies, or specialized encodings.</p></li>
+<li><p><strong>Dependence on encoding and operators</strong> Poorly chosen representations or genetic operators can severely degrade performance, even with extensive parameter tuning.</p></li>
+</ul>
+<p>As a result, <strong>pure genetic algorithms are rarely competitive on their own</strong> for difficult real-world problems.</p>
+<hr>
+<section id="diagnostics-and-common-failure-modes" class="level3" data-number="15.1">
+<h3 data-number="15.1" class="anchored" data-anchor-id="diagnostics-and-common-failure-modes"><span class="header-section-number">15.1</span> Diagnostics and Common Failure Modes</h3>
+<p>Useful diagnostics during GA runs:</p>
+<ul>
+<li>best and mean fitness trajectories,</li>
+<li>population diversity metrics (e.g., Hamming distance, permutation distance),</li>
+<li>fraction of infeasible individuals,</li>
+<li>takeover speed (how quickly elites dominate the population).</li>
+</ul>
+<p>Common failure modes and fixes:</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Failure mode</th>
+<th>Typical cause</th>
+<th>Practical fix</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>premature convergence</td>
+<td>high selection pressure + low mutation</td>
+<td>reduce pressure, increase mutation, inject diversity</td>
+</tr>
+<tr class="even">
+<td>unstable progress</td>
+<td>high mutation or disruptive crossover</td>
+<td>reduce mutation or use less disruptive operators</td>
+</tr>
+<tr class="odd">
+<td>infeasibility explosion</td>
+<td>encoding/operator mismatch</td>
+<td>use feasibility-preserving operators or repair</td>
+</tr>
+<tr class="even">
+<td>slow improvement</td>
+<td>weak crossover utility or poor fitness shaping</td>
+<td>redesign encoding/fitness; hybridize with local search</td>
+</tr>
+</tbody>
+</table>
+<hr>
+</section>
+</section>
+<section id="genetic-algorithms-in-modern-soft-computing" class="level2" data-number="16">
+<h2 data-number="16" class="anchored" data-anchor-id="genetic-algorithms-in-modern-soft-computing"><span class="header-section-number">16</span> Genetic Algorithms in Modern Soft Computing</h2>
+<p>In contemporary soft computing practice, genetic algorithms are most effective when used as part of a <strong>hybrid optimization framework</strong>. Common combinations include:</p>
+<ul>
+<li><p><strong>Local search integration (memetic algorithms)</strong> Local improvement is applied to individuals to provide strong intensification.</p></li>
+<li><p><strong>Hybridization with tabu search or simulated annealing</strong> Memory-based or probabilistic mechanisms complement evolutionary exploration.</p></li>
+<li><p><strong>Coupling with MILP solvers</strong> Exact solvers are used for repair, bounding, or fine-grained optimization of promising solutions.</p></li>
+</ul>
+<p>In these roles, genetic algorithms function as powerful <strong>global exploration engines</strong>, identifying promising regions of the solution space that are then refined using more focused optimization techniques. This hybrid perspective reflects the modern view of soft computing as a toolbox of complementary methods rather than isolated algorithms.</p>
+<hr>
+</section>
+<section id="mini-exercises" class="level2" data-number="17">
+<h2 data-number="17" class="anchored" data-anchor-id="mini-exercises"><span class="header-section-number">17</span> Mini Exercises</h2>
+<ol type="1">
+<li><p><strong>Knapsack design</strong> Consider a 0–1 knapsack instance with values <span class="math inline">\(v_j\)</span>, weights <span class="math inline">\(w_j\)</span>, and capacity <span class="math inline">\(W\)</span>.</p>
+<ul>
+<li>Propose a binary encoding for candidate solutions.</li>
+<li>Define a fitness function for the maximization objective, and explain how infeasible solutions (violating capacity) should be handled using either a penalty function or a repair rule.</li>
+</ul></li>
+<li><p><strong>Selection pressure comparison</strong> Compare roulette-wheel selection and tournament selection with respect to selection pressure.</p>
+<ul>
+<li>Explain how scaling of fitness values affects roulette-wheel selection.</li>
+<li>Explain how the tournament size <span class="math inline">\(k\)</span> controls selection pressure in tournament selection.</li>
+<li>State which method is typically more robust in practice and why.</li>
+</ul></li>
+<li><p><strong>Permutation mutation for scheduling</strong> For a single-machine sequencing problem where a solution is a permutation of jobs, design a mutation operator.</p>
+<ul>
+<li>Choose one of the following and justify it: swap, insertion, or subsequence reversal.</li>
+<li>Explain how this mutation changes the neighborhood structure and impacts exploration.</li>
+</ul></li>
+<li><p><strong>Elitism and diversity trade-off</strong> Explain why elitism improves robustness and guarantees non-decreasing best fitness. Then discuss how excessive elitism can harm diversity and lead to premature convergence. Propose one practical way to retain the benefits of elitism while preserving diversity (for example, small elite size or diversity-aware replacement).</p></li>
+<li><p><strong>Parameter interaction experiment</strong> Design a small experimental study to analyze how population size and mutation rate interact on a benchmark problem.</p>
+<ul>
+<li>Specify at least three values for each parameter and a fixed evaluation budget.</li>
+<li>Define what metrics you will record (e.g., best fitness, mean fitness, diversity).</li>
+<li>Explain how you would decide whether observed differences are robust across random seeds.</li>
+</ul></li>
+</ol>
+<hr>
+</section>
+<section id="references-for-this-chapter" class="level2" data-number="18">
+<h2 data-number="18" class="anchored" data-anchor-id="references-for-this-chapter"><span class="header-section-number">18</span> References for This Chapter</h2>
+<ol type="1">
+<li>Holland, J. H. (1992). <em>Adaptation in Natural and Artificial Systems</em>. MIT Press. DOI: <a href="https://doi.org/10.7551/mitpress/1090.001.0001">10.7551/mitpress/1090.001.0001</a></li>
+<li>Mitchell, M. (1996). <em>An Introduction to Genetic Algorithms</em>. MIT Press. DOI: <a href="https://doi.org/10.7551/mitpress/3927.001.0001">10.7551/mitpress/3927.001.0001</a></li>
+<li>Whitley, D. (1994). A genetic algorithm tutorial. <em>Statistics and Computing</em>, 4(2), 65-85. DOI: <a href="https://doi.org/10.1007/BF00175354">10.1007/BF00175354</a></li>
+<li>Goldberg, D. E., &amp; Deb, K. (1991). A comparative analysis of selection schemes used in genetic algorithms. <em>Foundations of Genetic Algorithms</em>, 69-93. DOI: <a href="https://doi.org/10.1016/B978-0-08-050684-5.50008-2">10.1016/B978-0-08-050684-5.50008-2</a></li>
+<li>Blickle, T., &amp; Thiele, L. (1996). A comparison of selection schemes used in evolutionary algorithms. <em>Evolutionary Computation</em>, 4(4), 361-394. DOI: <a href="https://doi.org/10.1162/evco.1996.4.4.361">10.1162/evco.1996.4.4.361</a></li>
+<li>Srinivas, M., &amp; Patnaik, L. M. (1994). Adaptive probabilities of crossover and mutation in genetic algorithms. <em>IEEE Transactions on Systems, Man, and Cybernetics</em>, 24(4), 656-667. DOI: <a href="https://doi.org/10.1109/21.286385">10.1109/21.286385</a></li>
+<li>Deb, K., Pratap, A., Agarwal, S., &amp; Meyarivan, T. (2002). A fast and elitist multiobjective genetic algorithm: NSGA-II. <em>IEEE Transactions on Evolutionary Computation</em>, 6(2), 182-197. DOI: <a href="https://doi.org/10.1109/4235.996017">10.1109/4235.996017</a></li>
+</ol>
+<hr>
+
+
+</section>
+
+<a onclick="window.scrollTo(0, 0); return false;" role="button" id="quarto-back-to-top"><i class="bi bi-arrow-up"></i> Back to top</a></main> <!-- /main -->
+<div class="ui-controls" role="group" aria-label="Display controls">
+  <!-- Quarto already shows a light or dark toggle in the navbar when you set light and dark themes.
+       Here we only add font size. -->
+  <label for="fontSize" class="ui-label">A</label>
+  <select id="fontSize" aria-label="Font size">
+    <option value="16">A</option>
+    <option value="18">A+</option>
+    <option value="20">A++</option>
+  </select>
+</div>
+
+<script>
+(function () {
+  const KEY = "q_font_size_px";
+  const select = document.getElementById("fontSize");
+
+  function apply(px) {
+    document.documentElement.style.fontSize = px + "px";
+  }
+
+  // Load saved value or default to 16
+  const saved = localStorage.getItem(KEY) || "16";
+  select.value = saved;
+  apply(saved);
+
+  // Save on change
+  select.addEventListener("change", () => {
+    localStorage.setItem(KEY, select.value);
+    apply(select.value);
+  });
+})();
+</script>
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    // Ensure there is a toggle, if there isn't float one in the top right
+    if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
+      const a = window.document.createElement('a');
+      a.classList.add('top-right');
+      a.classList.add('quarto-color-scheme-toggle');
+      a.href = "";
+      a.onclick = function() { try { window.quartoToggleColorScheme(); } catch {} return false; };
+      const i = window.document.createElement("i");
+      i.classList.add('bi');
+      a.appendChild(i);
+      window.document.body.appendChild(a);
+    }
+    setColorSchemeToggle(hasAlternateSentinel())
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+        const codeEl = trigger.previousElementSibling.cloneNode(true);
+        for (const childEl of codeEl.children) {
+          if (isCodeAnnotation(childEl)) {
+            childEl.remove();
+          }
+        }
+        return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp("https:\/\/soumenatta\.github\.io\/selected_topics_in_soft_computing\/");
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+            // target, if specified
+            link.setAttribute("target", "_blank");
+            if (link.getAttribute("rel") === null) {
+              link.setAttribute("rel", "noopener");
+            }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">
+<p>© Dr.&nbsp;Soumen Atta, Ph.D.&nbsp;(2025)</p>
+</div>   
+    <div class="nav-footer-center">
+      &nbsp;
+    </div>
+    <div class="nav-footer-right">
+      &nbsp;
+    </div>
+  </div>
+</footer>
+
+
+
+
+<script src="../site_libs/quarto-html/zenscroll-min.js"></script>
+</body></html>

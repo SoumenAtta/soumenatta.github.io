@@ -1,0 +1,1541 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.7.33">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>Lecture 5 — Local Search and Neighborhood Structures – Selected Topics in Soft Computing</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<script src="../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-ea385d0e468b0dd5ea5bf0780b1290d9.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-dark-bc185b5c5bdbcb35c2eb49d8a876ef70.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-ea385d0e468b0dd5ea5bf0780b1290d9.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap-376eda28aa9f89c8ff844ce97b1c8190.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/bootstrap/bootstrap-dark-e9bb19cd34d53f25e420f2fd1f8a3f86.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<link href="../site_libs/bootstrap/bootstrap-376eda28aa9f89c8ff844ce97b1c8190.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<style>html{ scroll-behavior: smooth; }</style>
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+<link rel="stylesheet" href="../assets/site.css">
+</head>
+
+<body class="nav-fixed quarto-light"><script id="quarto-html-before-body" type="application/javascript">
+    const toggleBodyColorMode = (bsSheetEl) => {
+      const mode = bsSheetEl.getAttribute("data-mode");
+      const bodyEl = window.document.querySelector("body");
+      if (mode === "dark") {
+        bodyEl.classList.add("quarto-dark");
+        bodyEl.classList.remove("quarto-light");
+      } else {
+        bodyEl.classList.add("quarto-light");
+        bodyEl.classList.remove("quarto-dark");
+      }
+    }
+    const toggleBodyColorPrimary = () => {
+      const bsSheetEl = window.document.querySelector("link#quarto-bootstrap:not([rel=disabled-stylesheet])");
+      if (bsSheetEl) {
+        toggleBodyColorMode(bsSheetEl);
+      }
+    }
+    const setColorSchemeToggle = (alternate) => {
+      const toggles = window.document.querySelectorAll('.quarto-color-scheme-toggle');
+      for (let i=0; i < toggles.length; i++) {
+        const toggle = toggles[i];
+        if (toggle) {
+          if (alternate) {
+            toggle.classList.add("alternate");
+          } else {
+            toggle.classList.remove("alternate");
+          }
+        }
+      }
+    };
+    const toggleColorMode = (alternate) => {
+      // Switch the stylesheets
+      const primaryStylesheets = window.document.querySelectorAll('link.quarto-color-scheme:not(.quarto-color-alternate)');
+      const alternateStylesheets = window.document.querySelectorAll('link.quarto-color-scheme.quarto-color-alternate');
+      manageTransitions('#quarto-margin-sidebar .nav-link', false);
+      if (alternate) {
+        // note: dark is layered on light, we don't disable primary!
+        enableStylesheet(alternateStylesheets);
+        for (const sheetNode of alternateStylesheets) {
+          if (sheetNode.id === "quarto-bootstrap") {
+            toggleBodyColorMode(sheetNode);
+          }
+        }
+      } else {
+        disableStylesheet(alternateStylesheets);
+        enableStylesheet(primaryStylesheets)
+        toggleBodyColorPrimary();
+      }
+      manageTransitions('#quarto-margin-sidebar .nav-link', true);
+      // Switch the toggles
+      setColorSchemeToggle(alternate)
+      // Hack to workaround the fact that safari doesn't
+      // properly recolor the scrollbar when toggling (#1455)
+      if (navigator.userAgent.indexOf('Safari') > 0 && navigator.userAgent.indexOf('Chrome') == -1) {
+        manageTransitions("body", false);
+        window.scrollTo(0, 1);
+        setTimeout(() => {
+          window.scrollTo(0, 0);
+          manageTransitions("body", true);
+        }, 40);
+      }
+    }
+    const disableStylesheet = (stylesheets) => {
+      for (let i=0; i < stylesheets.length; i++) {
+        const stylesheet = stylesheets[i];
+        stylesheet.rel = 'disabled-stylesheet';
+      }
+    }
+    const enableStylesheet = (stylesheets) => {
+      for (let i=0; i < stylesheets.length; i++) {
+        const stylesheet = stylesheets[i];
+        if(stylesheet.rel !== 'stylesheet') { // for Chrome, which will still FOUC without this check
+          stylesheet.rel = 'stylesheet';
+        }
+      }
+    }
+    const manageTransitions = (selector, allowTransitions) => {
+      const els = window.document.querySelectorAll(selector);
+      for (let i=0; i < els.length; i++) {
+        const el = els[i];
+        if (allowTransitions) {
+          el.classList.remove('notransition');
+        } else {
+          el.classList.add('notransition');
+        }
+      }
+    }
+    const isFileUrl = () => {
+      return window.location.protocol === 'file:';
+    }
+    const hasAlternateSentinel = () => {
+      let styleSentinel = getColorSchemeSentinel();
+      if (styleSentinel !== null) {
+        return styleSentinel === "alternate";
+      } else {
+        return false;
+      }
+    }
+    const setStyleSentinel = (alternate) => {
+      const value = alternate ? "alternate" : "default";
+      if (!isFileUrl()) {
+        window.localStorage.setItem("quarto-color-scheme", value);
+      } else {
+        localAlternateSentinel = value;
+      }
+    }
+    const getColorSchemeSentinel = () => {
+      if (!isFileUrl()) {
+        const storageValue = window.localStorage.getItem("quarto-color-scheme");
+        return storageValue != null ? storageValue : localAlternateSentinel;
+      } else {
+        return localAlternateSentinel;
+      }
+    }
+    const toggleGiscusIfUsed = (isAlternate, darkModeDefault) => {
+      const baseTheme = document.querySelector('#giscus-base-theme')?.value ?? 'light';
+      const alternateTheme = document.querySelector('#giscus-alt-theme')?.value ?? 'dark';
+      let newTheme = '';
+      if(authorPrefersDark) {
+        newTheme = isAlternate ? baseTheme : alternateTheme;
+      } else {
+        newTheme = isAlternate ? alternateTheme : baseTheme;
+      }
+      const changeGiscusTheme = () => {
+        // From: https://github.com/giscus/giscus/issues/336
+        const sendMessage = (message) => {
+          const iframe = document.querySelector('iframe.giscus-frame');
+          if (!iframe) return;
+          iframe.contentWindow.postMessage({ giscus: message }, 'https://giscus.app');
+        }
+        sendMessage({
+          setConfig: {
+            theme: newTheme
+          }
+        });
+      }
+      const isGiscussLoaded = window.document.querySelector('iframe.giscus-frame') !== null;
+      if (isGiscussLoaded) {
+        changeGiscusTheme();
+      }
+    };
+    const authorPrefersDark = false;
+    const darkModeDefault = authorPrefersDark;
+      document.querySelector('link#quarto-text-highlighting-styles.quarto-color-scheme-extra').rel = 'disabled-stylesheet';
+      document.querySelector('link#quarto-bootstrap.quarto-color-scheme-extra').rel = 'disabled-stylesheet';
+    let localAlternateSentinel = darkModeDefault ? 'alternate' : 'default';
+    // Dark / light mode switch
+    window.quartoToggleColorScheme = () => {
+      // Read the current dark / light value
+      let toAlternate = !hasAlternateSentinel();
+      toggleColorMode(toAlternate);
+      setStyleSentinel(toAlternate);
+      toggleGiscusIfUsed(toAlternate, darkModeDefault);
+      window.dispatchEvent(new Event('resize'));
+    };
+    // Switch to dark mode if need be
+    if (hasAlternateSentinel()) {
+      toggleColorMode(true);
+    } else {
+      toggleColorMode(false);
+    }
+  </script>
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="../index.html">
+    <span class="navbar-title">Selected Topics in Soft Computing</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../index.html"> 
+<span class="menu-text">Home</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../schedule.html"> 
+<span class="menu-text">Schedule</span></a>
+  </li>  
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-lectures" role="link" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">Lectures</span>
+    </a>
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-lectures">    
+        <li>
+    <a class="dropdown-item" href="../lectures/lecture0.html">
+ <span class="dropdown-text">Lecture 0 - Course Introduction</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../lectures/lecture1.html">
+ <span class="dropdown-text">Lecture 1 — Introduction to Optimization</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../lectures/lecture2.html">
+ <span class="dropdown-text">Lecture 2 — Mathematical Programming with Python and Gurobi</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../lectures/lecture3.html">
+ <span class="dropdown-text">Lecture 3 — Why Exact Methods Fail: Complexity, Scalability, and Motivation for Soft Computing</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../lectures/lecture4.html">
+ <span class="dropdown-text">Lecture 4 — Introduction to Heuristics and Metaheuristics</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../lectures/lecture5.html">
+ <span class="dropdown-text">Lecture 5 — Local Search and Neighborhood Structures</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../lectures/lecture6.html">
+ <span class="dropdown-text">Lecture 6 — Hill Climbing, Descent Methods, and Local Optima</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../lectures/lecture7.html">
+ <span class="dropdown-text">Lecture 7 — Simulated Annealing and Probabilistic Local Search</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../lectures/lecture8.html">
+ <span class="dropdown-text">Lecture 8 — Tabu Search and Memory-Based Heuristics</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../lectures/lecture9.html">
+ <span class="dropdown-text">Lecture 9 — Population-Based Metaheuristics: Genetic Algorithms</span></a>
+  </li>  
+    </ul>
+  </li>
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+  <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#learning-objectives" id="toc-learning-objectives" class="nav-link active" data-scroll-target="#learning-objectives"><span class="header-section-number">1</span> Learning Objectives</a></li>
+  <li><a href="#lecture-roadmap" id="toc-lecture-roadmap" class="nav-link" data-scroll-target="#lecture-roadmap"><span class="header-section-number">2</span> Lecture Roadmap</a></li>
+  <li><a href="#from-heuristics-to-local-search" id="toc-from-heuristics-to-local-search" class="nav-link" data-scroll-target="#from-heuristics-to-local-search"><span class="header-section-number">3</span> From Heuristics to Local Search</a></li>
+  <li><a href="#what-is-local-search" id="toc-what-is-local-search" class="nav-link" data-scroll-target="#what-is-local-search"><span class="header-section-number">4</span> What Is Local Search?</a>
+  <ul class="collapse">
+  <li><a href="#generic-local-search-template" id="toc-generic-local-search-template" class="nav-link" data-scroll-target="#generic-local-search-template"><span class="header-section-number">4.1</span> Generic Local Search Template</a></li>
+  </ul></li>
+  <li><a href="#solution-representation" id="toc-solution-representation" class="nav-link" data-scroll-target="#solution-representation"><span class="header-section-number">5</span> Solution Representation</a>
+  <ul class="collapse">
+  <li><a href="#why-representation-matters" id="toc-why-representation-matters" class="nav-link" data-scroll-target="#why-representation-matters"><span class="header-section-number">5.1</span> Why Representation Matters</a></li>
+  <li><a href="#common-solution-representations" id="toc-common-solution-representations" class="nav-link" data-scroll-target="#common-solution-representations"><span class="header-section-number">5.2</span> Common Solution Representations</a></li>
+  <li><a href="#design-considerations" id="toc-design-considerations" class="nav-link" data-scroll-target="#design-considerations"><span class="header-section-number">5.3</span> Design Considerations</a></li>
+  </ul></li>
+  <li><a href="#neighborhood-structures" id="toc-neighborhood-structures" class="nav-link" data-scroll-target="#neighborhood-structures"><span class="header-section-number">6</span> Neighborhood Structures</a>
+  <ul class="collapse">
+  <li><a href="#definition" id="toc-definition" class="nav-link" data-scroll-target="#definition"><span class="header-section-number">6.1</span> Definition</a></li>
+  <li><a href="#common-neighborhood-operators" id="toc-common-neighborhood-operators" class="nav-link" data-scroll-target="#common-neighborhood-operators"><span class="header-section-number">6.2</span> Common Neighborhood Operators</a></li>
+  <li><a href="#neighborhood-size-and-computational-complexity" id="toc-neighborhood-size-and-computational-complexity" class="nav-link" data-scroll-target="#neighborhood-size-and-computational-complexity"><span class="header-section-number">6.3</span> Neighborhood Size and Computational Complexity</a></li>
+  <li><a href="#feasibility-handling-in-neighborhood-search" id="toc-feasibility-handling-in-neighborhood-search" class="nav-link" data-scroll-target="#feasibility-handling-in-neighborhood-search"><span class="header-section-number">6.4</span> Feasibility Handling in Neighborhood Search</a></li>
+  </ul></li>
+  <li><a href="#local-search-strategies" id="toc-local-search-strategies" class="nav-link" data-scroll-target="#local-search-strategies"><span class="header-section-number">7</span> Local Search Strategies</a>
+  <ul class="collapse">
+  <li><a href="#best-improvement-vs-first-improvement" id="toc-best-improvement-vs-first-improvement" class="nav-link" data-scroll-target="#best-improvement-vs-first-improvement"><span class="header-section-number">7.1</span> Best-Improvement vs First-Improvement</a></li>
+  <li><a href="#comparison-and-practical-considerations" id="toc-comparison-and-practical-considerations" class="nav-link" data-scroll-target="#comparison-and-practical-considerations"><span class="header-section-number">7.2</span> Comparison and Practical Considerations</a></li>
+  <li><a href="#termination-criteria" id="toc-termination-criteria" class="nav-link" data-scroll-target="#termination-criteria"><span class="header-section-number">7.3</span> Termination Criteria</a></li>
+  <li><a href="#restarts-and-diversification-preview" id="toc-restarts-and-diversification-preview" class="nav-link" data-scroll-target="#restarts-and-diversification-preview"><span class="header-section-number">7.4</span> Restarts and Diversification (Preview)</a></li>
+  </ul></li>
+  <li><a href="#intensification-in-local-search" id="toc-intensification-in-local-search" class="nav-link" data-scroll-target="#intensification-in-local-search"><span class="header-section-number">8</span> Intensification in Local Search</a>
+  <ul class="collapse">
+  <li><a href="#what-is-intensification" id="toc-what-is-intensification" class="nav-link" data-scroll-target="#what-is-intensification"><span class="header-section-number">8.1</span> What Is Intensification?</a></li>
+  <li><a href="#why-intensification-is-important" id="toc-why-intensification-is-important" class="nav-link" data-scroll-target="#why-intensification-is-important"><span class="header-section-number">8.2</span> Why Intensification Is Important</a></li>
+  <li><a href="#techniques-for-intensification" id="toc-techniques-for-intensification" class="nav-link" data-scroll-target="#techniques-for-intensification"><span class="header-section-number">8.3</span> Techniques for Intensification</a></li>
+  <li><a href="#limitations-of-intensification" id="toc-limitations-of-intensification" class="nav-link" data-scroll-target="#limitations-of-intensification"><span class="header-section-number">8.4</span> Limitations of Intensification</a></li>
+  </ul></li>
+  <li><a href="#incremental-evaluation" id="toc-incremental-evaluation" class="nav-link" data-scroll-target="#incremental-evaluation"><span class="header-section-number">9</span> Incremental Evaluation</a>
+  <ul class="collapse">
+  <li><a href="#why-incremental-evaluation-matters" id="toc-why-incremental-evaluation-matters" class="nav-link" data-scroll-target="#why-incremental-evaluation-matters"><span class="header-section-number">9.1</span> Why Incremental Evaluation Matters</a></li>
+  <li><a href="#benefits-of-incremental-evaluation" id="toc-benefits-of-incremental-evaluation" class="nav-link" data-scroll-target="#benefits-of-incremental-evaluation"><span class="header-section-number">9.2</span> Benefits of Incremental Evaluation</a></li>
+  <li><a href="#typical-use-cases" id="toc-typical-use-cases" class="nav-link" data-scroll-target="#typical-use-cases"><span class="header-section-number">9.3</span> Typical Use Cases</a></li>
+  <li><a href="#practical-importance" id="toc-practical-importance" class="nav-link" data-scroll-target="#practical-importance"><span class="header-section-number">9.4</span> Practical Importance</a></li>
+  </ul></li>
+  <li><a href="#limitations-and-role-of-local-search-in-metaheuristics" id="toc-limitations-and-role-of-local-search-in-metaheuristics" class="nav-link" data-scroll-target="#limitations-and-role-of-local-search-in-metaheuristics"><span class="header-section-number">10</span> Limitations and Role of Local Search in Metaheuristics</a>
+  <ul class="collapse">
+  <li><a href="#limitations-of-basic-local-search" id="toc-limitations-of-basic-local-search" class="nav-link" data-scroll-target="#limitations-of-basic-local-search"><span class="header-section-number">10.1</span> Limitations of Basic Local Search</a></li>
+  <li><a href="#role-of-local-search-in-metaheuristics" id="toc-role-of-local-search-in-metaheuristics" class="nav-link" data-scroll-target="#role-of-local-search-in-metaheuristics"><span class="header-section-number">10.2</span> Role of Local Search in Metaheuristics</a></li>
+  <li><a href="#implementation-checklist" id="toc-implementation-checklist" class="nav-link" data-scroll-target="#implementation-checklist"><span class="header-section-number">10.3</span> Implementation Checklist</a></li>
+  <li><a href="#takeaways" id="toc-takeaways" class="nav-link" data-scroll-target="#takeaways"><span class="header-section-number">10.4</span> Takeaways</a></li>
+  </ul></li>
+  <li><a href="#mini-exercises" id="toc-mini-exercises" class="nav-link" data-scroll-target="#mini-exercises"><span class="header-section-number">11</span> Mini Exercises</a></li>
+  <li><a href="#references-for-this-chapter" id="toc-references-for-this-chapter" class="nav-link" data-scroll-target="#references-for-this-chapter"><span class="header-section-number">12</span> References for This Chapter</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Lecture 5 — Local Search and Neighborhood Structures</h1>
+<p class="subtitle lead">Solution representation, neighborhoods, intensification</p>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<section id="learning-objectives" class="level2" data-number="1">
+<h2 data-number="1" class="anchored" data-anchor-id="learning-objectives"><span class="header-section-number">1</span> Learning Objectives</h2>
+<p>By the end of this lecture, students should be able to:</p>
+<ul>
+<li>understand the role of local search in heuristic optimization<br>
+</li>
+<li>design effective solution representations for combinatorial problems<br>
+</li>
+<li>define and analyze neighborhood structures<br>
+</li>
+<li>distinguish between different neighborhood operators<br>
+</li>
+<li>understand intensification and its role in improving solution quality<br>
+</li>
+<li>recognize the limitations of naive local search and how neighborhoods affect performance</li>
+</ul>
+<hr>
+</section>
+<section id="lecture-roadmap" class="level2" data-number="2">
+<h2 data-number="2" class="anchored" data-anchor-id="lecture-roadmap"><span class="header-section-number">2</span> Lecture Roadmap</h2>
+<p>This lecture proceeds in seven blocks:</p>
+<ol type="1">
+<li>local search as an iterative improvement paradigm</li>
+<li>solution representation choices</li>
+<li>neighborhood design and complexity trade-offs</li>
+<li>move acceptance strategies and termination rules</li>
+<li>intensification, diversification, and stagnation behavior</li>
+<li>incremental evaluation for scalable implementations</li>
+<li>local search as a core engine inside metaheuristics</li>
+</ol>
+<hr>
+</section>
+<section id="from-heuristics-to-local-search" class="level2" data-number="3">
+<h2 data-number="3" class="anchored" data-anchor-id="from-heuristics-to-local-search"><span class="header-section-number">3</span> From Heuristics to Local Search</h2>
+<p>In the previous lecture, heuristics were introduced as fast and practical methods for constructing or improving solutions to hard optimization problems. While simple heuristics can be effective for generating initial solutions, their ability to consistently deliver high-quality results is often limited. This naturally leads to the development of more systematic improvement strategies, among which <strong>local search</strong> occupies a central position in soft computing.</p>
+<p>Local search methods are founded on a simple yet powerful principle:</p>
+<blockquote class="blockquote">
+<p>Start from a feasible solution and iteratively move to a better solution in its neighborhood.</p>
+</blockquote>
+<p>This paradigm shifts the focus from building solutions from scratch to <strong>refining and intensifying</strong> existing solutions. Instead of exploring the entire solution space, local search concentrates on a carefully defined subset of nearby solutions, enabling rapid improvement with relatively low computational effort.</p>
+<p>Despite their conceptual simplicity, local search algorithms are remarkably effective. They form the core component of many advanced metaheuristics and hybrid optimization methods, serving as the primary mechanism for intensification. Techniques such as simulated annealing, tabu search, genetic algorithms with local improvement, and large neighborhood search all rely on local search as a fundamental building block.</p>
+<p>In modern optimization practice, local search is rarely used in isolation. Instead, it is embedded within higher-level frameworks that control when and how local improvements are applied, making local search one of the most influential ideas in contemporary soft computing.</p>
+<hr>
+</section>
+<section id="what-is-local-search" class="level2" data-number="4">
+<h2 data-number="4" class="anchored" data-anchor-id="what-is-local-search"><span class="header-section-number">4</span> What Is Local Search?</h2>
+<p>Local search is an <strong>iterative improvement technique</strong> that explores the solution space by repeatedly applying small, well-defined modifications to a current solution. Rather than attempting to search the entire solution space, local search focuses on a restricted set of neighboring solutions and exploits local structure to improve solution quality efficiently.</p>
+<p>At its core, local search operates according to the following generic framework:</p>
+<ol type="1">
+<li><strong>Start from an initial feasible solution</strong>, often generated by a constructive heuristic or randomly.</li>
+<li><strong>Define a neighborhood</strong> that specifies which solutions are considered close to the current one.</li>
+<li><strong>Evaluate neighboring solutions</strong> and identify an improving move according to the objective function.</li>
+<li><strong>Move to a better neighboring solution</strong> and update the current solution.</li>
+<li><strong>Repeat</strong> this process until no improving move exists or a stopping criterion is met.</li>
+</ol>
+<p>Local search algorithms may be <strong>deterministic</strong>, always selecting moves according to fixed rules, or <strong>stochastic</strong>, incorporating randomness in move selection or acceptance. In either case, they typically terminate at a <strong>local optimum</strong>, defined as a solution for which no neighbor yields improvement with respect to the chosen neighborhood structure.</p>
+<p>The effectiveness of local search critically depends on three design choices: the initial solution, the neighborhood definition, and the move acceptance strategy. These choices determine both the quality of the final solution and the computational efficiency of the algorithm.</p>
+<hr>
+<section id="generic-local-search-template" class="level3" data-number="4.1">
+<h3 data-number="4.1" class="anchored" data-anchor-id="generic-local-search-template"><span class="header-section-number">4.1</span> Generic Local Search Template</h3>
+<p>For minimization problems, a generic local search pattern can be written as:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode numberSource text number-lines code-with-copy"><code class="sourceCode"><span id="cb1-1"><a href="#cb1-1"></a>Input: initial feasible solution s</span>
+<span id="cb1-2"><a href="#cb1-2"></a>Repeat:</span>
+<span id="cb1-3"><a href="#cb1-3"></a>  Select one or more candidate moves from N(s)</span>
+<span id="cb1-4"><a href="#cb1-4"></a>  Evaluate move quality (exact or incremental evaluation)</span>
+<span id="cb1-5"><a href="#cb1-5"></a>  If an accepted improving move exists:</span>
+<span id="cb1-6"><a href="#cb1-6"></a>     Apply move and update s</span>
+<span id="cb1-7"><a href="#cb1-7"></a>  Else:</span>
+<span id="cb1-8"><a href="#cb1-8"></a>     Stop or trigger diversification/restart</span>
+<span id="cb1-9"><a href="#cb1-9"></a>Until stopping criterion is met</span>
+<span id="cb1-10"><a href="#cb1-10"></a>Output: best solution found</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>This template separates three design layers clearly: neighborhood generation, move acceptance, and stopping/diversification control.</p>
+<hr>
+</section>
+</section>
+<section id="solution-representation" class="level2" data-number="5">
+<h2 data-number="5" class="anchored" data-anchor-id="solution-representation"><span class="header-section-number">5</span> Solution Representation</h2>
+<section id="why-representation-matters" class="level3" data-number="5.1">
+<h3 data-number="5.1" class="anchored" data-anchor-id="why-representation-matters"><span class="header-section-number">5.1</span> Why Representation Matters</h3>
+<p>The <strong>solution representation</strong> is a foundational design choice in local search and, more broadly, in heuristic and metaheuristic optimization. It determines:</p>
+<ul>
+<li>how candidate solutions are encoded and stored in memory,</li>
+<li>which types of modifications or moves are possible,</li>
+<li>how neighborhoods are defined and explored, and</li>
+<li>how efficiently objective values and constraint violations can be evaluated.</li>
+</ul>
+<p>A well-chosen representation exposes the structure of the problem and enables efficient neighborhood exploration. Conversely, a poor representation can severely limit the effectiveness of local search, making even sophisticated algorithms slow, fragile, or incapable of reaching high-quality solutions.</p>
+<p>In practice, the representation implicitly defines the geometry of the search space and strongly influences convergence behavior.</p>
+<hr>
+</section>
+<section id="common-solution-representations" class="level3" data-number="5.2">
+<h3 data-number="5.2" class="anchored" data-anchor-id="common-solution-representations"><span class="header-section-number">5.2</span> Common Solution Representations</h3>
+<p>Different classes of optimization problems naturally lend themselves to different solution representations. The choice should align with the decision structure of the problem and support meaningful neighborhood moves.</p>
+<ul>
+<li><p><strong>Binary vector representation</strong></p>
+<ul>
+<li>Used in selection, knapsack, set covering, and facility location problems.</li>
+<li>Each component represents a yes–no decision.</li>
+<li>Example: <span class="math display">\[
+x \in \{0,1\}^n
+\]</span></li>
+<li>Neighborhoods are often defined by bit flips or small combinations of flips.</li>
+</ul></li>
+<li><p><strong>Integer vector representation</strong></p>
+<ul>
+<li>Used in assignment, allocation, and partitioning problems.</li>
+<li>Each variable takes one value from a finite set of options.</li>
+<li>Example: <span class="math display">\[
+x_i \in \{1,\dots,m\}
+\]</span></li>
+<li>Neighborhoods typically involve reassignment or swap operations.</li>
+</ul></li>
+<li><p><strong>Permutation representation</strong></p>
+<ul>
+<li>Used in sequencing, scheduling, and routing problems.</li>
+<li>A solution is represented as an ordered list of elements.</li>
+<li>Example: an ordering of jobs on a machine or a sequence of cities in a tour.</li>
+<li>Neighborhoods include swaps, insertions, reversals, or subsequence moves.</li>
+</ul></li>
+<li><p><strong>Mixed representations</strong></p>
+<ul>
+<li>Combine discrete and continuous components within a single solution.</li>
+<li>Common in hybrid approaches and problems derived from MILP formulations.</li>
+<li>Example: binary variables for activation decisions combined with continuous flow or quantity variables.</li>
+</ul></li>
+</ul>
+<hr>
+</section>
+<section id="design-considerations" class="level3" data-number="5.3">
+<h3 data-number="5.3" class="anchored" data-anchor-id="design-considerations"><span class="header-section-number">5.3</span> Design Considerations</h3>
+<p>An effective solution representation should:</p>
+<ul>
+<li>reflect the natural structure of the problem,</li>
+<li>allow simple and meaningful neighborhood moves,</li>
+<li>support efficient feasibility checks and incremental evaluation, and</li>
+<li>avoid introducing unnecessary redundancy or symmetry.</li>
+</ul>
+<p>Choosing an appropriate representation is often as important as choosing the local search strategy itself, since it directly determines what parts of the solution space can be explored efficiently.</p>
+<hr>
+</section>
+</section>
+<section id="neighborhood-structures" class="level2" data-number="6">
+<h2 data-number="6" class="anchored" data-anchor-id="neighborhood-structures"><span class="header-section-number">6</span> Neighborhood Structures</h2>
+<section id="definition" class="level3" data-number="6.1">
+<h3 data-number="6.1" class="anchored" data-anchor-id="definition"><span class="header-section-number">6.1</span> Definition</h3>
+<p>A <strong>neighborhood</strong> of a solution is the set of solutions that can be reached from it by applying a predefined move operator. Neighborhoods define the <em>local geometry</em> of the solution space and determine how the search progresses.</p>
+<p>Formally, for a solution <span class="math inline">\(s\)</span>, its neighborhood is denoted by:</p>
+<p><span class="math display">\[
+\mathcal{N}(s) = \{ s' \mid s' \text{ can be obtained from } s \text{ by one move} \}.
+\]</span></p>
+<p>In local search, the algorithm repeatedly evaluates elements of <span class="math inline">\(\mathcal{N}(s)\)</span> and decides whether to move from <span class="math inline">\(s\)</span> to one of its neighbors. The definition of the neighborhood therefore directly controls:</p>
+<ul>
+<li>which solutions are reachable in one step,</li>
+<li>how easily the search can escape poor regions, and</li>
+<li>the computational cost of each iteration.</li>
+</ul>
+<p>Choosing an appropriate neighborhood is one of the most critical design decisions in local search.</p>
+<hr>
+</section>
+<section id="common-neighborhood-operators" class="level3" data-number="6.2">
+<h3 data-number="6.2" class="anchored" data-anchor-id="common-neighborhood-operators"><span class="header-section-number">6.2</span> Common Neighborhood Operators</h3>
+<p>Neighborhood operators depend strongly on the underlying solution representation. Well-designed operators reflect the structure of the problem and enable meaningful improvements.</p>
+<hr>
+<section id="binary-neighborhoods" class="level4" data-number="6.2.1">
+<h4 data-number="6.2.1" class="anchored" data-anchor-id="binary-neighborhoods"><span class="header-section-number">6.2.1</span> Binary Neighborhoods</h4>
+<p>Used when solutions are represented as binary vectors.</p>
+<ul>
+<li><p><strong>Single-bit flip</strong></p>
+<ul>
+<li>Change one binary variable from 0 to 1 or from 1 to 0.</li>
+<li>Neighborhood size: <span class="math inline">\(O(n)\)</span> for <span class="math inline">\(n\)</span> binary variables.</li>
+<li>Simple and fast, but may lead to shallow local optima.</li>
+</ul></li>
+<li><p><strong>Multi-bit flip</strong></p>
+<ul>
+<li>Flip two or more bits simultaneously.</li>
+<li>Allows larger structural changes in one move.</li>
+<li>Neighborhood size grows combinatorially, increasing evaluation cost.</li>
+</ul></li>
+</ul>
+<p>Single-bit neighborhoods are commonly used in basic local search, while multi-bit neighborhoods are often embedded in more advanced methods.</p>
+<hr>
+</section>
+<section id="assignment-neighborhoods" class="level4" data-number="6.2.2">
+<h4 data-number="6.2.2" class="anchored" data-anchor-id="assignment-neighborhoods"><span class="header-section-number">6.2.2</span> Assignment Neighborhoods</h4>
+<p>Used in allocation and assignment problems.</p>
+<ul>
+<li><p><strong>Reassignment move</strong></p>
+<ul>
+<li>Reassign one item (e.g., customer, job) to a different category, machine, or facility.</li>
+<li>Neighborhood size depends on the number of alternative assignments.</li>
+</ul></li>
+<li><p><strong>Swap move</strong></p>
+<ul>
+<li>Swap the assignments of two items.</li>
+<li>Preserves certain constraints (e.g., balanced assignments) and can produce stronger improvements than single reassignment moves.</li>
+</ul></li>
+</ul>
+<p>These neighborhoods are especially effective when feasibility must be maintained explicitly.</p>
+<hr>
+</section>
+<section id="permutation-neighborhoods" class="level4" data-number="6.2.3">
+<h4 data-number="6.2.3" class="anchored" data-anchor-id="permutation-neighborhoods"><span class="header-section-number">6.2.3</span> Permutation Neighborhoods</h4>
+<p>Used in sequencing, scheduling, and routing problems.</p>
+<ul>
+<li><p><strong>Swap</strong></p>
+<ul>
+<li>Exchange two positions in a sequence.</li>
+<li>Simple and widely used, but limited in expressive power.</li>
+</ul></li>
+<li><p><strong>Insertion</strong></p>
+<ul>
+<li>Remove an element from its current position and insert it elsewhere.</li>
+<li>Produces larger changes than swaps and often yields better improvements.</li>
+</ul></li>
+<li><p><strong>2-opt move</strong></p>
+<ul>
+<li>Reverse a subsequence between two positions.</li>
+<li>Common in routing and traveling salesman problems.</li>
+<li>Efficiently removes crossings and shortens routes.</li>
+</ul></li>
+</ul>
+<p>Permutation neighborhoods are often carefully selected to balance move expressiveness and evaluation cost.</p>
+<hr>
+</section>
+</section>
+<section id="neighborhood-size-and-computational-complexity" class="level3" data-number="6.3">
+<h3 data-number="6.3" class="anchored" data-anchor-id="neighborhood-size-and-computational-complexity"><span class="header-section-number">6.3</span> Neighborhood Size and Computational Complexity</h3>
+<p>Neighborhoods vary significantly in size and computational burden:</p>
+<ul>
+<li><p><strong>Small neighborhoods</strong></p>
+<ul>
+<li>Fast to explore and easy to evaluate.</li>
+<li>Risk of early convergence to poor local optima.</li>
+</ul></li>
+<li><p><strong>Large neighborhoods</strong></p>
+<ul>
+<li>Offer greater improvement potential and stronger diversification.</li>
+<li>Increase runtime per iteration and may require specialized evaluation strategies.</li>
+</ul></li>
+</ul>
+<p>A central trade-off in local search design is:</p>
+<blockquote class="blockquote">
+<p>Larger neighborhoods increase solution quality potential but also increase computational cost per iteration.</p>
+</blockquote>
+<p>Modern local search and metaheuristic methods often address this trade-off by using <strong>adaptive</strong>, <strong>variable</strong>, or <strong>implicitly explored</strong> neighborhoods, enabling efficient exploration without exhaustive enumeration.</p>
+<hr>
+</section>
+<section id="feasibility-handling-in-neighborhood-search" class="level3" data-number="6.4">
+<h3 data-number="6.4" class="anchored" data-anchor-id="feasibility-handling-in-neighborhood-search"><span class="header-section-number">6.4</span> Feasibility Handling in Neighborhood Search</h3>
+<p>Neighborhood moves can be handled in two main ways when constraints are present:</p>
+<ul>
+<li><p><strong>Feasibility-preserving neighborhoods</strong></p>
+<ul>
+<li>generate only moves that keep the solution feasible,</li>
+<li>simplify acceptance rules and avoid penalty calibration,</li>
+<li>may restrict exploration too strongly.</li>
+</ul></li>
+<li><p><strong>Infeasible moves with repair/penalty</strong></p>
+<ul>
+<li>allow temporary infeasibility to improve exploration power,</li>
+<li>use repair operators or penalized objective values for guidance,</li>
+<li>require careful design of penalties and recovery logic.</li>
+</ul></li>
+</ul>
+<p>In practice, many strong heuristics combine both: mostly feasible moves, with occasional controlled infeasible exploration.</p>
+<hr>
+</section>
+</section>
+<section id="local-search-strategies" class="level2" data-number="7">
+<h2 data-number="7" class="anchored" data-anchor-id="local-search-strategies"><span class="header-section-number">7</span> Local Search Strategies</h2>
+<p>Once a solution representation and a neighborhood structure have been defined, a <strong>local search strategy</strong> specifies <em>how</em> the neighborhood is explored and <em>which</em> moves are accepted. These choices strongly influence convergence speed, solution quality, and computational effort.</p>
+<hr>
+<section id="best-improvement-vs-first-improvement" class="level3" data-number="7.1">
+<h3 data-number="7.1" class="anchored" data-anchor-id="best-improvement-vs-first-improvement"><span class="header-section-number">7.1</span> Best-Improvement vs First-Improvement</h3>
+<p>Two classical move acceptance strategies are widely used in local search.</p>
+<section id="best-improvement-steepest-descent" class="level4" data-number="7.1.1">
+<h4 data-number="7.1.1" class="anchored" data-anchor-id="best-improvement-steepest-descent"><span class="header-section-number">7.1.1</span> Best-Improvement (Steepest Descent)</h4>
+<ul>
+<li>all neighbors in <span class="math inline">\(\mathcal{N}(s)\)</span> are evaluated,</li>
+<li>the move that yields the largest improvement in the objective value is selected,</li>
+<li>the search moves deterministically to the best neighboring solution.</li>
+</ul>
+<p><strong>Characteristics</strong></p>
+<ul>
+<li>produces strong improvements per iteration,</li>
+<li>more stable and predictable behavior,</li>
+<li>higher computational cost per iteration due to full neighborhood evaluation.</li>
+</ul>
+<p>Best-improvement is often preferred when neighborhoods are small or when solution evaluation is inexpensive.</p>
+<hr>
+</section>
+<section id="first-improvement" class="level4" data-number="7.1.2">
+<h4 data-number="7.1.2" class="anchored" data-anchor-id="first-improvement"><span class="header-section-number">7.1.2</span> First-Improvement</h4>
+<ul>
+<li>neighbors are explored sequentially in some order,</li>
+<li>the search accepts the <em>first</em> neighbor that improves the objective value,</li>
+<li>neighborhood exploration stops as soon as an improving move is found.</li>
+</ul>
+<p><strong>Characteristics</strong></p>
+<ul>
+<li>significantly faster per iteration,</li>
+<li>more stochastic behavior due to dependence on exploration order,</li>
+<li>often reaches good solutions faster in wall-clock time.</li>
+</ul>
+<p>First-improvement is especially effective for large neighborhoods where evaluating all neighbors would be prohibitively expensive.</p>
+<hr>
+</section>
+</section>
+<section id="comparison-and-practical-considerations" class="level3" data-number="7.2">
+<h3 data-number="7.2" class="anchored" data-anchor-id="comparison-and-practical-considerations"><span class="header-section-number">7.2</span> Comparison and Practical Considerations</h3>
+<ul>
+<li>Best-improvement emphasizes <strong>solution quality per move</strong>.</li>
+<li>First-improvement emphasizes <strong>speed and scalability</strong>.</li>
+</ul>
+<p>In practice, first-improvement is more commonly used in large-scale problems, while best-improvement is useful in small or structured neighborhoods. Some algorithms dynamically switch between the two strategies depending on the search phase.</p>
+<hr>
+</section>
+<section id="termination-criteria" class="level3" data-number="7.3">
+<h3 data-number="7.3" class="anchored" data-anchor-id="termination-criteria"><span class="header-section-number">7.3</span> Termination Criteria</h3>
+<p>Local search algorithms require explicit stopping rules. Common termination criteria include:</p>
+<ul>
+<li><p><strong>Local optimality</strong></p>
+<ul>
+<li>no improving neighbor exists in the current neighborhood,</li>
+<li>the algorithm has reached a local optimum.</li>
+</ul></li>
+<li><p><strong>Iteration limits</strong></p>
+<ul>
+<li>a predefined maximum number of iterations or moves is reached,</li>
+<li>useful to control runtime in large problems.</li>
+</ul></li>
+<li><p><strong>Time limits</strong></p>
+<ul>
+<li>the algorithm stops after a fixed amount of computation time,</li>
+<li>essential in real-time or large-scale applications.</li>
+</ul></li>
+<li><p><strong>Stagnation criteria</strong></p>
+<ul>
+<li>no improvement observed for a certain number of iterations,</li>
+<li>often used to trigger diversification or restart mechanisms.</li>
+</ul></li>
+</ul>
+<p>At termination, the current solution is locally optimal with respect to the chosen neighborhood and acceptance strategy. Escaping such local optima requires enhanced mechanisms, which motivates the metaheuristic methods introduced in subsequent lectures.</p>
+<hr>
+</section>
+<section id="restarts-and-diversification-preview" class="level3" data-number="7.4">
+<h3 data-number="7.4" class="anchored" data-anchor-id="restarts-and-diversification-preview"><span class="header-section-number">7.4</span> Restarts and Diversification (Preview)</h3>
+<p>When local search stagnates, a common strategy is to restart from a different region of the search space.</p>
+<p>Typical diversification mechanisms include:</p>
+<ul>
+<li>random restart from a new initial solution,</li>
+<li>perturb-and-improve (apply a strong move, then run local search again),</li>
+<li>adaptive neighborhood change (switch to a different move operator),</li>
+<li>memory-guided diversification (as in tabu-based methods).</li>
+</ul>
+<p>These mechanisms preserve local search as the intensification engine while improving global exploration.</p>
+<hr>
+</section>
+</section>
+<section id="intensification-in-local-search" class="level2" data-number="8">
+<h2 data-number="8" class="anchored" data-anchor-id="intensification-in-local-search"><span class="header-section-number">8</span> Intensification in Local Search</h2>
+<section id="what-is-intensification" class="level3" data-number="8.1">
+<h3 data-number="8.1" class="anchored" data-anchor-id="what-is-intensification"><span class="header-section-number">8.1</span> What Is Intensification?</h3>
+<p><strong>Intensification</strong> refers to the deliberate focus of search effort on <strong>promising regions</strong> of the solution space, where high-quality solutions are likely to be found. The objective of intensification is to exploit local structure as thoroughly as possible in order to refine and improve good solutions.</p>
+<p>In local search, intensification arises naturally through the repeated application of improving moves:</p>
+<ul>
+<li>the search remains in the vicinity of the current best solution,</li>
+<li>neighbors of high-quality solutions are explored extensively, and</li>
+<li>small refinements are accumulated to reach locally optimal configurations.</li>
+</ul>
+<p>From a soft computing perspective, intensification embodies the principle of <strong>exploitation</strong>, emphasizing depth of search over breadth.</p>
+<hr>
+</section>
+<section id="why-intensification-is-important" class="level3" data-number="8.2">
+<h3 data-number="8.2" class="anchored" data-anchor-id="why-intensification-is-important"><span class="header-section-number">8.2</span> Why Intensification Is Important</h3>
+<p>Effective intensification allows local search to:</p>
+<ul>
+<li>extract maximum value from promising solution regions,</li>
+<li>converge quickly to high-quality local optima, and</li>
+<li>produce solutions that are competitive with exact or hybrid approaches on large instances.</li>
+</ul>
+<p>Without sufficient intensification, the search may wander without adequately refining solutions, leading to mediocre outcomes.</p>
+<hr>
+</section>
+<section id="techniques-for-intensification" class="level3" data-number="8.3">
+<h3 data-number="8.3" class="anchored" data-anchor-id="techniques-for-intensification"><span class="header-section-number">8.3</span> Techniques for Intensification</h3>
+<p>Several strategies are commonly used to strengthen intensification in local search:</p>
+<ul>
+<li><p><strong>Repeated local search from a good solution</strong></p>
+<ul>
+<li>restart local search from the same or slightly perturbed high-quality solution</li>
+<li>ensures thorough exploitation of the surrounding neighborhood</li>
+</ul></li>
+<li><p><strong>Multiple neighborhood operators</strong></p>
+<ul>
+<li>apply a sequence of neighborhoods of increasing complexity</li>
+<li>begin with simple moves and progressively allow richer modifications</li>
+</ul></li>
+<li><p><strong>Variable neighborhood refinement</strong></p>
+<ul>
+<li>start with larger neighborhoods and gradually restrict them</li>
+<li>focus on finer-grained improvements near convergence</li>
+</ul></li>
+<li><p><strong>Deterministic move selection</strong></p>
+<ul>
+<li>favor best-improvement or steepest-descent strategies</li>
+<li>ensure maximal improvement at each step</li>
+</ul></li>
+</ul>
+<hr>
+</section>
+<section id="limitations-of-intensification" class="level3" data-number="8.4">
+<h3 data-number="8.4" class="anchored" data-anchor-id="limitations-of-intensification"><span class="header-section-number">8.4</span> Limitations of Intensification</h3>
+<p>While intensification is essential for solution quality, excessive intensification carries risks:</p>
+<ul>
+<li><strong>stagnation at poor local optima</strong>,</li>
+<li><strong>loss of diversity</strong> in explored solutions, and</li>
+<li><strong>inability to escape local traps</strong>.</li>
+</ul>
+<p>These limitations highlight the need to balance intensification with <strong>diversification</strong>, which deliberately pushes the search toward unexplored regions of the solution space. Achieving this balance is a central challenge addressed by metaheuristic algorithms introduced in subsequent lectures.</p>
+<hr>
+</section>
+</section>
+<section id="incremental-evaluation" class="level2" data-number="9">
+<h2 data-number="9" class="anchored" data-anchor-id="incremental-evaluation"><span class="header-section-number">9</span> Incremental Evaluation</h2>
+<section id="why-incremental-evaluation-matters" class="level3" data-number="9.1">
+<h3 data-number="9.1" class="anchored" data-anchor-id="why-incremental-evaluation-matters"><span class="header-section-number">9.1</span> Why Incremental Evaluation Matters</h3>
+<p>In local search algorithms, a large number of candidate moves are evaluated repeatedly. Recomputing the objective function and constraint violations <strong>from scratch</strong> after each move can be computationally expensive and quickly become the dominant cost of the algorithm, especially for large-scale problems or complex neighborhoods.</p>
+<p><strong>Incremental evaluation</strong> addresses this issue by updating the objective value and relevant constraint measures using only the <strong>difference</strong> introduced by a move, rather than re-evaluating the entire solution.</p>
+<p>The core idea is simple:</p>
+<blockquote class="blockquote">
+<p>If a move modifies only a small part of the solution, then only a small part of the objective and constraints need to be updated.</p>
+</blockquote>
+<p>For a candidate move <span class="math inline">\(m\)</span>, this is often written as:</p>
+<p><span class="math display">\[
+f(s \oplus m) = f(s) + \Delta(m \mid s),
+\]</span></p>
+<p>where <span class="math inline">\(\Delta(m \mid s)\)</span> is the move delta computed from local information.</p>
+<hr>
+</section>
+<section id="benefits-of-incremental-evaluation" class="level3" data-number="9.2">
+<h3 data-number="9.2" class="anchored" data-anchor-id="benefits-of-incremental-evaluation"><span class="header-section-number">9.2</span> Benefits of Incremental Evaluation</h3>
+<p>Efficient incremental evaluation provides several critical advantages:</p>
+<ul>
+<li><p><strong>Significantly faster neighborhood exploration</strong></p>
+<ul>
+<li>allows many more moves to be evaluated per unit of time,</li>
+<li>enables the use of larger or more expressive neighborhoods.</li>
+</ul></li>
+<li><p><strong>Improved scalability</strong></p>
+<ul>
+<li>makes local search feasible for large instances with thousands or millions of variables,</li>
+<li>avoids repeated full computations that scale poorly with problem size.</li>
+</ul></li>
+<li><p><strong>Support for complex neighborhoods</strong></p>
+<ul>
+<li>enables multi-move and large-neighborhood operators that would otherwise be too costly,</li>
+<li>essential for advanced local search and metaheuristic techniques.</li>
+</ul></li>
+</ul>
+<hr>
+</section>
+<section id="typical-use-cases" class="level3" data-number="9.3">
+<h3 data-number="9.3" class="anchored" data-anchor-id="typical-use-cases"><span class="header-section-number">9.3</span> Typical Use Cases</h3>
+<p>Incremental evaluation is particularly effective when:</p>
+<ul>
+<li>objective functions are additive (e.g., sums of costs or distances),</li>
+<li>moves affect only a limited subset of decision variables, and</li>
+<li>constraints can be updated locally (e.g., capacity usage, assignment counts).</li>
+</ul>
+<p>Examples include updating total cost after flipping a binary variable, recalculating route length after a 2-opt move, or adjusting load after reassigning a single customer.</p>
+<hr>
+</section>
+<section id="practical-importance" class="level3" data-number="9.4">
+<h3 data-number="9.4" class="anchored" data-anchor-id="practical-importance"><span class="header-section-number">9.4</span> Practical Importance</h3>
+<p>In practice, efficient local search implementations rely heavily on incremental evaluation. The difference between a naive implementation and an incrementally evaluated one can be orders of magnitude in runtime. For this reason, careful bookkeeping of objective contributions and constraint impacts is a key skill in designing effective heuristic and metaheuristic algorithms.</p>
+<hr>
+</section>
+</section>
+<section id="limitations-and-role-of-local-search-in-metaheuristics" class="level2" data-number="10">
+<h2 data-number="10" class="anchored" data-anchor-id="limitations-and-role-of-local-search-in-metaheuristics"><span class="header-section-number">10</span> Limitations and Role of Local Search in Metaheuristics</h2>
+<section id="limitations-of-basic-local-search" class="level3" data-number="10.1">
+<h3 data-number="10.1" class="anchored" data-anchor-id="limitations-of-basic-local-search"><span class="header-section-number">10.1</span> Limitations of Basic Local Search</h3>
+<p>Despite their practical effectiveness and conceptual simplicity, basic local search methods suffer from several inherent limitations that restrict their performance on complex optimization problems:</p>
+<ul>
+<li><p><strong>Convergence to local optima</strong> Once no improving neighbor exists under the chosen neighborhood, the search terminates, even if substantially better solutions exist elsewhere in the solution space.</p></li>
+<li><p><strong>Strong dependence on neighborhood definition</strong> The quality of the final solution is tightly coupled to the neighborhood structure. A poorly chosen neighborhood may prevent the search from accessing promising regions, regardless of runtime.</p></li>
+<li><p><strong>Sensitivity to initial solutions</strong> Different starting points can lead to very different local optima. Without diversification mechanisms, the algorithm may consistently converge to low-quality solutions.</p></li>
+<li><p><strong>Lack of diversification mechanisms</strong> Basic local search has no built-in strategy to escape local optima, revisit unexplored regions, or avoid cycling behavior.</p></li>
+</ul>
+<p>As problem size and complexity increase, these limitations become more pronounced. Addressing them requires mechanisms that allow controlled exploration beyond local neighborhoods, motivating the development of <strong>metaheuristic frameworks</strong>.</p>
+<hr>
+</section>
+<section id="role-of-local-search-in-metaheuristics" class="level3" data-number="10.2">
+<h3 data-number="10.2" class="anchored" data-anchor-id="role-of-local-search-in-metaheuristics"><span class="header-section-number">10.2</span> Role of Local Search in Metaheuristics</h3>
+<p>In modern soft computing, local search is rarely used as a standalone optimization method. Instead, it plays a central role as a <strong>core intensification component</strong> within more powerful metaheuristic algorithms.</p>
+<p>Many well-known metaheuristics explicitly rely on local search:</p>
+<ul>
+<li><p><strong>Simulated annealing</strong></p>
+<ul>
+<li>performs local moves but allows non-improving moves with controlled probability,</li>
+<li>enables escape from local optima while retaining local refinement.</li>
+</ul></li>
+<li><p><strong>Tabu search</strong></p>
+<ul>
+<li>applies local search guided by memory structures,</li>
+<li>prevents cycling and encourages exploration of new regions.</li>
+</ul></li>
+<li><p><strong>Genetic algorithms with local improvement (memetic algorithms)</strong></p>
+<ul>
+<li>use evolutionary operators for exploration,</li>
+<li>apply local search to refine individuals and accelerate convergence.</li>
+</ul></li>
+<li><p><strong>Large and variable neighborhood search</strong></p>
+<ul>
+<li>repeatedly invoke local search after changing the neighborhood structure,</li>
+<li>combine diversification and intensification dynamically.</li>
+</ul></li>
+</ul>
+<p>Within these frameworks, local search provides the <strong>intensification engine</strong>, responsible for exploiting high-quality regions of the solution space. Metaheuristics augment local search with memory, randomness, and adaptive control to overcome its limitations, achieving both robustness and scalability on large and complex optimization problems.</p>
+<hr>
+</section>
+<section id="implementation-checklist" class="level3" data-number="10.3">
+<h3 data-number="10.3" class="anchored" data-anchor-id="implementation-checklist"><span class="header-section-number">10.3</span> Implementation Checklist</h3>
+<p>Before scaling a local search implementation, verify the following:</p>
+<ol type="1">
+<li>solution representation is explicit and easy to mutate</li>
+<li>neighborhood operators are correct and unit-tested on small instances</li>
+<li>feasibility checks (or penalty logic) are consistent</li>
+<li>incremental evaluation matches full recomputation on validation samples</li>
+<li>stopping criteria and runtime budgets are clearly defined</li>
+<li>performance is measured over multiple random seeds/instances</li>
+</ol>
+<p>This checklist prevents many common bugs that otherwise appear only at large scale.</p>
+<hr>
+</section>
+<section id="takeaways" class="level3" data-number="10.4">
+<h3 data-number="10.4" class="anchored" data-anchor-id="takeaways"><span class="header-section-number">10.4</span> Takeaways</h3>
+<ul>
+<li>Local search iteratively improves solutions using neighborhood moves<br>
+</li>
+<li>Solution representation determines what neighborhoods are possible<br>
+</li>
+<li>Neighborhood design is critical for performance<br>
+</li>
+<li>Intensification focuses search around good solutions<br>
+</li>
+<li>Efficient evaluation is essential for scalability<br>
+</li>
+<li>Local search is a key building block of metaheuristics</li>
+</ul>
+<hr>
+</section>
+</section>
+<section id="mini-exercises" class="level2" data-number="11">
+<h2 data-number="11" class="anchored" data-anchor-id="mini-exercises"><span class="header-section-number">11</span> Mini Exercises</h2>
+<ol type="1">
+<li><p><strong>Solution representation and neighborhood design</strong> Consider a simple knapsack problem with binary decision variables.</p>
+<ul>
+<li>Propose a suitable solution representation.</li>
+<li>Define at least one neighborhood structure (for example, single-bit flip or swap-based).</li>
+<li>Explain how a local search algorithm would explore this neighborhood to improve the solution.</li>
+</ul></li>
+<li><p><strong>Comparison of local search strategies</strong> Compare <strong>first-improvement</strong> and <strong>best-improvement</strong> strategies in local search.</p>
+<ul>
+<li>Discuss their differences in terms of computational effort per iteration.</li>
+<li>Explain how each strategy affects convergence speed and solution quality.</li>
+<li>Identify situations where one strategy may be preferred over the other.</li>
+</ul></li>
+<li><p><strong>Incremental evaluation design</strong> Consider a binary optimization problem with objective <span class="math display">\[
+f(x)=\sum_{j=1}^{n} c_j x_j,\quad x_j\in\{0,1\}.
+\]</span></p>
+<ul>
+<li>Derive the objective delta for flipping a single variable <span class="math inline">\(x_k\)</span>.</li>
+<li>Explain how this delta avoids full objective recomputation.</li>
+<li>Estimate the difference in per-move cost between naive and incremental evaluation.</li>
+</ul></li>
+<li><p><strong>Feasibility handling trade-offs</strong> For a constrained assignment problem, compare:</p>
+<ul>
+<li>strictly feasibility-preserving moves, and</li>
+<li>moves that allow temporary infeasibility with penalties.</li>
+</ul>
+<p>Discuss how each choice affects exploration, implementation complexity, and final solution quality.</p></li>
+</ol>
+<hr>
+</section>
+<section id="references-for-this-chapter" class="level2" data-number="12">
+<h2 data-number="12" class="anchored" data-anchor-id="references-for-this-chapter"><span class="header-section-number">12</span> References for This Chapter</h2>
+<ol type="1">
+<li>Hoos, H. H., &amp; Stutzle, T. (2005). <em>Stochastic Local Search: Foundations and Applications</em>. Morgan Kaufmann. URL: <a href="https://www.cs.ubc.ca/~hoos/SLS-Book/about.html">https://www.cs.ubc.ca/~hoos/SLS-Book/about.html</a></li>
+<li>Kernighan, B. W., &amp; Lin, S. (1970). An efficient heuristic procedure for partitioning graphs. <em>Bell System Technical Journal</em>, 49(2), 291-307. DOI: <a href="https://doi.org/10.1002/j.1538-7305.1970.tb01770.x">10.1002/j.1538-7305.1970.tb01770.x</a></li>
+<li>Lin, S., &amp; Kernighan, B. W. (1973). An effective heuristic algorithm for the traveling-salesman problem. <em>Operations Research</em>, 21(2), 498-516. DOI: <a href="https://doi.org/10.1287/opre.21.2.498">10.1287/opre.21.2.498</a></li>
+<li>Mladenovic, N., &amp; Hansen, P. (1997). Variable neighborhood search. <em>Computers &amp; Operations Research</em>, 24(11), 1097-1100. DOI: <a href="https://doi.org/10.1016/S0305-0548(97)00031-2">10.1016/S0305-0548(97)00031-2</a></li>
+<li>Johnson, D. S., Aragon, C. R., McGeoch, L. A., &amp; Schevon, C. (1989). Optimization by simulated annealing: An experimental evaluation; part I, graph partitioning. <em>Operations Research</em>, 37(6), 865-892. DOI: <a href="https://doi.org/10.1287/opre.37.6.865">10.1287/opre.37.6.865</a></li>
+<li>Lourenco, H. R., Martin, O. C., &amp; Stutzle, T. (2019). Iterated local search: Framework and applications. In <em>Handbook of Metaheuristics</em> (3rd ed.). DOI: <a href="https://doi.org/10.1007/978-3-319-91086-4_5">10.1007/978-3-319-91086-4_5</a></li>
+</ol>
+
+
+</section>
+
+<a onclick="window.scrollTo(0, 0); return false;" role="button" id="quarto-back-to-top"><i class="bi bi-arrow-up"></i> Back to top</a></main> <!-- /main -->
+<div class="ui-controls" role="group" aria-label="Display controls">
+  <!-- Quarto already shows a light or dark toggle in the navbar when you set light and dark themes.
+       Here we only add font size. -->
+  <label for="fontSize" class="ui-label">A</label>
+  <select id="fontSize" aria-label="Font size">
+    <option value="16">A</option>
+    <option value="18">A+</option>
+    <option value="20">A++</option>
+  </select>
+</div>
+
+<script>
+(function () {
+  const KEY = "q_font_size_px";
+  const select = document.getElementById("fontSize");
+
+  function apply(px) {
+    document.documentElement.style.fontSize = px + "px";
+  }
+
+  // Load saved value or default to 16
+  const saved = localStorage.getItem(KEY) || "16";
+  select.value = saved;
+  apply(saved);
+
+  // Save on change
+  select.addEventListener("change", () => {
+    localStorage.setItem(KEY, select.value);
+    apply(select.value);
+  });
+})();
+</script>
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    // Ensure there is a toggle, if there isn't float one in the top right
+    if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
+      const a = window.document.createElement('a');
+      a.classList.add('top-right');
+      a.classList.add('quarto-color-scheme-toggle');
+      a.href = "";
+      a.onclick = function() { try { window.quartoToggleColorScheme(); } catch {} return false; };
+      const i = window.document.createElement("i");
+      i.classList.add('bi');
+      a.appendChild(i);
+      window.document.body.appendChild(a);
+    }
+    setColorSchemeToggle(hasAlternateSentinel())
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+        const codeEl = trigger.previousElementSibling.cloneNode(true);
+        for (const childEl of codeEl.children) {
+          if (isCodeAnnotation(childEl)) {
+            childEl.remove();
+          }
+        }
+        return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp("https:\/\/soumenatta\.github\.io\/selected_topics_in_soft_computing\/");
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+            // target, if specified
+            link.setAttribute("target", "_blank");
+            if (link.getAttribute("rel") === null) {
+              link.setAttribute("rel", "noopener");
+            }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">
+<p>© Dr.&nbsp;Soumen Atta, Ph.D.&nbsp;(2025)</p>
+</div>   
+    <div class="nav-footer-center">
+      &nbsp;
+    </div>
+    <div class="nav-footer-right">
+      &nbsp;
+    </div>
+  </div>
+</footer>
+
+
+
+
+<script src="../site_libs/quarto-html/zenscroll-min.js"></script>
+</body></html>

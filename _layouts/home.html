@@ -1,0 +1,31 @@
+---
+layout: default
+---
+<section class="hero">
+  <div class="hero__inner">
+    {% assign has_photo = false %}
+    {% for f in site.static_files %}
+      {% if f.path == "/assets/img/profile.jpg" %}{% assign has_photo = true %}{% endif %}
+    {% endfor %}
+    {% if has_photo %}
+    <img class="hero__photo" src="{{ '/assets/img/profile.jpg' | relative_url }}" alt="Photo of {{ site.author.name }}">
+    {% else %}
+    <div class="hero__photo hero__photo--placeholder" aria-hidden="true">SA</div>
+    {% endif %}
+    <div>
+      <h1>{{ site.title }}</h1>
+      <p class="hero__role">{{ site.tagline }}</p>
+      <p class="hero__affil">Faculty of Information Technology, University of Jyväskylä, Finland</p>
+      <div class="hero__links">
+        <a class="btn btn--accent" href="mailto:{{ site.author.email }}">Email</a>
+        <a class="btn" href="{{ '/academics' | relative_url }}">Academics</a>
+        <a class="btn" href="{{ '/publications' | relative_url }}">Publications</a>
+        <a class="btn" href="{{ '/datasets' | relative_url }}">Data Sets</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="container">
+  {{ content }}
+</div>

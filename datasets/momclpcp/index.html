@@ -1,0 +1,695 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Supplementary Webpage for Manuscript: MOMCLPCP · Soumen Atta, Ph.D.</title>
+<meta name="description" content="Supplementary data and benchmark instances for a published research article by Dr. Soumen Atta.">
+<link rel="canonical" href="https://www.soumenatta.com/datasets/momclpcp">
+<link rel="icon" href="/assets/img/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="/assets/css/style.css">
+</head>
+<body>
+<header class="site-header">
+  <div class="site-header__inner">
+    <a class="brand" href="/">Soumen Atta <span class="brand__suffix">Ph.D.</span></a>
+    <button class="nav-toggle" id="nav-toggle" aria-label="Toggle navigation" aria-expanded="false" aria-controls="primary-nav">
+      <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M1 4h16M1 9h16M1 14h16" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+      </svg>
+    </button>
+    <nav class="primary-nav" id="primary-nav">
+      <ul>
+        <li><a href="/">Home</a></li>
+        <li><a href="/academics">Academics</a></li>
+        <li><a href="/publications">Publications</a></li>
+        <li><a href="/experiences">Experiences</a></li>
+        <li><a href="/experiences/teaching_experiences/courses">Courses</a></li>
+        <li class="active"><a href="/datasets">Data Sets</a></li>
+        <li><a href="/blogs">Blogs</a></li>
+        <li><a href="/contact">Contact</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<div class="container wide">
+  <p class="small muted" style="margin-top:1.6rem;"><a href="/datasets">← Back to Data Sets</a></p>
+  <div class="dataset-body">
+
+
+<h1 style="text-align: center" align="center"><font size="5">Supplementary Web-page for Manuscript:</font></h1>
+<h1 style="text-align: center" align="center"><font size="5">A multi-objective formulation of maximal covering location problem with customers' preferences: exploring Pareto optimality-based solutions</font></h1>
+<p class="MsoNormal" align="center"><b><span lang="FI"><font size="4">
+Soumen Atta<sup>1</sup>, Priya Ranjan Sinha Mahapatra<sup>2</sup>, Anirban Mukhopadhyay<sup>2</sup>
+</font></span></b></p>
+<p class="MsoNormal" align="center"><b><span lang="FI"><font size="3">
+<sup>1</sup> Laboratoire des Sciences du Numérique de Nantes (LS2N), UMR 6004, UFR Sciences et Techniques, Université de Nantes, IMT Atlantique, 4 Rue Alfred
+Kastler, Nantes 44307, France<br> 
+<sup>2</sup>Department of Computer Science and Engineering, University of Kalyani, Kalyani-741235, West Bengal, India
+</font></span></b></p>
+<p class="MsoNormal" align="center"><b><span lang="FI"><font size="3">
+
+Email addresses: <a href="mailto:soumen.atta@univ-nantes.fr;soumen.atta@ls2n.fr;priya@klyuniv.ac.in;anirban@klyuniv.ac.in?Subject=MOMCLPCP%20dataset" target="_top">soumen.atta@univ-nantes.fr;soumen.atta@ls2n.fr;priya@klyuniv.ac.in;anirban@klyuniv.ac.in</a>
+</font></span></b></p>
+<p class="MsoNormal">&nbsp;</p>
+
+
+<p style="font-size:100%;" align="justify">
+The instances for the <i>multi-objective maximal covering location problem with customers' preferences</i> (MOMCLPCP) mentioned in this page are generated using the <i>maximal covering location problem</i> (MCLP) [1, 2] instances which are available at <a href="http://www.lac.inpe.br/~lorena/instancias.html">http://www.lac.inpe.br/~lorena/instancias.html</a>. We have created 82 MOMCLPCP instances. The size of an instance is determined by the number of customers (<i>n</i>). Each instance of MOMCLPCP consists of <i>distance matrix</i> having size <i>n</i> &times; <i>n</i>, <i>demand vector</i> of size <i>n</i> &times; 1, and <i>preference matrix</i> having size <i>n</i> &times; <i>n</i>. These files are named as follows: <i>distanceMOMCLPCP#.txt</i>, <i>demandMOMCLPCP#.txt</i>, and <i>preferenceMOMCLPCP#.txt</i>, respectively, where <i>#</i> denotes the number of customers. <br> 
+
+The obtained solutions for each of these 82 instances, along with their visualization, can be seen by clicking on the individual "Show Result" button in the following table. 
+</p> 
+  
+<br> 
+  
+<p style="font-size:100%;" align="justify"> 
+Cite as: Soumen Atta, Priya Ranjan Sinha Mahapatra and Anirban Mukhopadhyay (2021). A multi-objective formulation of maximal covering location problem with customers’ preferences: Exploring Pareto optimality-based solutions. Expert Systems With Applications, Elsevier, Article 115830. 
+</p> 
+
+<br> 
+  
+<p class="MsoNormal" align="right"><b><span lang="FI"><font size="3">
+Click <a href="momclpcp_data_sets.zip">here</a> to download all the instances as single zip file. 
+</font></span></b></p> 
+
+
+<div class="table-wrap"><table border="1" width="35%" bordercolor="#C0C0C0" bgcolor="#FFFFFF" height="10"align="center">
+<tr>
+<td width="5%" align="center"><font size="3"><b><i>n</i></b></font></td>
+<td width="5%" align="center"><font size="3"><b><i>k</i></b></font></td>
+<td width="5%" align="center"><font size="3"><b><i>s</i></b></font></td>
+<td width="10%" align="center"><font size="3"><b>NSGA-II</b></font></td>
+<td width="10%" align="center"><font size="3"><b>MOHSA</b></font></td>
+</tr>
+<tr>
+<td width="5%" align="center"><font size="3">324</font></td>
+<td width="5%" align="center"><font size="3">1</font></td>
+<td width="5%" align="center"><font size="3">800</font></td>
+<td width="10%" align="center"><font size="3"><a href="momclpcp_324_800_1nsgaii.html" target="_blank">Show Result</a></font></td>
+<td width="10%" align="center"><font size="3"><a href="momclpcp_324_800_1mohsa.html" target="_blank">Show Result</font></td>
+</tr>
+<tr>
+<td width="5%" align="center"><font size="3">324</font></td>
+<td width="5%" align="center"><font size="3">2</font></td>
+<td width="5%" align="center"><font size="3">800</font></td>
+<td width="10%" align="center"><font size="3"><a href="momclpcp_324_800_2nsgaii.html" target="_blank">Show Result</a></font></td>
+<td width="10%" align="center"><font size="3"><a href="momclpcp_324_800_2mohsa.html" target="_blank">Show Result</font></td>
+</tr>
+<tr>
+<td width="5%" align="center"><font size="3">324</font></td>
+<td width="5%" align="center"><font size="3">3</font></td>
+<td width="5%" align="center"><font size="3">800</font></td>
+<td width="10%" align="center"><font size="3"><a href="momclpcp_324_800_3nsgaii.html" target="_blank">Show Result</a></font></td>
+<td width="10%" align="center"><font size="3"><a href="momclpcp_324_800_3mohsa.html" target="_blank">Show Result</font></td>
+</tr>
+<tr>
+<td width="5%" align="center"><font size="3">324</font></td>
+<td width="5%" align="center"><font size="3">4</font></td>
+<td width="5%" align="center"><font size="3">800</font></td>
+<td width="10%" align="center"><font size="3"><a href="momclpcp_324_800_4nsgaii.html" target="_blank">Show Result</a></font></td>
+<td width="10%" align="center"><font size="3"><a href="momclpcp_324_800_4mohsa.html" target="_blank">Show Result</font></td>
+</tr>
+<tr>
+<td width="5%" align="center"><font size="3">324</font></td>
+<td width="5%" align="center"><font size="3">5</font></td>
+<td width="5%" align="center"><font size="3">800</font></td>
+<td width="10%" align="center"><font size="3"><a href="momclpcp_324_800_5nsgaii.html" target="_blank">Show Result</a></font></td>
+<td width="10%" align="center"><font size="3"><a href="momclpcp_324_800_5mohsa.html" target="_blank">Show Result</font></td>
+</tr>
+<tr>
+<td width="5%" align="center"><font size="3">324</font></td>
+<td width="5%" align="center"><font size="3">1</font></td>
+<td width="5%" align="center"><font size="3">1200</font></td>
+<td width="10%" align="center"><font size="3"><a href="momclpcp_324_1200_1nsgaii.html" target="_blank">Show Result</a></font></td>
+<td width="10%" align="center"><font size="3"><a href="momclpcp_324_1200_1mohsa.html" target="_blank">Show Result</font></td>
+</tr>
+<tr>
+<td width="5%" align="center"><font size="3">324</font></td>
+<td width="5%" align="center"><font size="3">2</font></td>
+<td width="5%" align="center"><font size="3">1200</font></td>
+<td width="10%" align="center"><font size="3"><a href="momclpcp_324_1200_2nsgaii.html" target="_blank">Show Result</a></font></td>
+<td width="10%" align="center"><font size="3"><a href="momclpcp_324_1200_2mohsa.html" target="_blank">Show Result</font></td>
+</tr>
+<tr>
+<td width="5%" align="center"><font size="3">324</font></td>
+<td width="5%" align="center"><font size="3">3</font></td>
+<td width="5%" align="center"><font size="3">1200</font></td>
+<td width="10%" align="center"><font size="3"><a href="momclpcp_324_1200_3nsgaii.html" target="_blank">Show Result</a></font></td>
+<td width="10%" align="center"><font size="3"><a href="momclpcp_324_1200_3mohsa.html" target="_blank">Show Result</font></td>
+</tr>
+<tr>
+<td width="5%" align="center"><font size="3">324</font></td>
+<td width="5%" align="center"><font size="3">1</font></td>
+<td width="5%" align="center"><font size="3">1600</font></td>
+<td width="10%" align="center"><font size="3"><a href="momclpcp_324_1600_1nsgaii.html" target="_blank">Show Result</a></font></td>
+<td width="10%" align="center"><font size="3"><a href="momclpcp_324_1600_1mohsa.html" target="_blank">Show Result</font></td>
+</tr>
+<tr>
+<td width="5%" align="center"><font size="3">324</font></td>
+<td width="5%" align="center"><font size="3">2</font></td>
+<td width="5%" align="center"><font size="3">1600</font></td>
+<td width="10%" align="center"><font size="3"><a href="momclpcp_324_1600_2nsgaii.html" target="_blank">Show Result</a></font></td>
+<td width="10%" align="center"><font size="3"><a href="momclpcp_324_1600_2mohsa.html" target="_blank">Show Result</font></td>
+</tr>
+<tr>
+<td width="5%" align="center"><font size="3">402</font></td>
+<td width="5%" align="center"><font size="3">1</font></td>
+<td width="5%" align="center"><font size="3">800</font></td>
+<td width="10%" align="center"><font size="3"><a href="momclpcp_402_800_1nsgaii.html" target="_blank">Show Result</a></font></td>
+<td width="10%" align="center"><font size="3"><a href="momclpcp_402_800_1mohsa.html" target="_blank">Show Result</font></td>
+</tr>
+<tr>
+<td width="5%" align="center"><font size="3">402</font></td>
+<td width="5%" align="center"><font size="3">2</font></td>
+<td width="5%" align="center"><font size="3">800</font></td>
+<td width="10%" align="center"><font size="3"><a href="momclpcp_402_800_2nsgaii.html" target="_blank">Show Result</a></font></td>
+<td width="10%" align="center"><font size="3"><a href="momclpcp_402_800_2mohsa.html" target="_blank">Show Result</font></td>
+</tr>
+<tr>
+<td width="5%" align="center"><font size="3">402</font></td>
+<td width="5%" align="center"><font size="3">3</font></td>
+<td width="5%" align="center"><font size="3">800</font></td>
+<td width="10%" align="center"><font size="3"><a href="momclpcp_402_800_3nsgaii.html" target="_blank">Show Result</a></font></td>
+<td width="10%" align="center"><font size="3"><a href="momclpcp_402_800_3mohsa.html" target="_blank">Show Result</font></td>
+</tr>
+<tr>
+<td width="5%" align="center"><font size="3">402</font></td>
+<td width="5%" align="center"><font size="3">4</font></td>
+<td width="5%" align="center"><font size="3">800</font></td>
+<td width="10%" align="center"><font size="3"><a href="momclpcp_402_800_4nsgaii.html" target="_blank">Show Result</a></font></td>
+<td width="10%" align="center"><font size="3"><a href="momclpcp_402_800_4mohsa.html" target="_blank">Show Result</font></td>
+</tr>
+<tr>
+<td width="5%" align="center"><font size="3">402</font></td>
+<td width="5%" align="center"><font size="3">5</font></td>
+<td width="5%" align="center"><font size="3">800</font></td>
+<td width="10%" align="center"><font size="3"><a href="momclpcp_402_800_5nsgaii.html" target="_blank">Show Result</a></font></td>
+<td width="10%" align="center"><font size="3"><a href="momclpcp_402_800_5mohsa.html" target="_blank">Show Result</font></td>
+</tr>
+<tr>
+<td width="5%" align="center"><font size="3">402</font></td>
+<td width="5%" align="center"><font size="3">6</font></td>
+<td width="5%" align="center"><font size="3">800</font></td>
+<td width="10%" align="center"><font size="3"><a href="momclpcp_402_800_6nsgaii.html" target="_blank">Show Result</a></font></td>
+<td width="10%" align="center"><font size="3"><a href="momclpcp_402_800_6mohsa.html" target="_blank">Show Result</font></td>
+</tr>
+<tr>
+<td width="5%" align="center"><font size="3">402</font></td>
+<td width="5%" align="center"><font size="3">1</font></td>
+<td width="5%" align="center"><font size="3">1200</font></td>
+<td width="10%" align="center"><font size="3"><a href="momclpcp_402_1200_1nsgaii.html" target="_blank">Show Result</a></font></td>
+<td width="10%" align="center"><font size="3"><a href="momclpcp_402_1200_1mohsa.html" target="_blank">Show Result</font></td>
+</tr>
+<tr>
+<td width="5%" align="center"><font size="3">402</font></td>
+<td width="5%" align="center"><font size="3">2</font></td>
+<td width="5%" align="center"><font size="3">1200</font></td>
+<td width="10%" align="center"><font size="3"><a href="momclpcp_402_1200_2nsgaii.html" target="_blank">Show Result</a></font></td>
+<td width="10%" align="center"><font size="3"><a href="momclpcp_402_1200_2mohsa.html" target="_blank">Show Result</font></td>
+</tr>
+<tr>
+<td width="5%" align="center"><font size="3">402</font></td>
+<td width="5%" align="center"><font size="3">3</font></td>
+<td width="5%" align="center"><font size="3">1200</font></td>
+<td width="10%" align="center"><font size="3"><a href="momclpcp_402_1200_3nsgaii.html" target="_blank">Show Result</a></font></td>
+<td width="10%" align="center"><font size="3"><a href="momclpcp_402_1200_3mohsa.html" target="_blank">Show Result</font></td>
+</tr>
+<tr>
+<td width="5%" align="center"><font size="3">402</font></td>
+<td width="5%" align="center"><font size="3">1</font></td>
+<td width="5%" align="center"><font size="3">1600</font></td>
+<td width="10%" align="center"><font size="3"><a href="momclpcp_402_1600_1nsgaii.html" target="_blank">Show Result</a></font></td>
+<td width="10%" align="center"><font size="3"><a href="momclpcp_402_1600_1mohsa.html" target="_blank">Show Result</font></td>
+</tr>
+<tr>
+<td width="5%" align="center"><font size="3">402</font></td>
+<td width="5%" align="center"><font size="3">2</font></td>
+<td width="5%" align="center"><font size="3">1600</font></td>
+<td width="10%" align="center"><font size="3"><a href="momclpcp_402_1600_2nsgaii.html" target="_blank">Show Result</a></font></td>
+<td width="10%" align="center"><font size="3"><a href="momclpcp_402_1600_2mohsa.html" target="_blank">Show Result</font></td>
+</tr>
+<tr>
+<td width="5%" align="center"><font size="3">500</font></td>
+<td width="5%" align="center"><font size="3">1</font></td>
+<td width="5%" align="center"><font size="3">800</font></td>
+<td width="10%" align="center"><font size="3"><a href="momclpcp_500_800_1nsgaii.html" target="_blank">Show Result</a></font></td>
+<td width="10%" align="center"><font size="3"><a href="momclpcp_500_800_1mohsa.html" target="_blank">Show Result</font></td>
+</tr>
+<tr>
+<td width="5%" align="center"><font size="3">500</font></td>
+<td width="5%" align="center"><font size="3">2</font></td>
+<td width="5%" align="center"><font size="3">800</font></td>
+<td width="10%" align="center"><font size="3"><a href="momclpcp_500_800_2nsgaii.html" target="_blank">Show Result</a></font></td>
+<td width="10%" align="center"><font size="3"><a href="momclpcp_500_800_2mohsa.html" target="_blank">Show Result</font></td>
+</tr>
+<tr>
+<td width="5%" align="center"><font size="3">500</font></td>
+<td width="5%" align="center"><font size="3">3</font></td>
+<td width="5%" align="center"><font size="3">800</font></td>
+<td width="10%" align="center"><font size="3"><a href="momclpcp_500_800_3nsgaii.html" target="_blank">Show Result</a></font></td>
+<td width="10%" align="center"><font size="3"><a href="momclpcp_500_800_3mohsa.html" target="_blank">Show Result</font></td>
+</tr>
+<tr>
+<td width="5%" align="center"><font size="3">500</font></td>
+<td width="5%" align="center"><font size="3">4</font></td>
+<td width="5%" align="center"><font size="3">800</font></td>
+<td width="10%" align="center"><font size="3"><a href="momclpcp_500_800_4nsgaii.html" target="_blank">Show Result</a></font></td>
+<td width="10%" align="center"><font size="3"><a href="momclpcp_500_800_4mohsa.html" target="_blank">Show Result</font></td>
+</tr>
+<tr>
+<td width="5%" align="center"><font size="3">500</font></td>
+<td width="5%" align="center"><font size="3">5</font></td>
+<td width="5%" align="center"><font size="3">800</font></td>
+<td width="10%" align="center"><font size="3"><a href="momclpcp_500_800_5nsgaii.html" target="_blank">Show Result</a></font></td>
+<td width="10%" align="center"><font size="3"><a href="momclpcp_500_800_5mohsa.html" target="_blank">Show Result</font></td>
+</tr>
+<tr>
+<td width="5%" align="center"><font size="3">500</font></td>
+<td width="5%" align="center"><font size="3">6</font></td>
+<td width="5%" align="center"><font size="3">800</font></td>
+<td width="10%" align="center"><font size="3"><a href="momclpcp_500_800_6nsgaii.html" target="_blank">Show Result</a></font></td>
+<td width="10%" align="center"><font size="3"><a href="momclpcp_500_800_6mohsa.html" target="_blank">Show Result</font></td>
+</tr>
+<tr>
+<td width="5%" align="center"><font size="3">500</font></td>
+<td width="5%" align="center"><font size="3">7</font></td>
+<td width="5%" align="center"><font size="3">800</font></td>
+<td width="10%" align="center"><font size="3"><a href="momclpcp_500_800_7nsgaii.html" target="_blank">Show Result</a></font></td>
+<td width="10%" align="center"><font size="3"><a href="momclpcp_500_800_7mohsa.html" target="_blank">Show Result</font></td>
+</tr>
+<tr>
+<td width="5%" align="center"><font size="3">500</font></td>
+<td width="5%" align="center"><font size="3">8</font></td>
+<td width="5%" align="center"><font size="3">800</font></td>
+<td width="10%" align="center"><font size="3"><a href="momclpcp_500_800_8nsgaii.html" target="_blank">Show Result</a></font></td>
+<td width="10%" align="center"><font size="3"><a href="momclpcp_500_800_8mohsa.html" target="_blank">Show Result</font></td>
+</tr>
+<tr>
+<td width="5%" align="center"><font size="3">500</font></td>
+<td width="5%" align="center"><font size="3">1</font></td>
+<td width="5%" align="center"><font size="3">1200</font></td>
+<td width="10%" align="center"><font size="3"><a href="momclpcp_500_1200_1nsgaii.html" target="_blank">Show Result</a></font></td>
+<td width="10%" align="center"><font size="3"><a href="momclpcp_500_1200_1mohsa.html" target="_blank">Show Result</font></td>
+</tr>
+<tr>
+<td width="5%" align="center"><font size="3">500</font></td>
+<td width="5%" align="center"><font size="3">2</font></td>
+<td width="5%" align="center"><font size="3">1200</font></td>
+<td width="10%" align="center"><font size="3"><a href="momclpcp_500_1200_2nsgaii.html" target="_blank">Show Result</a></font></td>
+<td width="10%" align="center"><font size="3"><a href="momclpcp_500_1200_2mohsa.html" target="_blank">Show Result</font></td>
+</tr>
+<tr>
+<td width="5%" align="center"><font size="3">500</font></td>
+<td width="5%" align="center"><font size="3">3</font></td>
+<td width="5%" align="center"><font size="3">1200</font></td>
+<td width="10%" align="center"><font size="3"><a href="momclpcp_500_1200_3nsgaii.html" target="_blank">Show Result</a></font></td>
+<td width="10%" align="center"><font size="3"><a href="momclpcp_500_1200_3mohsa.html" target="_blank">Show Result</font></td>
+</tr>
+<tr>
+<td width="5%" align="center"><font size="3">500</font></td>
+<td width="5%" align="center"><font size="3">4</font></td>
+<td width="5%" align="center"><font size="3">1200</font></td>
+<td width="10%" align="center"><font size="3"><a href="momclpcp_500_1200_4nsgaii.html" target="_blank">Show Result</a></font></td>
+<td width="10%" align="center"><font size="3"><a href="momclpcp_500_1200_4mohsa.html" target="_blank">Show Result</font></td>
+</tr>
+<tr>
+<td width="5%" align="center"><font size="3">500</font></td>
+<td width="5%" align="center"><font size="3">1</font></td>
+<td width="5%" align="center"><font size="3">1600</font></td>
+<td width="10%" align="center"><font size="3"><a href="momclpcp_500_1600_1nsgaii.html" target="_blank">Show Result</a></font></td>
+<td width="10%" align="center"><font size="3"><a href="momclpcp_500_1600_1mohsa.html" target="_blank">Show Result</font></td>
+</tr>
+<tr>
+<td width="5%" align="center"><font size="3">500</font></td>
+<td width="5%" align="center"><font size="3">2</font></td>
+<td width="5%" align="center"><font size="3">1600</font></td>
+<td width="10%" align="center"><font size="3"><a href="momclpcp_500_1600_2nsgaii.html" target="_blank">Show Result</a></font></td>
+<td width="10%" align="center"><font size="3"><a href="momclpcp_500_1600_2mohsa.html" target="_blank">Show Result</font></td>
+</tr>
+<tr>
+<td width="5%" align="center"><font size="3">500</font></td>
+<td width="5%" align="center"><font size="3">3</font></td>
+<td width="5%" align="center"><font size="3">1600</font></td>
+<td width="10%" align="center"><font size="3"><a href="momclpcp_500_1600_3nsgaii.html" target="_blank">Show Result</a></font></td>
+<td width="10%" align="center"><font size="3"><a href="momclpcp_500_1600_3mohsa.html" target="_blank">Show Result</font></td>
+</tr>
+<tr>
+<td width="5%" align="center"><font size="3">708</font></td>
+<td width="5%" align="center"><font size="3">1</font></td>
+<td width="5%" align="center"><font size="3">800</font></td>
+<td width="10%" align="center"><font size="3"><a href="momclpcp_708_800_1nsgaii.html" target="_blank">Show Result</a></font></td>
+<td width="10%" align="center"><font size="3"><a href="momclpcp_708_800_1mohsa.html" target="_blank">Show Result</font></td>
+</tr>
+<tr>
+<td width="5%" align="center"><font size="3">708</font></td>
+<td width="5%" align="center"><font size="3">2</font></td>
+<td width="5%" align="center"><font size="3">800</font></td>
+<td width="10%" align="center"><font size="3"><a href="momclpcp_708_800_2nsgaii.html" target="_blank">Show Result</a></font></td>
+<td width="10%" align="center"><font size="3"><a href="momclpcp_708_800_2mohsa.html" target="_blank">Show Result</font></td>
+</tr>
+<tr>
+<td width="5%" align="center"><font size="3">708</font></td>
+<td width="5%" align="center"><font size="3">3</font></td>
+<td width="5%" align="center"><font size="3">800</font></td>
+<td width="10%" align="center"><font size="3"><a href="momclpcp_708_800_3nsgaii.html" target="_blank">Show Result</a></font></td>
+<td width="10%" align="center"><font size="3"><a href="momclpcp_708_800_3mohsa.html" target="_blank">Show Result</font></td>
+</tr>
+<tr>
+<td width="5%" align="center"><font size="3">708</font></td>
+<td width="5%" align="center"><font size="3">4</font></td>
+<td width="5%" align="center"><font size="3">800</font></td>
+<td width="10%" align="center"><font size="3"><a href="momclpcp_708_800_4nsgaii.html" target="_blank">Show Result</a></font></td>
+<td width="10%" align="center"><font size="3"><a href="momclpcp_708_800_4mohsa.html" target="_blank">Show Result</font></td>
+</tr>
+<tr>
+<td width="5%" align="center"><font size="3">708</font></td>
+<td width="5%" align="center"><font size="3">5</font></td>
+<td width="5%" align="center"><font size="3">800</font></td>
+<td width="10%" align="center"><font size="3"><a href="momclpcp_708_800_5nsgaii.html" target="_blank">Show Result</a></font></td>
+<td width="10%" align="center"><font size="3"><a href="momclpcp_708_800_5mohsa.html" target="_blank">Show Result</font></td>
+</tr>
+<tr>
+<td width="5%" align="center"><font size="3">708</font></td>
+<td width="5%" align="center"><font size="3">6</font></td>
+<td width="5%" align="center"><font size="3">800</font></td>
+<td width="10%" align="center"><font size="3"><a href="momclpcp_708_800_6nsgaii.html" target="_blank">Show Result</a></font></td>
+<td width="10%" align="center"><font size="3"><a href="momclpcp_708_800_6mohsa.html" target="_blank">Show Result</font></td>
+</tr>
+<tr>
+<td width="5%" align="center"><font size="3">708</font></td>
+<td width="5%" align="center"><font size="3">7</font></td>
+<td width="5%" align="center"><font size="3">800</font></td>
+<td width="10%" align="center"><font size="3"><a href="momclpcp_708_800_7nsgaii.html" target="_blank">Show Result</a></font></td>
+<td width="10%" align="center"><font size="3"><a href="momclpcp_708_800_7mohsa.html" target="_blank">Show Result</font></td>
+</tr>
+<tr>
+<td width="5%" align="center"><font size="3">708</font></td>
+<td width="5%" align="center"><font size="3">8</font></td>
+<td width="5%" align="center"><font size="3">800</font></td>
+<td width="10%" align="center"><font size="3"><a href="momclpcp_708_800_8nsgaii.html" target="_blank">Show Result</a></font></td>
+<td width="10%" align="center"><font size="3"><a href="momclpcp_708_800_8mohsa.html" target="_blank">Show Result</font></td>
+</tr>
+<tr>
+<td width="5%" align="center"><font size="3">708</font></td>
+<td width="5%" align="center"><font size="3">9</font></td>
+<td width="5%" align="center"><font size="3">800</font></td>
+<td width="10%" align="center"><font size="3"><a href="momclpcp_708_800_9nsgaii.html" target="_blank">Show Result</a></font></td>
+<td width="10%" align="center"><font size="3"><a href="momclpcp_708_800_9mohsa.html" target="_blank">Show Result</font></td>
+</tr>
+<tr>
+<td width="5%" align="center"><font size="3">708</font></td>
+<td width="5%" align="center"><font size="3">10</font></td>
+<td width="5%" align="center"><font size="3">800</font></td>
+<td width="10%" align="center"><font size="3"><a href="momclpcp_708_800_10nsgaii.html" target="_blank">Show Result</a></font></td>
+<td width="10%" align="center"><font size="3"><a href="momclpcp_708_800_10mohsa.html" target="_blank">Show Result</font></td>
+</tr>
+<tr>
+<td width="5%" align="center"><font size="3">708</font></td>
+<td width="5%" align="center"><font size="3">11</font></td>
+<td width="5%" align="center"><font size="3">800</font></td>
+<td width="10%" align="center"><font size="3"><a href="momclpcp_708_800_11nsgaii.html" target="_blank">Show Result</a></font></td>
+<td width="10%" align="center"><font size="3"><a href="momclpcp_708_800_11mohsa.html" target="_blank">Show Result</font></td>
+</tr>
+<tr>
+<td width="5%" align="center"><font size="3">708</font></td>
+<td width="5%" align="center"><font size="3">1</font></td>
+<td width="5%" align="center"><font size="3">1200</font></td>
+<td width="10%" align="center"><font size="3"><a href="momclpcp_708_1200_1nsgaii.html" target="_blank">Show Result</a></font></td>
+<td width="10%" align="center"><font size="3"><a href="momclpcp_708_1200_1mohsa.html" target="_blank">Show Result</font></td>
+</tr>
+<tr>
+<td width="5%" align="center"><font size="3">708</font></td>
+<td width="5%" align="center"><font size="3">2</font></td>
+<td width="5%" align="center"><font size="3">1200</font></td>
+<td width="10%" align="center"><font size="3"><a href="momclpcp_708_1200_2nsgaii.html" target="_blank">Show Result</a></font></td>
+<td width="10%" align="center"><font size="3"><a href="momclpcp_708_1200_2mohsa.html" target="_blank">Show Result</font></td>
+</tr>
+<tr>
+<td width="5%" align="center"><font size="3">708</font></td>
+<td width="5%" align="center"><font size="3">3</font></td>
+<td width="5%" align="center"><font size="3">1200</font></td>
+<td width="10%" align="center"><font size="3"><a href="momclpcp_708_1200_3nsgaii.html" target="_blank">Show Result</a></font></td>
+<td width="10%" align="center"><font size="3"><a href="momclpcp_708_1200_3mohsa.html" target="_blank">Show Result</font></td>
+</tr>
+<tr>
+<td width="5%" align="center"><font size="3">708</font></td>
+<td width="5%" align="center"><font size="3">4</font></td>
+<td width="5%" align="center"><font size="3">1200</font></td>
+<td width="10%" align="center"><font size="3"><a href="momclpcp_708_1200_4nsgaii.html" target="_blank">Show Result</a></font></td>
+<td width="10%" align="center"><font size="3"><a href="momclpcp_708_1200_4mohsa.html" target="_blank">Show Result</font></td>
+</tr>
+<tr>
+<td width="5%" align="center"><font size="3">708</font></td>
+<td width="5%" align="center"><font size="3">5</font></td>
+<td width="5%" align="center"><font size="3">1200</font></td>
+<td width="10%" align="center"><font size="3"><a href="momclpcp_708_1200_5nsgaii.html" target="_blank">Show Result</a></font></td>
+<td width="10%" align="center"><font size="3"><a href="momclpcp_708_1200_5mohsa.html" target="_blank">Show Result</font></td>
+</tr>
+<tr>
+<td width="5%" align="center"><font size="3">708</font></td>
+<td width="5%" align="center"><font size="3">6</font></td>
+<td width="5%" align="center"><font size="3">1200</font></td>
+<td width="10%" align="center"><font size="3"><a href="momclpcp_708_1200_6nsgaii.html" target="_blank">Show Result</a></font></td>
+<td width="10%" align="center"><font size="3"><a href="momclpcp_708_1200_6mohsa.html" target="_blank">Show Result</font></td>
+</tr>
+<tr>
+<td width="5%" align="center"><font size="3">708</font></td>
+<td width="5%" align="center"><font size="3">1</font></td>
+<td width="5%" align="center"><font size="3">1600</font></td>
+<td width="10%" align="center"><font size="3"><a href="momclpcp_708_1600_1nsgaii.html" target="_blank">Show Result</a></font></td>
+<td width="10%" align="center"><font size="3"><a href="momclpcp_708_1600_1mohsa.html" target="_blank">Show Result</font></td>
+</tr>
+<tr>
+<td width="5%" align="center"><font size="3">708</font></td>
+<td width="5%" align="center"><font size="3">2</font></td>
+<td width="5%" align="center"><font size="3">1600</font></td>
+<td width="10%" align="center"><font size="3"><a href="momclpcp_708_1600_2nsgaii.html" target="_blank">Show Result</a></font></td>
+<td width="10%" align="center"><font size="3"><a href="momclpcp_708_1600_2mohsa.html" target="_blank">Show Result</font></td>
+</tr>
+<tr>
+<td width="5%" align="center"><font size="3">708</font></td>
+<td width="5%" align="center"><font size="3">3</font></td>
+<td width="5%" align="center"><font size="3">1600</font></td>
+<td width="10%" align="center"><font size="3"><a href="momclpcp_708_1600_3nsgaii.html" target="_blank">Show Result</a></font></td>
+<td width="10%" align="center"><font size="3"><a href="momclpcp_708_1600_3mohsa.html" target="_blank">Show Result</font></td>
+</tr>
+<tr>
+<td width="5%" align="center"><font size="3">708</font></td>
+<td width="5%" align="center"><font size="3">4</font></td>
+<td width="5%" align="center"><font size="3">1600</font></td>
+<td width="10%" align="center"><font size="3"><a href="momclpcp_708_1600_4nsgaii.html" target="_blank">Show Result</a></font></td>
+<td width="10%" align="center"><font size="3"><a href="momclpcp_708_1600_4mohsa.html" target="_blank">Show Result</font></td>
+</tr>
+<tr>
+<td width="5%" align="center"><font size="3">818</font></td>
+<td width="5%" align="center"><font size="3">1</font></td>
+<td width="5%" align="center"><font size="3">800</font></td>
+<td width="10%" align="center"><font size="3"><a href="momclpcp_818_800_1nsgaii.html" target="_blank">Show Result</a></font></td>
+<td width="10%" align="center"><font size="3"><a href="momclpcp_818_800_1mohsa.html" target="_blank">Show Result</font></td>
+</tr>
+<tr>
+<td width="5%" align="center"><font size="3">818</font></td>
+<td width="5%" align="center"><font size="3">2</font></td>
+<td width="5%" align="center"><font size="3">800</font></td>
+<td width="10%" align="center"><font size="3"><a href="momclpcp_818_800_2nsgaii.html" target="_blank">Show Result</a></font></td>
+<td width="10%" align="center"><font size="3"><a href="momclpcp_818_800_2mohsa.html" target="_blank">Show Result</font></td>
+</tr>
+<tr>
+<td width="5%" align="center"><font size="3">818</font></td>
+<td width="5%" align="center"><font size="3">3</font></td>
+<td width="5%" align="center"><font size="3">800</font></td>
+<td width="10%" align="center"><font size="3"><a href="momclpcp_818_800_3nsgaii.html" target="_blank">Show Result</a></font></td>
+<td width="10%" align="center"><font size="3"><a href="momclpcp_818_800_3mohsa.html" target="_blank">Show Result</font></td>
+</tr>
+<tr>
+<td width="5%" align="center"><font size="3">818</font></td>
+<td width="5%" align="center"><font size="3">4</font></td>
+<td width="5%" align="center"><font size="3">800</font></td>
+<td width="10%" align="center"><font size="3"><a href="momclpcp_818_800_4nsgaii.html" target="_blank">Show Result</a></font></td>
+<td width="10%" align="center"><font size="3"><a href="momclpcp_818_800_4mohsa.html" target="_blank">Show Result</font></td>
+</tr>
+<tr>
+<td width="5%" align="center"><font size="3">818</font></td>
+<td width="5%" align="center"><font size="3">5</font></td>
+<td width="5%" align="center"><font size="3">800</font></td>
+<td width="10%" align="center"><font size="3"><a href="momclpcp_818_800_5nsgaii.html" target="_blank">Show Result</a></font></td>
+<td width="10%" align="center"><font size="3"><a href="momclpcp_818_800_5mohsa.html" target="_blank">Show Result</font></td>
+</tr>
+<tr>
+<td width="5%" align="center"><font size="3">818</font></td>
+<td width="5%" align="center"><font size="3">6</font></td>
+<td width="5%" align="center"><font size="3">800</font></td>
+<td width="10%" align="center"><font size="3"><a href="momclpcp_818_800_6nsgaii.html" target="_blank">Show Result</a></font></td>
+<td width="10%" align="center"><font size="3"><a href="momclpcp_818_800_6mohsa.html" target="_blank">Show Result</font></td>
+</tr>
+<tr>
+<td width="5%" align="center"><font size="3">818</font></td>
+<td width="5%" align="center"><font size="3">7</font></td>
+<td width="5%" align="center"><font size="3">800</font></td>
+<td width="10%" align="center"><font size="3"><a href="momclpcp_818_800_7nsgaii.html" target="_blank">Show Result</a></font></td>
+<td width="10%" align="center"><font size="3"><a href="momclpcp_818_800_7mohsa.html" target="_blank">Show Result</font></td>
+</tr>
+<tr>
+<td width="5%" align="center"><font size="3">818</font></td>
+<td width="5%" align="center"><font size="3">8</font></td>
+<td width="5%" align="center"><font size="3">800</font></td>
+<td width="10%" align="center"><font size="3"><a href="momclpcp_818_800_8nsgaii.html" target="_blank">Show Result</a></font></td>
+<td width="10%" align="center"><font size="3"><a href="momclpcp_818_800_8mohsa.html" target="_blank">Show Result</font></td>
+</tr>
+<tr>
+<td width="5%" align="center"><font size="3">818</font></td>
+<td width="5%" align="center"><font size="3">9</font></td>
+<td width="5%" align="center"><font size="3">800</font></td>
+<td width="10%" align="center"><font size="3"><a href="momclpcp_818_800_9nsgaii.html" target="_blank">Show Result</a></font></td>
+<td width="10%" align="center"><font size="3"><a href="momclpcp_818_800_9mohsa.html" target="_blank">Show Result</font></td>
+</tr>
+<tr>
+<td width="5%" align="center"><font size="3">818</font></td>
+<td width="5%" align="center"><font size="3">10</font></td>
+<td width="5%" align="center"><font size="3">800</font></td>
+<td width="10%" align="center"><font size="3"><a href="momclpcp_818_800_10nsgaii.html" target="_blank">Show Result</a></font></td>
+<td width="10%" align="center"><font size="3"><a href="momclpcp_818_800_10mohsa.html" target="_blank">Show Result</font></td>
+</tr>
+<tr>
+<td width="5%" align="center"><font size="3">818</font></td>
+<td width="5%" align="center"><font size="3">11</font></td>
+<td width="5%" align="center"><font size="3">800</font></td>
+<td width="10%" align="center"><font size="3"><a href="momclpcp_818_800_11nsgaii.html" target="_blank">Show Result</a></font></td>
+<td width="10%" align="center"><font size="3"><a href="momclpcp_818_800_11mohsa.html" target="_blank">Show Result</font></td>
+</tr>
+<tr>
+<td width="5%" align="center"><font size="3">818</font></td>
+<td width="5%" align="center"><font size="3">12</font></td>
+<td width="5%" align="center"><font size="3">800</font></td>
+<td width="10%" align="center"><font size="3"><a href="momclpcp_818_800_12nsgaii.html" target="_blank">Show Result</a></font></td>
+<td width="10%" align="center"><font size="3"><a href="momclpcp_818_800_12mohsa.html" target="_blank">Show Result</font></td>
+</tr>
+<tr>
+<td width="5%" align="center"><font size="3">818</font></td>
+<td width="5%" align="center"><font size="3">13</font></td>
+<td width="5%" align="center"><font size="3">800</font></td>
+<td width="10%" align="center"><font size="3"><a href="momclpcp_818_800_13nsgaii.html" target="_blank">Show Result</a></font></td>
+<td width="10%" align="center"><font size="3"><a href="momclpcp_818_800_13mohsa.html" target="_blank">Show Result</font></td>
+</tr>
+<tr>
+<td width="5%" align="center"><font size="3">818</font></td>
+<td width="5%" align="center"><font size="3">1</font></td>
+<td width="5%" align="center"><font size="3">1200</font></td>
+<td width="10%" align="center"><font size="3"><a href="momclpcp_818_1200_1nsgaii.html" target="_blank">Show Result</a></font></td>
+<td width="10%" align="center"><font size="3"><a href="momclpcp_818_1200_1mohsa.html" target="_blank">Show Result</font></td>
+</tr>
+<tr>
+<td width="5%" align="center"><font size="3">818</font></td>
+<td width="5%" align="center"><font size="3">2</font></td>
+<td width="5%" align="center"><font size="3">1200</font></td>
+<td width="10%" align="center"><font size="3"><a href="momclpcp_818_1200_2nsgaii.html" target="_blank">Show Result</a></font></td>
+<td width="10%" align="center"><font size="3"><a href="momclpcp_818_1200_2mohsa.html" target="_blank">Show Result</font></td>
+</tr>
+<tr>
+<td width="5%" align="center"><font size="3">818</font></td>
+<td width="5%" align="center"><font size="3">3</font></td>
+<td width="5%" align="center"><font size="3">1200</font></td>
+<td width="10%" align="center"><font size="3"><a href="momclpcp_818_1200_3nsgaii.html" target="_blank">Show Result</a></font></td>
+<td width="10%" align="center"><font size="3"><a href="momclpcp_818_1200_3mohsa.html" target="_blank">Show Result</font></td>
+</tr>
+<tr>
+<td width="5%" align="center"><font size="3">818</font></td>
+<td width="5%" align="center"><font size="3">4</font></td>
+<td width="5%" align="center"><font size="3">1200</font></td>
+<td width="10%" align="center"><font size="3"><a href="momclpcp_818_1200_4nsgaii.html" target="_blank">Show Result</a></font></td>
+<td width="10%" align="center"><font size="3"><a href="momclpcp_818_1200_4mohsa.html" target="_blank">Show Result</font></td>
+</tr>
+<tr>
+<td width="5%" align="center"><font size="3">818</font></td>
+<td width="5%" align="center"><font size="3">5</font></td>
+<td width="5%" align="center"><font size="3">1200</font></td>
+<td width="10%" align="center"><font size="3"><a href="momclpcp_818_1200_5nsgaii.html" target="_blank">Show Result</a></font></td>
+<td width="10%" align="center"><font size="3"><a href="momclpcp_818_1200_5mohsa.html" target="_blank">Show Result</font></td>
+</tr>
+<tr>
+<td width="5%" align="center"><font size="3">818</font></td>
+<td width="5%" align="center"><font size="3">6</font></td>
+<td width="5%" align="center"><font size="3">1200</font></td>
+<td width="10%" align="center"><font size="3"><a href="momclpcp_818_1200_6nsgaii.html" target="_blank">Show Result</a></font></td>
+<td width="10%" align="center"><font size="3"><a href="momclpcp_818_1200_6mohsa.html" target="_blank">Show Result</font></td>
+</tr>
+<tr>
+<td width="5%" align="center"><font size="3">818</font></td>
+<td width="5%" align="center"><font size="3">7</font></td>
+<td width="5%" align="center"><font size="3">1200</font></td>
+<td width="10%" align="center"><font size="3"><a href="momclpcp_818_1200_7nsgaii.html" target="_blank">Show Result</a></font></td>
+<td width="10%" align="center"><font size="3"><a href="momclpcp_818_1200_7mohsa.html" target="_blank">Show Result</font></td>
+</tr>
+<tr>
+<td width="5%" align="center"><font size="3">818</font></td>
+<td width="5%" align="center"><font size="3">1</font></td>
+<td width="5%" align="center"><font size="3">1600</font></td>
+<td width="10%" align="center"><font size="3"><a href="momclpcp_818_1600_1nsgaii.html" target="_blank">Show Result</a></font></td>
+<td width="10%" align="center"><font size="3"><a href="momclpcp_818_1600_1mohsa.html" target="_blank">Show Result</font></td>
+</tr>
+<tr>
+<td width="5%" align="center"><font size="3">818</font></td>
+<td width="5%" align="center"><font size="3">2</font></td>
+<td width="5%" align="center"><font size="3">1600</font></td>
+<td width="10%" align="center"><font size="3"><a href="momclpcp_818_1600_2nsgaii.html" target="_blank">Show Result</a></font></td>
+<td width="10%" align="center"><font size="3"><a href="momclpcp_818_1600_2mohsa.html" target="_blank">Show Result</font></td>
+</tr>
+<tr>
+<td width="5%" align="center"><font size="3">818</font></td>
+<td width="5%" align="center"><font size="3">3</font></td>
+<td width="5%" align="center"><font size="3">1600</font></td>
+<td width="10%" align="center"><font size="3"><a href="momclpcp_818_1600_3nsgaii.html" target="_blank">Show Result</a></font></td>
+<td width="10%" align="center"><font size="3"><a href="momclpcp_818_1600_3mohsa.html" target="_blank">Show Result</font></td>
+</tr>
+<tr>
+<td width="5%" align="center"><font size="3">818</font></td>
+<td width="5%" align="center"><font size="3">4</font></td>
+<td width="5%" align="center"><font size="3">1600</font></td>
+<td width="10%" align="center"><font size="3"><a href="momclpcp_818_1600_4nsgaii.html" target="_blank">Show Result</a></font></td>
+<td width="10%" align="center"><font size="3"><a href="momclpcp_818_1600_4mohsa.html" target="_blank">Show Result</font></td>
+</tr>
+<tr>
+<td width="5%" align="center"><font size="3">818</font></td>
+<td width="5%" align="center"><font size="3">5</font></td>
+<td width="5%" align="center"><font size="3">1600</font></td>
+<td width="10%" align="center"><font size="3"><a href="momclpcp_818_1600_5nsgaii.html" target="_blank">Show Result</a></font></td>
+<td width="10%" align="center"><font size="3"><a href="momclpcp_818_1600_5mohsa.html" target="_blank">Show Result</font></td>
+</tr>
+</table></div>
+
+
+
+<p style="font-size:100%;">
+<b>References:</b><br>
+[1]  Lorena, L.A., Pereira, M.A.: A Lagrangean/Surrogate Heuristic for the Maximal Covering Location Problem Using Hillman's Edition. International Journal of Industrial Engineering 9, 57–67 (2002) <br>
+
+
+[2]  Atta, S., Mahapatra, P.R.S., Mukhopadhyay, A.: Solving maximal covering location problem using genetic algorithm with local refinement. Soft Computing 22(12), 3891–3906 (2018)
+</p>
+
+<p style="font-size:75%;" align=right>
+<i>This page is maintained by <a href="https://www.soumenatta.com/" target="_blank">Dr. Soumen Atta, PhD</a>.<i> <br>
+<i>This page was created on December 25, 2019.</i> 
+</p>
+
+
+  </div>
+</div>
+
+<footer class="site-footer">
+  <div class="site-footer__inner">
+    <span>&copy; Soumen Atta. All rights reserved.</span>
+    <span>
+      <a href="mailto:soumen.atta@gmail.com"><svg class="footer-icon" viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="2.5" y="5" width="19" height="14" rx="2" stroke="currentColor" stroke-width="1.6"/><path d="M4 7l8 6 8-6" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>soumen.atta@gmail.com</a>
+      &nbsp;·&nbsp;
+      <a href="/"><svg class="footer-icon" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="1.6"/><path d="M3 12h18M12 3c2.5 2.5 2.5 15.5 0 18M12 3c-2.5 2.5-2.5 15.5 0 18" stroke="currentColor" stroke-width="1.6"/></svg>soumenatta.com</a>
+      &nbsp;·&nbsp;
+      <a href="https://www.linkedin.com/in/soumen-atta/" target="_blank" rel="noopener"><svg class="footer-icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M20.45 20.45h-3.55v-5.57c0-1.33-.02-3.03-1.85-3.03-1.85 0-2.14 1.45-2.14 2.94v5.66H9.36V9h3.41v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.46v6.28ZM5.34 7.43a2.06 2.06 0 1 1 0-4.12 2.06 2.06 0 0 1 0 4.12ZM7.12 20.45H3.56V9h3.56v11.45Z"/></svg>LinkedIn</a>
+    </span>
+  </div>
+</footer>
+
+<script src="/assets/js/main.js"></script>
+</body>
+</html>

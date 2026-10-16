@@ -1,0 +1,732 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Supplementary Webpage for Manuscript:MOUFLPCP · Soumen Atta, Ph.D.</title>
+<meta name="description" content="Supplementary data and benchmark instances for a published research article by Dr. Soumen Atta.">
+<link rel="canonical" href="https://www.soumenatta.com/datasets/mouflpcp">
+<link rel="icon" href="/assets/img/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="/assets/css/style.css">
+</head>
+<body>
+<header class="site-header">
+  <div class="site-header__inner">
+    <a class="brand" href="/">Soumen Atta <span class="brand__suffix">Ph.D.</span></a>
+    <button class="nav-toggle" id="nav-toggle" aria-label="Toggle navigation" aria-expanded="false" aria-controls="primary-nav">
+      <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M1 4h16M1 9h16M1 14h16" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+      </svg>
+    </button>
+    <nav class="primary-nav" id="primary-nav">
+      <ul>
+        <li><a href="/">Home</a></li>
+        <li><a href="/academics">Academics</a></li>
+        <li><a href="/publications">Publications</a></li>
+        <li><a href="/experiences">Experiences</a></li>
+        <li><a href="/experiences/teaching_experiences/courses">Courses</a></li>
+        <li class="active"><a href="/datasets">Data Sets</a></li>
+        <li><a href="/blogs">Blogs</a></li>
+        <li><a href="/contact">Contact</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<div class="container wide">
+  <p class="small muted" style="margin-top:1.6rem;"><a href="/datasets">← Back to Data Sets</a></p>
+  <div class="dataset-body">
+
+
+<h1 style="text-align: center" align="center"><font size="5">Supplementary 
+Web-page for Manuscript:</font></h1>
+<h1 style="text-align: center" align="center"><font size="5">Multi-objective Uncapacitated Facility Location Problem with Customers' Preferences: Pareto-based and Weighted Sum GA-based Approaches
+</font></h1>
+<p class="MsoNormal" align="center"><b><span lang="FI"><font size="4">
+Soumen Atta<sup>1</sup>, Priya Ranjan Sinha Mahapatra<sup>1</sup>, Anirban Mukhopadhyay<sup>1,&star;</sup>
+</font></span></b></p>
+<p class="MsoNormal" align="center"><b><span lang="FI"><font size="3">
+<sup>1</sup>Department of Computer Science and Engineering, University of Kalyani, Kalyani-741235, West Bengal, India 
+</font></span></b></p>
+<p class="MsoNormal" align="center"><b><span lang="FI"><font size="3">
+<sup>&star;</sup>Corresponding author: <a href="mailto:anirban@klyuniv.ac.in?Subject=Hello%20again" target="_top">anirban@klyuniv.ac.in</a>
+</font></span></b></p>
+<p class="MsoNormal">&nbsp;</p> 
+
+<h2>Citation (BibTeX)</h2>
+
+<details>
+  <summary>Click to view BibTeX</summary>
+  <pre><code>@article{atta2019multi,
+  title={Multi-objective uncapacitated facility location problem with customers’ preferences: Pareto-based and weighted sum GA-based approaches},
+  author={Atta, Soumen and Sinha Mahapatra, Priya Ranjan and Mukhopadhyay, Anirban},
+  journal={Soft Computing},
+  volume={23},
+  pages={12347--12362},
+  year={2019},
+  publisher={Springer},
+  doi={10.1007/s00500-019-03774-1},
+  url={https://doi.org/10.1007/s00500-019-03774-1} 
+}
+
+@dataset{atta2018mouflpcpdata,
+  author       = {Atta, Soumen and Sinha Mahapatra, Priya Ranjan and Mukhopadhyay, Anirban},
+  title        = {Dataset for the Multi-objective Uncapacitated Facility Location Problem with Customers' Preferences (MOUFLPCP)},
+  year         = {2018},
+  publisher    = {Zenodo},
+  doi          = {10.5281/zenodo.15243382},
+  url          = {https://doi.org/10.5281/zenodo.15243382}
+}</code></pre>
+</details>
+
+
+<p style="font-size:120%;">
+The instances for the <i>Multi-objective Uncapacitated Facility Location Problem with Customers' Preferences</i> (MOUFLPCP) mentioned in this page are adapted from the <i>Uncapacitated Facility Location Problem</i> (UFLP) [1, 2] and the original instances of UFLP can be found from <a href="http://people.brunel.ac.uk/~mastjjb/jeb/info.html">Beasley's OR Library</a> [3]. Each instance of
+MOUFLPCP consists of two matrices, viz., <i>service cost
+matrix</i> and <i>preference matrix</i>, and a set defining the <i>opening
+cost</i> of each facility. 
+</p>
+
+<p style="font-size:120%;">
+Format of the data files: <br>
+Each instance <i>mouflpcp#</i> of size <i>n &times m</i> consists of two data files, namely, "<i>cap#.txt</i>" and "<i>cap#pref.txt</i>". The size of the file "<i>cap#.txt</i>" is <i>n &times (m+1)</i> and it consists of <i>service cost matrix</i> of size <i>n &times m</i> and the last column of it represents the <i>opening cost</i>. The size of the file "<i>cap#pref.txt</i>" is <i>n &times m</i> and it consists of <i>preference matrix</i>. 
+<p>
+
+
+<p class="MsoNormal" align="right"><b><span lang="FI"><font size="3">
+Click <a href="mouflpcp_data.zip">here</a> to download all the instances of <i>MOUFLPCP</i> as single zip file.
+</font></span></b></p>
+
+<div class="table-wrap"><table border="1" width="50%" bordercolor="#C0C0C0" bgcolor="#FFFFFF" height="10" align="center">
+  <tr>
+	    <td width="5%" align="center"><font size="3"><b>Instance</b></font></td>
+    	<td width="5%" align="center"><font size="3"><b>Size</b></font></td>
+	  	<td width="5%" align="center"><font size="3"><b>Data Files</b></font></td>
+  </tr>
+  <tr>
+    	<td width="5%">
+      		<p align="center"><span lang="EN-US" style="font-size:12.0pt;font-family:
+  		&quot;Times New Roman&quot;;mso-ansi-language:EN-US">mouflpcp41</span>
+	    </td>
+    	<td width="5%">
+      		<p align="center"><font size="3">&nbsp;<span style="mso-fareast-font-family:
+		Times New Roman; mso-ansi-language: RU; mso-fareast-language: RU; mso-bidi-language: AR-SA">16 &times; 50</span></font></p>
+    	</td>
+    	<td width="5%" valign="middle" height="1">
+      		<p align="center"><span lang="EN-US" style="font-size:12.0pt;font-family:
+  		&quot;Times New Roman&quot;;mso-ansi-language:EN-US"><a href="mouflpcp41.zip">Download</a></span>
+	    </td>
+	</tr>
+  <tr>
+    	<td width="5%">
+      		<p align="center"><span lang="EN-US" style="font-size:12.0pt;font-family:
+
+  		&quot;Times New Roman&quot;;mso-ansi-language:EN-US">mouflpcp42</span>
+	    </td>
+    	<td width="5%">
+      		<p align="center"><font size="3">&nbsp;<span style="mso-fareast-font-family:
+		Times New Roman; mso-ansi-language: RU; mso-fareast-language: RU; mso-bidi-language: AR-SA">16 &times; 50</span></font></p>
+    	</td>
+    	<td width="5%" valign="middle" height="1">
+      		<p align="center"><span lang="EN-US" style="font-size:12.0pt;font-family:
+  		&quot;Times New Roman&quot;;mso-ansi-language:EN-US"><a href="mouflpcp42.zip">Download</a></span>
+	    </td>
+	</tr>
+  <tr>
+    	<td width="5%">
+      		<p align="center"><span lang="EN-US" style="font-size:12.0pt;font-family:
+
+  		&quot;Times New Roman&quot;;mso-ansi-language:EN-US">mouflpcp43</span>
+	    </td>
+    	<td width="5%">
+      		<p align="center"><font size="3">&nbsp;<span style="mso-fareast-font-family:
+		Times New Roman; mso-ansi-language: RU; mso-fareast-language: RU; mso-bidi-language: AR-SA">16 &times; 50</span></font></p>
+    	</td>
+    	<td width="5%" valign="middle" height="1">
+      		<p align="center"><span lang="EN-US" style="font-size:12.0pt;font-family:
+  		&quot;Times New Roman&quot;;mso-ansi-language:EN-US"><a href="mouflpcp43.zip">Download</a></span>
+	    </td>
+	</tr>
+  <tr>
+    	<td width="5%">
+      		<p align="center"><span lang="EN-US" style="font-size:12.0pt;font-family:
+
+  		&quot;Times New Roman&quot;;mso-ansi-language:EN-US">mouflpcp44</span>
+	    </td>
+    	<td width="5%">
+      		<p align="center"><font size="3">&nbsp;<span style="mso-fareast-font-family:
+		Times New Roman; mso-ansi-language: RU; mso-fareast-language: RU; mso-bidi-language: AR-SA">16 &times; 50</span></font></p>
+    	</td>
+    	<td width="5%" valign="middle" height="1">
+      		<p align="center"><span lang="EN-US" style="font-size:12.0pt;font-family:
+  		&quot;Times New Roman&quot;;mso-ansi-language:EN-US"><a href="mouflpcp44.zip">Download</a></span>
+	    </td>
+	 </tr>
+  <tr>
+    	<td width="5%">
+      		<p align="center"><span lang="EN-US" style="font-size:12.0pt;font-family:
+  		&quot;Times New Roman&quot;;mso-ansi-language:EN-US">mouflpcp51</span>
+	    </td>
+    	<td width="5%">
+      		<p align="center"><font size="3">&nbsp;<span style="mso-fareast-font-family:
+
+		Times New Roman; mso-ansi-language: RU; mso-fareast-language: RU; mso-bidi-language: AR-SA">16 &times; 50</span></font></p>
+    	</td>
+    	<td width="5%" valign="middle" height="1">
+      		<p align="center"><span lang="EN-US" style="font-size:12.0pt;font-family:
+
+  		&quot;Times New Roman&quot;;mso-ansi-language:EN-US"><a href="mouflpcp51.zip">Download</a></span>
+	    </td>
+	</tr>
+  <tr>
+    	<td width="5%">
+      		<p align="center"><span lang="EN-US" style="font-size:12.0pt;font-family:
+
+
+  		&quot;Times New Roman&quot;;mso-ansi-language:EN-US">mouflpcp61</span>
+	    </td>
+    	<td width="5%">
+      		<p align="center"><font size="3">&nbsp;<span style="mso-fareast-font-family:
+		Times New Roman; mso-ansi-language: RU; mso-fareast-language: RU; mso-bidi-language: AR-SA">16 &times; 50</span></font></p>
+    	</td>
+    	<td width="5%" valign="middle" height="1">
+      		<p align="center"><span lang="EN-US" style="font-size:12.0pt;font-family:
+  		&quot;Times New Roman&quot;;mso-ansi-language:EN-US"><a href="mouflpcp61.zip">Download</a></span>
+	    </td>
+	</tr>
+  <tr>
+    	<td width="5%">
+      		<p align="center"><span lang="EN-US" style="font-size:12.0pt;font-family:
+
+  		&quot;Times New Roman&quot;;mso-ansi-language:EN-US">mouflpcp62</span>
+	    </td>
+    	<td width="5%">
+      		<p align="center"><font size="3">&nbsp;<span style="mso-fareast-font-family:
+
+		Times New Roman; mso-ansi-language: RU; mso-fareast-language: RU; mso-bidi-language: AR-SA">16 &times; 50</span></font></p>
+    	</td>
+    	<td width="5%" valign="middle" height="1">
+      		<p align="center"><span lang="EN-US" style="font-size:12.0pt;font-family:
+
+  		&quot;Times New Roman&quot;;mso-ansi-language:EN-US"><a href="mouflpcp62.zip">Download</a></span>
+	    </td>
+	</tr>
+  <tr>
+    	<td width="5%">
+      		<p align="center"><span lang="EN-US" style="font-size:12.0pt;font-family:
+
+
+  		&quot;Times New Roman&quot;;mso-ansi-language:EN-US">mouflpcp63</span>
+	    </td>
+    	<td width="5%">
+      		<p align="center"><font size="3">&nbsp;<span style="mso-fareast-font-family:
+		Times New Roman; mso-ansi-language: RU; mso-fareast-language: RU; mso-bidi-language: AR-SA">16 &times; 50</span></font></p>
+    	</td>
+    	<td width="5%" valign="middle" height="1">
+      		<p align="center"><span lang="EN-US" style="font-size:12.0pt;font-family:
+  		&quot;Times New Roman&quot;;mso-ansi-language:EN-US"><a href="mouflpcp63.zip">Download</a></span>
+	    </td>
+	 </tr>
+  <tr>
+    	<td width="5%">
+      		<p align="center"><span lang="EN-US" style="font-size:12.0pt;font-family:
+
+
+  		&quot;Times New Roman&quot;;mso-ansi-language:EN-US">mouflpcp64</span>
+	    </td>
+    	<td width="5%">
+      		<p align="center"><font size="3">&nbsp;<span style="mso-fareast-font-family:
+		Times New Roman; mso-ansi-language: RU; mso-fareast-language: RU; mso-bidi-language: AR-SA">16 &times; 50</span></font></p>
+    	</td>
+    	<td width="5%" valign="middle" height="1">
+      		<p align="center"><span lang="EN-US" style="font-size:12.0pt;font-family:
+  		&quot;Times New Roman&quot;;mso-ansi-language:EN-US"><a href="mouflpcp64.zip">Download</a></span>
+	    </td>
+	 </tr>
+  <tr>
+    	<td width="5%">
+      		<p align="center"><span lang="EN-US" style="font-size:12.0pt;font-family:
+
+
+  		&quot;Times New Roman&quot;;mso-ansi-language:EN-US">mouflpcp71</span>
+	    </td>
+    	<td width="5%">
+      		<p align="center"><font size="3">&nbsp;<span style="mso-fareast-font-family:
+		Times New Roman; mso-ansi-language: RU; mso-fareast-language: RU; mso-bidi-language: AR-SA">16 &times; 50</span></font></p>
+    	</td>
+    	<td width="5%" valign="middle" height="1">
+      		<p align="center"><span lang="EN-US" style="font-size:12.0pt;font-family:
+  		&quot;Times New Roman&quot;;mso-ansi-language:EN-US"><a href="mouflpcp71.zip">Download</a></span>
+	    </td>
+	 </tr>  
+  <tr>
+    	<td width="5%">
+      		<p align="center"><span lang="EN-US" style="font-size:12.0pt;font-family:
+
+
+  		&quot;Times New Roman&quot;;mso-ansi-language:EN-US">mouflpcp72</span>
+	    </td>
+    	<td width="5%">
+      		<p align="center"><font size="3">&nbsp;<span style="mso-fareast-font-family:
+		Times New Roman; mso-ansi-language: RU; mso-fareast-language: RU; mso-bidi-language: AR-SA">16 &times; 50</span></font></p>
+    	</td>
+    	<td width="5%" valign="middle" height="1">
+      		<p align="center"><span lang="EN-US" style="font-size:12.0pt;font-family:
+  		&quot;Times New Roman&quot;;mso-ansi-language:EN-US"><a href="mouflpcp72.zip">Download</a></span>
+	    </td>
+	 </tr> 
+  <tr>
+    	<td width="5%">
+      		<p align="center"><span lang="EN-US" style="font-size:12.0pt;font-family:
+
+
+  		&quot;Times New Roman&quot;;mso-ansi-language:EN-US">mouflpcp73</span>
+	    </td>
+    	<td width="5%">
+      		<p align="center"><font size="3">&nbsp;<span style="mso-fareast-font-family:
+		Times New Roman; mso-ansi-language: RU; mso-fareast-language: RU; mso-bidi-language: AR-SA">16 &times; 50</span></font></p>
+    	</td>
+    	<td width="5%" valign="middle" height="1">
+      		<p align="center"><span lang="EN-US" style="font-size:12.0pt;font-family:
+  		&quot;Times New Roman&quot;;mso-ansi-language:EN-US"><a href="mouflpcp73.zip">Download</a></span>
+	    </td>
+	 </tr> 
+  <tr>
+    	<td width="5%">
+      		<p align="center"><span lang="EN-US" style="font-size:12.0pt;font-family:
+
+
+  		&quot;Times New Roman&quot;;mso-ansi-language:EN-US">mouflpcp74</span>
+	    </td>
+    	<td width="5%">
+      		<p align="center"><font size="3">&nbsp;<span style="mso-fareast-font-family:
+		Times New Roman; mso-ansi-language: RU; mso-fareast-language: RU; mso-bidi-language: AR-SA">16 &times; 50</span></font></p>
+    	</td>
+    	<td width="5%" valign="middle" height="1">
+      		<p align="center"><span lang="EN-US" style="font-size:12.0pt;font-family:
+  		&quot;Times New Roman&quot;;mso-ansi-language:EN-US"><a href="mouflpcp74.zip">Download</a></span>
+	    </td>
+	 </tr> 
+  <tr>
+    	<td width="5%">
+      		<p align="center"><span lang="EN-US" style="font-size:12.0pt;font-family:
+
+
+  		&quot;Times New Roman&quot;;mso-ansi-language:EN-US">mouflpcp81</span>
+	    </td>
+    	<td width="5%">
+      		<p align="center"><font size="3">&nbsp;<span style="mso-fareast-font-family:
+		Times New Roman; mso-ansi-language: RU; mso-fareast-language: RU; mso-bidi-language: AR-SA">25 &times; 50</span></font></p>
+    	</td>
+    	<td width="5%" valign="middle" height="1">
+      		<p align="center"><span lang="EN-US" style="font-size:12.0pt;font-family:
+  		&quot;Times New Roman&quot;;mso-ansi-language:EN-US"><a href="mouflpcp81.zip">Download</a></span>
+	    </td>
+	 </tr>
+  <tr>
+    	<td width="5%">
+      		<p align="center"><span lang="EN-US" style="font-size:12.0pt;font-family:
+
+
+  		&quot;Times New Roman&quot;;mso-ansi-language:EN-US">mouflpcp82</span>
+	    </td>
+    	<td width="5%">
+      		<p align="center"><font size="3">&nbsp;<span style="mso-fareast-font-family:
+		Times New Roman; mso-ansi-language: RU; mso-fareast-language: RU; mso-bidi-language: AR-SA">25 &times; 50</span></font></p>
+    	</td>
+    	<td width="5%" valign="middle" height="1">
+      		<p align="center"><span lang="EN-US" style="font-size:12.0pt;font-family:
+  		&quot;Times New Roman&quot;;mso-ansi-language:EN-US"><a href="mouflpcp82.zip">Download</a></span>
+	    </td>
+	 </tr>
+  <tr>
+    	<td width="5%">
+      		<p align="center"><span lang="EN-US" style="font-size:12.0pt;font-family:
+
+
+  		&quot;Times New Roman&quot;;mso-ansi-language:EN-US">mouflpcp83</span>
+	    </td>
+    	<td width="5%">
+      		<p align="center"><font size="3">&nbsp;<span style="mso-fareast-font-family:
+		Times New Roman; mso-ansi-language: RU; mso-fareast-language: RU; mso-bidi-language: AR-SA">25 &times; 50</span></font></p>
+    	</td>
+    	<td width="5%" valign="middle" height="1">
+      		<p align="center"><span lang="EN-US" style="font-size:12.0pt;font-family:
+  		&quot;Times New Roman&quot;;mso-ansi-language:EN-US"><a href="mouflpcp83.zip">Download</a></span>
+	    </td>
+	 </tr>
+  <tr>
+    	<td width="5%">
+      		<p align="center"><span lang="EN-US" style="font-size:12.0pt;font-family:
+
+
+  		&quot;Times New Roman&quot;;mso-ansi-language:EN-US">mouflpcp84</span>
+	    </td>
+    	<td width="5%">
+      		<p align="center"><font size="3">&nbsp;<span style="mso-fareast-font-family:
+		Times New Roman; mso-ansi-language: RU; mso-fareast-language: RU; mso-bidi-language: AR-SA">25 &times; 50</span></font></p>
+    	</td>
+    	<td width="5%" valign="middle" height="1">
+      		<p align="center"><span lang="EN-US" style="font-size:12.0pt;font-family:
+  		&quot;Times New Roman&quot;;mso-ansi-language:EN-US"><a href="mouflpcp84.zip">Download</a></span>
+	    </td>
+	 </tr>
+  <tr>
+    	<td width="5%">
+      		<p align="center"><span lang="EN-US" style="font-size:12.0pt;font-family:
+
+
+  		&quot;Times New Roman&quot;;mso-ansi-language:EN-US">mouflpcp91</span>
+	    </td>
+    	<td width="5%">
+      		<p align="center"><font size="3">&nbsp;<span style="mso-fareast-font-family:
+		Times New Roman; mso-ansi-language: RU; mso-fareast-language: RU; mso-bidi-language: AR-SA">25 &times; 50</span></font></p>
+    	</td>
+    	<td width="5%" valign="middle" height="1">
+      		<p align="center"><span lang="EN-US" style="font-size:12.0pt;font-family:
+  		&quot;Times New Roman&quot;;mso-ansi-language:EN-US"><a href="mouflpcp91.zip">Download</a></span>
+	    </td>
+	 </tr>
+  <tr>
+    	<td width="5%">
+      		<p align="center"><span lang="EN-US" style="font-size:12.0pt;font-family:
+
+
+  		&quot;Times New Roman&quot;;mso-ansi-language:EN-US">mouflpcp92</span>
+	    </td>
+    	<td width="5%">
+      		<p align="center"><font size="3">&nbsp;<span style="mso-fareast-font-family:
+		Times New Roman; mso-ansi-language: RU; mso-fareast-language: RU; mso-bidi-language: AR-SA">25 &times; 50</span></font></p>
+    	</td>
+    	<td width="5%" valign="middle" height="1">
+      		<p align="center"><span lang="EN-US" style="font-size:12.0pt;font-family:
+  		&quot;Times New Roman&quot;;mso-ansi-language:EN-US"><a href="mouflpcp92.zip">Download</a></span>
+	    </td>
+	 </tr>
+  <tr>
+    	<td width="5%">
+      		<p align="center"><span lang="EN-US" style="font-size:12.0pt;font-family:
+
+
+  		&quot;Times New Roman&quot;;mso-ansi-language:EN-US">mouflpcp93</span>
+	    </td>
+    	<td width="5%">
+      		<p align="center"><font size="3">&nbsp;<span style="mso-fareast-font-family:
+		Times New Roman; mso-ansi-language: RU; mso-fareast-language: RU; mso-bidi-language: AR-SA">25 &times; 50</span></font></p>
+    	</td>
+    	<td width="5%" valign="middle" height="1">
+      		<p align="center"><span lang="EN-US" style="font-size:12.0pt;font-family:
+  		&quot;Times New Roman&quot;;mso-ansi-language:EN-US"><a href="mouflpcp93.zip">Download</a></span>
+	    </td>
+	 </tr>
+  <tr>
+    	<td width="5%">
+      		<p align="center"><span lang="EN-US" style="font-size:12.0pt;font-family:
+
+
+  		&quot;Times New Roman&quot;;mso-ansi-language:EN-US">mouflpcp94</span>
+	    </td>
+    	<td width="5%">
+      		<p align="center"><font size="3">&nbsp;<span style="mso-fareast-font-family:
+		Times New Roman; mso-ansi-language: RU; mso-fareast-language: RU; mso-bidi-language: AR-SA">25 &times; 50</span></font></p>
+    	</td>
+    	<td width="5%" valign="middle" height="1">
+      		<p align="center"><span lang="EN-US" style="font-size:12.0pt;font-family:
+  		&quot;Times New Roman&quot;;mso-ansi-language:EN-US"><a href="mouflpcp94.zip">Download</a></span>
+	    </td>
+	 </tr>
+  <tr>
+    	<td width="5%">
+      		<p align="center"><span lang="EN-US" style="font-size:12.0pt;font-family:
+
+
+  		&quot;Times New Roman&quot;;mso-ansi-language:EN-US">mouflpcp101</span>
+	    </td>
+    	<td width="5%">
+      		<p align="center"><font size="3">&nbsp;<span style="mso-fareast-font-family:
+		Times New Roman; mso-ansi-language: RU; mso-fareast-language: RU; mso-bidi-language: AR-SA">25 &times; 50</span></font></p>
+    	</td>
+    	<td width="5%" valign="middle" height="1">
+      		<p align="center"><span lang="EN-US" style="font-size:12.0pt;font-family:
+  		&quot;Times New Roman&quot;;mso-ansi-language:EN-US"><a href="mouflpcp101.zip">Download</a></span>
+	    </td>
+	 </tr> 
+  <tr>
+    	<td width="5%">
+      		<p align="center"><span lang="EN-US" style="font-size:12.0pt;font-family:
+
+
+  		&quot;Times New Roman&quot;;mso-ansi-language:EN-US">mouflpcp102</span>
+	    </td>
+    	<td width="5%">
+      		<p align="center"><font size="3">&nbsp;<span style="mso-fareast-font-family:
+		Times New Roman; mso-ansi-language: RU; mso-fareast-language: RU; mso-bidi-language: AR-SA">25 &times; 50</span></font></p>
+    	</td>
+    	<td width="5%" valign="middle" height="1">
+      		<p align="center"><span lang="EN-US" style="font-size:12.0pt;font-family:
+  		&quot;Times New Roman&quot;;mso-ansi-language:EN-US"><a href="mouflpcp102.zip">Download</a></span>
+	    </td>
+	 </tr> 
+  <tr>
+    	<td width="5%">
+      		<p align="center"><span lang="EN-US" style="font-size:12.0pt;font-family:
+
+
+  		&quot;Times New Roman&quot;;mso-ansi-language:EN-US">mouflpcp103</span>
+	    </td>
+    	<td width="5%">
+      		<p align="center"><font size="3">&nbsp;<span style="mso-fareast-font-family:
+		Times New Roman; mso-ansi-language: RU; mso-fareast-language: RU; mso-bidi-language: AR-SA">25 &times; 50</span></font></p>
+    	</td>
+    	<td width="5%" valign="middle" height="1">
+      		<p align="center"><span lang="EN-US" style="font-size:12.0pt;font-family:
+  		&quot;Times New Roman&quot;;mso-ansi-language:EN-US"><a href="mouflpcp103.zip">Download</a></span>
+	    </td>
+	 </tr> 
+  <tr>
+    	<td width="5%">
+      		<p align="center"><span lang="EN-US" style="font-size:12.0pt;font-family:
+
+
+  		&quot;Times New Roman&quot;;mso-ansi-language:EN-US">mouflpcp104</span>
+	    </td>
+    	<td width="5%">
+      		<p align="center"><font size="3">&nbsp;<span style="mso-fareast-font-family:
+		Times New Roman; mso-ansi-language: RU; mso-fareast-language: RU; mso-bidi-language: AR-SA">25 &times; 50</span></font></p>
+    	</td>
+    	<td width="5%" valign="middle" height="1">
+      		<p align="center"><span lang="EN-US" style="font-size:12.0pt;font-family:
+  		&quot;Times New Roman&quot;;mso-ansi-language:EN-US"><a href="mouflpcp104.zip">Download</a></span>
+	    </td>
+	 </tr> 
+  <tr>
+    	<td width="5%">
+      		<p align="center"><span lang="EN-US" style="font-size:12.0pt;font-family:
+
+
+  		&quot;Times New Roman&quot;;mso-ansi-language:EN-US">mouflpcp111</span>
+	    </td>
+    	<td width="5%">
+      		<p align="center"><font size="3">&nbsp;<span style="mso-fareast-font-family:
+		Times New Roman; mso-ansi-language: RU; mso-fareast-language: RU; mso-bidi-language: AR-SA">50 &times; 50</span></font></p>
+    	</td>
+    	<td width="5%" valign="middle" height="1">
+      		<p align="center"><span lang="EN-US" style="font-size:12.0pt;font-family:
+  		&quot;Times New Roman&quot;;mso-ansi-language:EN-US"><a href="mouflpcp111.zip">Download</a></span>
+	    </td>
+	 </tr>
+  <tr>
+    	<td width="5%">
+      		<p align="center"><span lang="EN-US" style="font-size:12.0pt;font-family:
+
+
+  		&quot;Times New Roman&quot;;mso-ansi-language:EN-US">mouflpcp112</span>
+	    </td>
+    	<td width="5%">
+      		<p align="center"><font size="3">&nbsp;<span style="mso-fareast-font-family:
+		Times New Roman; mso-ansi-language: RU; mso-fareast-language: RU; mso-bidi-language: AR-SA">50 &times; 50</span></font></p>
+    	</td>
+    	<td width="5%" valign="middle" height="1">
+      		<p align="center"><span lang="EN-US" style="font-size:12.0pt;font-family:
+  		&quot;Times New Roman&quot;;mso-ansi-language:EN-US"><a href="mouflpcp112.zip">Download</a></span>
+	    </td>
+	 </tr>
+  <tr>
+    	<td width="5%">
+      		<p align="center"><span lang="EN-US" style="font-size:12.0pt;font-family:
+
+
+  		&quot;Times New Roman&quot;;mso-ansi-language:EN-US">mouflpcp113</span>
+	    </td>
+    	<td width="5%">
+      		<p align="center"><font size="3">&nbsp;<span style="mso-fareast-font-family:
+		Times New Roman; mso-ansi-language: RU; mso-fareast-language: RU; mso-bidi-language: AR-SA">50 &times; 50</span></font></p>
+    	</td>
+    	<td width="5%" valign="middle" height="1">
+      		<p align="center"><span lang="EN-US" style="font-size:12.0pt;font-family:
+  		&quot;Times New Roman&quot;;mso-ansi-language:EN-US"><a href="mouflpcp113.zip">Download</a></span>
+	    </td>
+	 </tr>
+  <tr>
+    	<td width="5%">
+      		<p align="center"><span lang="EN-US" style="font-size:12.0pt;font-family:
+
+
+  		&quot;Times New Roman&quot;;mso-ansi-language:EN-US">mouflpcp114</span>
+	    </td>
+    	<td width="5%">
+      		<p align="center"><font size="3">&nbsp;<span style="mso-fareast-font-family:
+		Times New Roman; mso-ansi-language: RU; mso-fareast-language: RU; mso-bidi-language: AR-SA">50 &times; 50</span></font></p>
+    	</td>
+    	<td width="5%" valign="middle" height="1">
+      		<p align="center"><span lang="EN-US" style="font-size:12.0pt;font-family:
+  		&quot;Times New Roman&quot;;mso-ansi-language:EN-US"><a href="mouflpcp114.zip">Download</a></span>
+	    </td>
+	 </tr>
+  <tr>
+    	<td width="5%">
+      		<p align="center"><span lang="EN-US" style="font-size:12.0pt;font-family:
+
+
+  		&quot;Times New Roman&quot;;mso-ansi-language:EN-US">mouflpcp121</span>
+	    </td>
+    	<td width="5%">
+      		<p align="center"><font size="3">&nbsp;<span style="mso-fareast-font-family:
+		Times New Roman; mso-ansi-language: RU; mso-fareast-language: RU; mso-bidi-language: AR-SA">50 &times; 50</span></font></p>
+    	</td>
+    	<td width="5%" valign="middle" height="1">
+      		<p align="center"><span lang="EN-US" style="font-size:12.0pt;font-family:
+  		&quot;Times New Roman&quot;;mso-ansi-language:EN-US"><a href="mouflpcp121.zip">Download</a></span>
+	    </td>
+	 </tr>
+  <tr>
+    	<td width="5%">
+      		<p align="center"><span lang="EN-US" style="font-size:12.0pt;font-family:
+
+
+  		&quot;Times New Roman&quot;;mso-ansi-language:EN-US">mouflpcp122</span>
+	    </td>
+    	<td width="5%">
+      		<p align="center"><font size="3">&nbsp;<span style="mso-fareast-font-family:
+		Times New Roman; mso-ansi-language: RU; mso-fareast-language: RU; mso-bidi-language: AR-SA">50 &times; 50</span></font></p>
+    	</td>
+    	<td width="5%" valign="middle" height="1">
+      		<p align="center"><span lang="EN-US" style="font-size:12.0pt;font-family:
+  		&quot;Times New Roman&quot;;mso-ansi-language:EN-US"><a href="mouflpcp122.zip">Download</a></span>
+	    </td>
+	 </tr>
+  <tr>
+    	<td width="5%">
+      		<p align="center"><span lang="EN-US" style="font-size:12.0pt;font-family:
+
+
+  		&quot;Times New Roman&quot;;mso-ansi-language:EN-US">mouflpcp123</span>
+	    </td>
+    	<td width="5%">
+      		<p align="center"><font size="3">&nbsp;<span style="mso-fareast-font-family:
+		Times New Roman; mso-ansi-language: RU; mso-fareast-language: RU; mso-bidi-language: AR-SA">50 &times; 50</span></font></p>
+    	</td>
+    	<td width="5%" valign="middle" height="1">
+      		<p align="center"><span lang="EN-US" style="font-size:12.0pt;font-family:
+  		&quot;Times New Roman&quot;;mso-ansi-language:EN-US"><a href="mouflpcp123.zip">Download</a></span>
+	    </td>
+	 </tr>
+  <tr>
+    	<td width="5%">
+      		<p align="center"><span lang="EN-US" style="font-size:12.0pt;font-family:
+
+
+  		&quot;Times New Roman&quot;;mso-ansi-language:EN-US">mouflpcp124</span>
+	    </td>
+    	<td width="5%">
+      		<p align="center"><font size="3">&nbsp;<span style="mso-fareast-font-family:
+		Times New Roman; mso-ansi-language: RU; mso-fareast-language: RU; mso-bidi-language: AR-SA">50 &times; 50</span></font></p>
+    	</td>
+    	<td width="5%" valign="middle" height="1">
+      		<p align="center"><span lang="EN-US" style="font-size:12.0pt;font-family:
+  		&quot;Times New Roman&quot;;mso-ansi-language:EN-US"><a href="mouflpcp124.zip">Download</a></span>
+	    </td>
+	 </tr>
+  <tr>
+    	<td width="5%">
+      		<p align="center"><span lang="EN-US" style="font-size:12.0pt;font-family:
+
+
+  		&quot;Times New Roman&quot;;mso-ansi-language:EN-US">mouflpcp131</span>
+	    </td>
+    	<td width="5%">
+      		<p align="center"><font size="3">&nbsp;<span style="mso-fareast-font-family:
+		Times New Roman; mso-ansi-language: RU; mso-fareast-language: RU; mso-bidi-language: AR-SA">50 &times; 50</span></font></p>
+    	</td>
+    	<td width="5%" valign="middle" height="1">
+      		<p align="center"><span lang="EN-US" style="font-size:12.0pt;font-family:
+  		&quot;Times New Roman&quot;;mso-ansi-language:EN-US"><a href="mouflpcp131.zip">Download</a></span>
+	    </td>
+	 </tr> 
+  <tr>
+    	<td width="5%">
+      		<p align="center"><span lang="EN-US" style="font-size:12.0pt;font-family:
+
+
+  		&quot;Times New Roman&quot;;mso-ansi-language:EN-US">mouflpcp132</span>
+	    </td>
+    	<td width="5%">
+      		<p align="center"><font size="3">&nbsp;<span style="mso-fareast-font-family:
+		Times New Roman; mso-ansi-language: RU; mso-fareast-language: RU; mso-bidi-language: AR-SA">50 &times; 50</span></font></p>
+    	</td>
+    	<td width="5%" valign="middle" height="1">
+      		<p align="center"><span lang="EN-US" style="font-size:12.0pt;font-family:
+  		&quot;Times New Roman&quot;;mso-ansi-language:EN-US"><a href="mouflpcp132.zip">Download</a></span>
+	    </td>
+	 </tr> 
+  <tr>
+    	<td width="5%">
+      		<p align="center"><span lang="EN-US" style="font-size:12.0pt;font-family:
+
+
+  		&quot;Times New Roman&quot;;mso-ansi-language:EN-US">mouflpcp133</span>
+	    </td>
+    	<td width="5%">
+      		<p align="center"><font size="3">&nbsp;<span style="mso-fareast-font-family:
+		Times New Roman; mso-ansi-language: RU; mso-fareast-language: RU; mso-bidi-language: AR-SA">50 &times; 50</span></font></p>
+    	</td>
+    	<td width="5%" valign="middle" height="1">
+      		<p align="center"><span lang="EN-US" style="font-size:12.0pt;font-family:
+  		&quot;Times New Roman&quot;;mso-ansi-language:EN-US"><a href="mouflpcp133.zip">Download</a></span>
+	    </td>
+	 </tr> 
+  <tr>
+    	<td width="5%">
+      		<p align="center"><span lang="EN-US" style="font-size:12.0pt;font-family:
+
+
+  		&quot;Times New Roman&quot;;mso-ansi-language:EN-US">mouflpcp134</span>
+	    </td>
+    	<td width="5%">
+      		<p align="center"><font size="3">&nbsp;<span style="mso-fareast-font-family:
+		Times New Roman; mso-ansi-language: RU; mso-fareast-language: RU; mso-bidi-language: AR-SA">50 &times; 50</span></font></p>
+    	</td>
+    	<td width="5%" valign="middle" height="1">
+      		<p align="center"><span lang="EN-US" style="font-size:12.0pt;font-family:
+  		&quot;Times New Roman&quot;;mso-ansi-language:EN-US"><a href="mouflpcp134.zip">Download</a></span>
+	    </td>
+	 </tr> 
+</table></div>
+
+<p style="font-size:120%;">
+<b>References:</b><br>
+[1]  Drezner Z, Hamacher HW (2001) Facility location: applications and theory. Springer Science & Business Media. <br>
+
+
+[2]  Al-Sultan K, Al-Fawzan M (1999) A tabu search approach to the uncapacitated facility location problem. Annals of Operations Research 86:91–103. <br>
+
+
+[3] Beasley JE (1990) OR-Library: distributing test problems by electronic mail. Journal of the Operational Research Society pp 1069–1072.
+</p>
+
+<p style="font-size:100%;" align=right>
+<i>This page is maintained by <a href="https://www.soumenatta.com/" target="_blank">Dr. Soumen Atta, Ph.D.</a>.<i> <br>
+<i>This page was created on April 1, 2018.</i>
+</p>
+	
+	
+
+  </div>
+</div>
+
+<footer class="site-footer">
+  <div class="site-footer__inner">
+    <span>&copy; Soumen Atta. All rights reserved.</span>
+    <span>
+      <a href="mailto:soumen.atta@gmail.com"><svg class="footer-icon" viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="2.5" y="5" width="19" height="14" rx="2" stroke="currentColor" stroke-width="1.6"/><path d="M4 7l8 6 8-6" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>soumen.atta@gmail.com</a>
+      &nbsp;·&nbsp;
+      <a href="/"><svg class="footer-icon" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="1.6"/><path d="M3 12h18M12 3c2.5 2.5 2.5 15.5 0 18M12 3c-2.5 2.5-2.5 15.5 0 18" stroke="currentColor" stroke-width="1.6"/></svg>soumenatta.com</a>
+      &nbsp;·&nbsp;
+      <a href="https://www.linkedin.com/in/soumen-atta/" target="_blank" rel="noopener"><svg class="footer-icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M20.45 20.45h-3.55v-5.57c0-1.33-.02-3.03-1.85-3.03-1.85 0-2.14 1.45-2.14 2.94v5.66H9.36V9h3.41v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.46v6.28ZM5.34 7.43a2.06 2.06 0 1 1 0-4.12 2.06 2.06 0 0 1 0 4.12ZM7.12 20.45H3.56V9h3.56v11.45Z"/></svg>LinkedIn</a>
+    </span>
+  </div>
+</footer>
+
+<script src="/assets/js/main.js"></script>
+</body>
+</html>
