@@ -1,22 +1,28 @@
 (function () {
   var storageKey = "site-theme";
+  var systemTheme = window.matchMedia("(prefers-color-scheme: dark)");
+  var preference = "system";
 
   function validPreference(value) {
     return value === "light" || value === "dark" ? value : "system";
   }
 
   function applyTheme(value) {
+    preference = value;
     if (value === "system") {
       document.documentElement.removeAttribute("data-theme");
     } else {
       document.documentElement.setAttribute("data-theme", value);
     }
-    document.querySelectorAll("[data-theme-picker]").forEach(function (picker) {
-      picker.value = value;
+    var dark = value === "dark" || (value === "system" && systemTheme.matches);
+    document.querySelectorAll("[data-theme-toggle]").forEach(function (button) {
+      var label = dark ? "Switch to light theme" : "Switch to dark theme";
+      button.setAttribute("data-current-theme", dark ? "dark" : "light");
+      button.setAttribute("aria-label", label);
+      button.title = label;
     });
   }
 
-  var preference = "system";
   try {
     preference = validPreference(localStorage.getItem(storageKey));
   } catch (error) {
@@ -25,24 +31,29 @@
   applyTheme(preference);
 
   document.addEventListener("DOMContentLoaded", function () {
-    document.querySelectorAll("[data-theme-picker]").forEach(function (picker) {
-      picker.value = preference;
-      picker.disabled = false;
-      picker.addEventListener("change", function () {
-        preference = validPreference(picker.value);
-        applyTheme(preference);
+    applyTheme(preference);
+    document.querySelectorAll("[data-theme-toggle]").forEach(function (button) {
+      button.disabled = false;
+      button.addEventListener("click", function () {
+        var dark = preference === "dark" || (preference === "system" && systemTheme.matches);
+        applyTheme(dark ? "light" : "dark");
         try {
-          if (preference === "system") {
-            localStorage.removeItem(storageKey);
-          } else {
-            localStorage.setItem(storageKey, preference);
-          }
+          localStorage.setItem(storageKey, preference);
         } catch (error) {
           // The selected theme still applies for this page.
         }
       });
     });
   });
+
+  function followSystemTheme() {
+    if (preference === "system") applyTheme("system");
+  }
+  if (systemTheme.addEventListener) {
+    systemTheme.addEventListener("change", followSystemTheme);
+  } else {
+    systemTheme.addListener(followSystemTheme);
+  }
 
   window.addEventListener("storage", function (event) {
     if (event.key === storageKey || event.key === null) {
