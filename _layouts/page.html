@@ -7,8 +7,10 @@ layout: default
 
   {% if page.subnav %}
   <nav class="subnav">
+    {% assign current_path = page.url | replace: 'index.html', '' | append: '/' | replace: '//', '/' %}
     {% for item in page.subnav %}
-    <a href="{{ item.url | relative_url }}"{% if page.url == item.url %} class="active"{% endif %}>{{ item.title }}</a>
+    {% assign item_path = item.url | append: '/' | replace: '//', '/' %}
+    <a href="{{ item.url | relative_url }}"{% if current_path == item_path %} class="active" aria-current="page"{% endif %}>{{ item.title }}</a>
     {% endfor %}
   </nav>
   {% endif %}

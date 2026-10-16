@@ -4,7 +4,7 @@ title: Data Sets
 lede: "Benchmark instances and supplementary material accompanying published research. Each page below is a permanent, citable supplementary webpage for the corresponding paper."
 ---
 
-<div class="card-grid">
+<div class="card-grid card-grid--datasets">
 {% for d in site.data.datasets %}
 <div class="card">
   <h3>{{ d.code }}</h3>
