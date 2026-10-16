@@ -647,6 +647,9 @@ tbody tr:hover { background: var(--teal-soft); }
 }
 .site-footer__links { display: flex; align-items: center; flex-wrap: wrap; gap: 0.25rem 1.1rem; }
 .site-footer__links a { display: inline-flex; align-items: center; gap: 0.4rem; min-height: 40px; }
+.site-footer__links .site-footer__social { width: 36px; justify-content: center; gap: 0; border-radius: var(--radius); }
+.site-footer__social:hover { background: var(--accent-soft); }
+.site-footer__social .footer-icon { width: 18px; height: 18px; color: currentColor; }
 .site-footer a { color: var(--text-muted); }
 .site-footer a:hover .footer-icon { color: var(--accent); }
 .footer-icon {
