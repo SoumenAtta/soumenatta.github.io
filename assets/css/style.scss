@@ -296,10 +296,13 @@ nav.primary-nav > ul > li.active > a {
 .hero h1 { font-size: 2.15rem; margin-bottom: 0.15em; color: var(--accent); }
 .hero__role { color: var(--teal); font-weight: 600; margin-bottom: 0.35em; font-size: 1.05rem; }
 .hero__affil { color: var(--text-muted); margin-bottom: 0.4em; max-width: 60ch; }
-.hero__emails { display: flex; flex-wrap: wrap; align-items: center; gap: 0.35rem 0.6rem; margin-bottom: 1rem; font-size: 0.9rem; }
+.hero__emails { display: flex; flex-wrap: wrap; align-items: center; gap: 0.35rem 0.6rem; margin-bottom: 0.55rem; font-size: 0.9rem; }
 .hero__email-address { display: inline-flex; align-items: center; gap: 0.6rem; }
 .hero__email-icon { width: 19px; height: 19px; flex-shrink: 0; color: var(--teal); }
 .hero__email-separator { color: var(--text-muted); }
+.hero__orcid { margin: 0; font-size: 0.9rem; }
+.hero__orcid a { display: inline-flex; align-items: center; gap: 0.5rem; }
+.hero__orcid img { width: 20px; height: 20px; flex-shrink: 0; }
 .hero__links { display: flex; flex-wrap: wrap; gap: 0.5rem; }
 
 @media (max-width: 640px) {
