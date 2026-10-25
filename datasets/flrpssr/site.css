@@ -29,7 +29,10 @@ tbody th { position: static; background: transparent; font-size: inherit; text-t
 .row-sub a { font-size: 11px; }
 .files { white-space: nowrap; font-size: 12px; line-height: 1.7; }
 @media (min-width: 901px) {
-  /* Separate Gurobi from ALNS across both header rows and every result row. */
+  /* Separate Instance, Gurobi and ALNS across both headers and all result rows. */
+  .instance-table thead tr:first-child th:nth-child(2),
+  .instance-table thead tr:nth-child(2) th:first-child,
+  .instance-table tbody td[data-label="Gurobi status"],
   .instance-table thead tr:first-child th:last-child,
   .instance-table thead tr:nth-child(2) th:nth-child(7),
   .instance-table tbody td[data-label="ALNS best L"] {
