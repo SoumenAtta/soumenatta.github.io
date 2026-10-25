@@ -1,16 +1,240 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>MApHLP ring and tree benchmarks — page moved</title>
-  <link rel="canonical" href="https://www.soumenatta.com/maphlp-ring-tree-benchmarks/">
-  <meta http-equiv="refresh" content="0; url=https://www.soumenatta.com/maphlp-ring-tree-benchmarks/">
-  <script>
-    window.location.replace("https://www.soumenatta.com/maphlp-ring-tree-benchmarks/" + window.location.search + window.location.hash);
-  </script>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Benchmark data and appendix case tables for ring- and tree-backbone multiple-allocation p-hub location.">
+<title>MApHLP supplementary benchmark data</title>
+<link rel="canonical" href="https://www.soumenatta.com/datasets/maphlp-ring-tree-benchmarks/">
+<style>
+  :root { color-scheme: light; --ink:#182b3f; --muted:#52687c; --line:#dbe5ea; --navy:#123249; --blue:#0e6389; --teal:#187870; }
+  * { box-sizing:border-box; }
+  html { scroll-behavior:smooth; }
+  body { margin:0; background:#f4f8fa; color:var(--ink); font:16px/1.56 system-ui,-apple-system,"Segoe UI",sans-serif; }
+  a { color:var(--blue); text-underline-offset:.15em; }
+  a:hover { color:#084665; }
+  a:focus-visible,input:focus-visible { outline:3px solid #d69a33; outline-offset:3px; }
+  .wrap { width:min(1100px,calc(100% - 2.5rem)); margin:auto; }
+  .skip { position:absolute; left:1rem; top:-4rem; background:#fff; padding:.6rem; z-index:5; }
+  .skip:focus { top:.5rem; }
+  header { background:linear-gradient(125deg,#10263d,#1a4b62 68%,#13626a); color:#f6fcff; border-bottom:5px solid #76c4bd; }
+  header .wrap { padding:3rem 0 2.8rem; }
+  .eyebrow { color:#b6e6de; font-size:.77rem; font-weight:750; letter-spacing:.13em; text-transform:uppercase; }
+  h1,h2 { font-family:Georgia,"Times New Roman",serif; font-weight:600; }
+  h1 { max-width:950px; margin:.6rem 0 .9rem; font-size:clamp(2rem,4vw,3.2rem); line-height:1.17; }
+  h2 { margin:0 0 .5rem; font-size:1.65rem; line-height:1.25; }
+  .authors { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:.75rem 1.5rem; max-width:950px; margin:0 0 1.6rem; }
+  .author { font-style:normal; color:#d0e1e9; }
+  .author strong { display:block; color:#fff; font-size:1.05rem; }
+  .author .role { color:#b6e6de; font-size:.85rem; font-weight:500; }
+  .author a { color:#e1f3f3; }
+  .actions { display:flex; flex-wrap:wrap; align-items:center; gap:.8rem 1.2rem; }
+  .button { display:inline-block; background:#e7faf6; border-radius:.45rem; color:#104a54; padding:.7rem 1rem; font-weight:750; text-decoration:none; }
+  .button:hover { background:#fff; color:#104a54; }
+  .actions .secondary { color:#e1f3f3; }
+  .size { color:#d0e1e9; font-size:.88rem; }
+  main { padding:1.8rem 0 2.8rem; }
+  .stats { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:.8rem; margin-bottom:1.35rem; }
+  .stat,.panel { background:#fff; border:1px solid var(--line); border-radius:.65rem; box-shadow:0 2px 12px #1232490b; }
+  .stat { padding:1rem 1.2rem; }
+  .stat strong { display:block; font:600 1.9rem/1.1 Georgia,"Times New Roman",serif; }
+  .stat span { color:var(--muted); font-size:.88rem; }
+  .panel { margin:0 0 1.25rem; padding:1.3rem 1.5rem; }
+  p { margin:.4rem 0 .85rem; }
+  .muted,.note { color:var(--muted); }
+  .note { font-size:.91rem; }
+  .symbols { display:grid; grid-template-columns:max-content 1fr; gap:.28rem 1rem; margin:.9rem 0 1rem; }
+  .symbols dt { font-weight:700; white-space:nowrap; }
+  .symbols dd { margin:0; }
+  .links { display:flex; flex-wrap:wrap; gap:.4rem 1.2rem; margin-top:.8rem; font-weight:650; }
+  code { background:#edf3f5; border-radius:.2rem; padding:.06rem .3rem; }
+  .table-wrap { max-height:630px; overflow:auto; border:1px solid var(--line); border-radius:.45rem; }
+  table { width:100%; min-width:840px; table-layout:fixed; border-collapse:collapse; font-variant-numeric:tabular-nums; }
+  th,td { padding:.53rem .75rem; text-align:left; border-bottom:1px solid #e6edf0; white-space:nowrap; }
+  th:nth-child(-n+3) { width:9%; }
+  th:nth-child(4) { width:19%; }
+  th:last-child,td:last-child { padding-left:2rem; }
+  thead th { position:sticky; top:0; z-index:1; background:#eaf2f5; color:var(--navy); font-size:.85rem; }
+  tbody tr:nth-child(even) { background:#fafcfd; }
+  tbody tr:hover { background:#e9f6f4; }
+  tbody tr.pair-start td { border-top:2px solid #bdd0d8; }
+  th.cost,td.cost { text-align:right; }
+  td.cost { font-weight:650; }
+  td.cost sup { color:var(--teal); margin-left:.08rem; }
+  td:last-child a { font-weight:650; }
+  footer { border-top:1px solid var(--line); color:var(--muted); font-size:.86rem; padding:1.3rem 0 2rem; }
+  footer .wrap { display:flex; justify-content:flex-end; align-items:flex-start; gap:1rem 2rem; }
+  .footer-meta { text-align:right; }
+  .footer-meta p { margin:0; }
+  @media(max-width:650px) { .wrap{width:calc(100% - 2rem)} header .wrap{padding:2.2rem 0} .stats{grid-template-columns:1fr} .panel{padding:1rem} .symbols{grid-template-columns:1fr;gap:0} .symbols dd{margin-bottom:.55rem} }
+  @media(max-width:650px) { .authors{grid-template-columns:1fr} footer .wrap{flex-direction:column} .footer-meta{text-align:left} }
+</style>
 </head>
 <body>
-  <p>The MApHLP ring and tree benchmarks have moved. <a href="https://www.soumenatta.com/maphlp-ring-tree-benchmarks/">Open the benchmark page</a>.</p>
+<a class="skip" href="#main">Skip to content</a>
+<header><div class="wrap">
+  <div class="eyebrow">Supplementary materials · benchmark instances</div>
+  <h1>Multiple Allocation <i>p</i>-Hub Location Problems with Ring and Tree Backbone Networks for VoD Content Placement</h1>
+  <div class="authors" aria-label="Authors and affiliations">
+    <address class="author"><strong>Soumen Atta <span class="role">(corresponding author)</span></strong>Faculty of Information Technology<br>University of Jyväskylä<br>P.O. Box 35 (Agora), 40014 Jyväskylä, Finland<br><a href="mailto:soumen.s.atta@jyu.fi">soumen.s.atta@jyu.fi</a></address>
+    <address class="author"><strong>Sriparna Saha</strong>Department of Computer Science and Engineering<br>Indian Institute of Technology Patna<br>Patna 801106, India<br><a href="mailto:sriparna@iitp.ac.in">sriparna@iitp.ac.in</a></address>
+  </div>
+  <div class="actions">
+    <a class="button" href="MApHLP_benchmark_instances.zip" download>Download all benchmark files (.zip)</a>
+    <span class="size">367 KiB · 11 data files</span>
+    <a class="secondary" href="case_manifest.csv" download>Case index (.csv)</a>
+  </div>
+</div></header>
+<main id="main" class="wrap">
+  <div class="stats" aria-label="Benchmark scope">
+    <div class="stat"><strong>11</strong><span>distinct data files</span></div>
+    <div class="stat"><strong>55</strong><span>(<i>n</i>, <i>p</i>, α) instances</span></div>
+    <div class="stat"><strong>110</strong><span>ring and tree cases</span></div>
+  </div>
+  <section class="panel" aria-labelledby="overview">
+    <h2 id="overview">About these tables</h2>
+    <p>The two tables reproduce the <strong>first four columns of the manuscript appendix</strong>. A fifth column provides the matching <code>.dat</code> file. Each data file is shared across five values of α and both topologies; α and topology are model settings, not separate data files.</p>
+    <dl class="symbols" aria-label="Definitions of all table symbols">
+      <dt><i>n</i></dt><dd>Number of demand nodes, each also a candidate hub location.</dd>
+      <dt><i>p</i></dt><dd>Number of hubs to open and distinct content segments to place.</dd>
+      <dt>α</dt><dd>Inter-hub transportation cost multiplier. The values 0.2, 0.4, 0.6, and 0.8 give a discount; α = 1.0 gives no discount.</dd>
+      <dt><i>z</i><sup>BKS</sup></dt><dd>Best-known solution cost: the smallest feasible objective found for this case across the direct Gurobi solve and all 30 standalone and hybrid runs. Costs use the original instance units.</dd>
+      <dt>*</dt><dd>Gurobi certified the best-known cost within the relative mixed-integer programming gap tolerance of 10<sup>−4</sup>. An unmarked cost has no such certificate.</dd>
+      <dt>Instance data</dt><dd>Downloadable file containing query-volume matrix <i>Q</i> and distance matrix <i>D</i>. In <i>Q</i>, an entry is the request volume from a node for a segment; in <i>D</i>, an entry is the distance between two nodes.</dd>
+    </dl>
+    <p class="note">The remaining appendix columns—solution source, segment-host assignments, and ring order or tree parent vector—remain in the manuscript.</p>
+    <nav class="links" aria-label="Sections"><a href="#ring">Ring cases</a><a href="#tree">Tree cases</a><a href="#downloads">Downloads and checksums</a></nav>
+  </section>
+  <section id="ring" class="panel" aria-labelledby="ring-heading">
+    <h2 id="ring-heading">Ring-backbone cases</h2>
+    <div class="table-wrap"><table>
+      <thead><tr><th scope="col"><i>n</i></th><th scope="col"><i>p</i></th><th scope="col">α</th><th scope="col" class="cost"><i>z</i><sup>BKS</sup></th><th scope="col">Instance data</th></tr></thead>
+      <tbody><tr data-search="10 5 0.2 553,104.47 10_100_5.dat"><td>10</td><td>5</td><td>0.2</td><td class="cost">553,104.47<sup aria-label="certified">*</sup></td><td><a href="instances/10_100_5.dat" download="10_100_5.dat" aria-label="Download 10_100_5.dat for ring, n=10, p=5, alpha=0.2">10_100_5.dat</a></td></tr>
+<tr data-search="10 5 0.4 935,456.48 10_100_5.dat"><td>10</td><td>5</td><td>0.4</td><td class="cost">935,456.48<sup aria-label="certified">*</sup></td><td><a href="instances/10_100_5.dat" download="10_100_5.dat" aria-label="Download 10_100_5.dat for ring, n=10, p=5, alpha=0.4">10_100_5.dat</a></td></tr>
+<tr data-search="10 5 0.6 1,304,212.11 10_100_5.dat"><td>10</td><td>5</td><td>0.6</td><td class="cost">1,304,212.11<sup aria-label="certified">*</sup></td><td><a href="instances/10_100_5.dat" download="10_100_5.dat" aria-label="Download 10_100_5.dat for ring, n=10, p=5, alpha=0.6">10_100_5.dat</a></td></tr>
+<tr data-search="10 5 0.8 1,608,624.09 10_100_5.dat"><td>10</td><td>5</td><td>0.8</td><td class="cost">1,608,624.09<sup aria-label="certified">*</sup></td><td><a href="instances/10_100_5.dat" download="10_100_5.dat" aria-label="Download 10_100_5.dat for ring, n=10, p=5, alpha=0.8">10_100_5.dat</a></td></tr>
+<tr data-search="10 5 1.0 1,819,576.48 10_100_5.dat"><td>10</td><td>5</td><td>1.0</td><td class="cost">1,819,576.48<sup aria-label="certified">*</sup></td><td><a href="instances/10_100_5.dat" download="10_100_5.dat" aria-label="Download 10_100_5.dat for ring, n=10, p=5, alpha=1.0">10_100_5.dat</a></td></tr>
+<tr class="pair-start" data-search="20 5 0.2 1,226,460.61 20_100_5.dat"><td>20</td><td>5</td><td>0.2</td><td class="cost">1,226,460.61<sup aria-label="certified">*</sup></td><td><a href="instances/20_100_5.dat" download="20_100_5.dat" aria-label="Download 20_100_5.dat for ring, n=20, p=5, alpha=0.2">20_100_5.dat</a></td></tr>
+<tr data-search="20 5 0.4 1,858,643.85 20_100_5.dat"><td>20</td><td>5</td><td>0.4</td><td class="cost">1,858,643.85<sup aria-label="certified">*</sup></td><td><a href="instances/20_100_5.dat" download="20_100_5.dat" aria-label="Download 20_100_5.dat for ring, n=20, p=5, alpha=0.4">20_100_5.dat</a></td></tr>
+<tr data-search="20 5 0.6 2,420,802.78 20_100_5.dat"><td>20</td><td>5</td><td>0.6</td><td class="cost">2,420,802.78<sup aria-label="certified">*</sup></td><td><a href="instances/20_100_5.dat" download="20_100_5.dat" aria-label="Download 20_100_5.dat for ring, n=20, p=5, alpha=0.6">20_100_5.dat</a></td></tr>
+<tr data-search="20 5 0.8 2,829,147.91 20_100_5.dat"><td>20</td><td>5</td><td>0.8</td><td class="cost">2,829,147.91<sup aria-label="certified">*</sup></td><td><a href="instances/20_100_5.dat" download="20_100_5.dat" aria-label="Download 20_100_5.dat for ring, n=20, p=5, alpha=0.8">20_100_5.dat</a></td></tr>
+<tr data-search="20 5 1.0 3,064,714.87 20_100_5.dat"><td>20</td><td>5</td><td>1.0</td><td class="cost">3,064,714.87<sup aria-label="certified">*</sup></td><td><a href="instances/20_100_5.dat" download="20_100_5.dat" aria-label="Download 20_100_5.dat for ring, n=20, p=5, alpha=1.0">20_100_5.dat</a></td></tr>
+<tr class="pair-start" data-search="30 5 0.2 1,788,595.23 30_100_5.dat"><td>30</td><td>5</td><td>0.2</td><td class="cost">1,788,595.23<sup aria-label="certified">*</sup></td><td><a href="instances/30_100_5.dat" download="30_100_5.dat" aria-label="Download 30_100_5.dat for ring, n=30, p=5, alpha=0.2">30_100_5.dat</a></td></tr>
+<tr data-search="30 5 0.4 2,652,500.44 30_100_5.dat"><td>30</td><td>5</td><td>0.4</td><td class="cost">2,652,500.44<sup aria-label="certified">*</sup></td><td><a href="instances/30_100_5.dat" download="30_100_5.dat" aria-label="Download 30_100_5.dat for ring, n=30, p=5, alpha=0.4">30_100_5.dat</a></td></tr>
+<tr data-search="30 5 0.6 3,363,318.86 30_100_5.dat"><td>30</td><td>5</td><td>0.6</td><td class="cost">3,363,318.86<sup aria-label="certified">*</sup></td><td><a href="instances/30_100_5.dat" download="30_100_5.dat" aria-label="Download 30_100_5.dat for ring, n=30, p=5, alpha=0.6">30_100_5.dat</a></td></tr>
+<tr data-search="30 5 0.8 3,897,976.35 30_100_5.dat"><td>30</td><td>5</td><td>0.8</td><td class="cost">3,897,976.35<sup aria-label="certified">*</sup></td><td><a href="instances/30_100_5.dat" download="30_100_5.dat" aria-label="Download 30_100_5.dat for ring, n=30, p=5, alpha=0.8">30_100_5.dat</a></td></tr>
+<tr data-search="30 5 1.0 4,154,922.32 30_100_5.dat"><td>30</td><td>5</td><td>1.0</td><td class="cost">4,154,922.32<sup aria-label="certified">*</sup></td><td><a href="instances/30_100_5.dat" download="30_100_5.dat" aria-label="Download 30_100_5.dat for ring, n=30, p=5, alpha=1.0">30_100_5.dat</a></td></tr>
+<tr class="pair-start" data-search="40 5 0.2 2,260,281.95 40_100_5.dat"><td>40</td><td>5</td><td>0.2</td><td class="cost">2,260,281.95<sup aria-label="certified">*</sup></td><td><a href="instances/40_100_5.dat" download="40_100_5.dat" aria-label="Download 40_100_5.dat for ring, n=40, p=5, alpha=0.2">40_100_5.dat</a></td></tr>
+<tr data-search="40 5 0.4 3,266,616.48 40_100_5.dat"><td>40</td><td>5</td><td>0.4</td><td class="cost">3,266,616.48<sup aria-label="certified">*</sup></td><td><a href="instances/40_100_5.dat" download="40_100_5.dat" aria-label="Download 40_100_5.dat for ring, n=40, p=5, alpha=0.4">40_100_5.dat</a></td></tr>
+<tr data-search="40 5 0.6 4,089,440.83 40_100_5.dat"><td>40</td><td>5</td><td>0.6</td><td class="cost">4,089,440.83<sup aria-label="certified">*</sup></td><td><a href="instances/40_100_5.dat" download="40_100_5.dat" aria-label="Download 40_100_5.dat for ring, n=40, p=5, alpha=0.6">40_100_5.dat</a></td></tr>
+<tr data-search="40 5 0.8 4,637,372.86 40_100_5.dat"><td>40</td><td>5</td><td>0.8</td><td class="cost">4,637,372.86<sup aria-label="certified">*</sup></td><td><a href="instances/40_100_5.dat" download="40_100_5.dat" aria-label="Download 40_100_5.dat for ring, n=40, p=5, alpha=0.8">40_100_5.dat</a></td></tr>
+<tr data-search="40 5 1.0 4,929,745.11 40_100_5.dat"><td>40</td><td>5</td><td>1.0</td><td class="cost">4,929,745.11<sup aria-label="certified">*</sup></td><td><a href="instances/40_100_5.dat" download="40_100_5.dat" aria-label="Download 40_100_5.dat for ring, n=40, p=5, alpha=1.0">40_100_5.dat</a></td></tr>
+<tr class="pair-start" data-search="50 5 0.2 2,652,973.40 50_100_5.dat"><td>50</td><td>5</td><td>0.2</td><td class="cost">2,652,973.40<sup aria-label="certified">*</sup></td><td><a href="instances/50_100_5.dat" download="50_100_5.dat" aria-label="Download 50_100_5.dat for ring, n=50, p=5, alpha=0.2">50_100_5.dat</a></td></tr>
+<tr data-search="50 5 0.4 3,695,479.04 50_100_5.dat"><td>50</td><td>5</td><td>0.4</td><td class="cost">3,695,479.04<sup aria-label="certified">*</sup></td><td><a href="instances/50_100_5.dat" download="50_100_5.dat" aria-label="Download 50_100_5.dat for ring, n=50, p=5, alpha=0.4">50_100_5.dat</a></td></tr>
+<tr data-search="50 5 0.6 4,491,026.83 50_100_5.dat"><td>50</td><td>5</td><td>0.6</td><td class="cost">4,491,026.83<sup aria-label="certified">*</sup></td><td><a href="instances/50_100_5.dat" download="50_100_5.dat" aria-label="Download 50_100_5.dat for ring, n=50, p=5, alpha=0.6">50_100_5.dat</a></td></tr>
+<tr data-search="50 5 0.8 5,135,770.88 50_100_5.dat"><td>50</td><td>5</td><td>0.8</td><td class="cost">5,135,770.88<sup aria-label="certified">*</sup></td><td><a href="instances/50_100_5.dat" download="50_100_5.dat" aria-label="Download 50_100_5.dat for ring, n=50, p=5, alpha=0.8">50_100_5.dat</a></td></tr>
+<tr data-search="50 5 1.0 5,480,018.18 50_100_5.dat"><td>50</td><td>5</td><td>1.0</td><td class="cost">5,480,018.18<sup aria-label="certified">*</sup></td><td><a href="instances/50_100_5.dat" download="50_100_5.dat" aria-label="Download 50_100_5.dat for ring, n=50, p=5, alpha=1.0">50_100_5.dat</a></td></tr>
+<tr class="pair-start" data-search="100 5 0.2 5,933,130.52 100_100_5.dat"><td>100</td><td>5</td><td>0.2</td><td class="cost">5,933,130.52</td><td><a href="instances/100_100_5.dat" download="100_100_5.dat" aria-label="Download 100_100_5.dat for ring, n=100, p=5, alpha=0.2">100_100_5.dat</a></td></tr>
+<tr data-search="100 5 0.4 7,873,053.89 100_100_5.dat"><td>100</td><td>5</td><td>0.4</td><td class="cost">7,873,053.89</td><td><a href="instances/100_100_5.dat" download="100_100_5.dat" aria-label="Download 100_100_5.dat for ring, n=100, p=5, alpha=0.4">100_100_5.dat</a></td></tr>
+<tr data-search="100 5 0.6 9,401,859.29 100_100_5.dat"><td>100</td><td>5</td><td>0.6</td><td class="cost">9,401,859.29</td><td><a href="instances/100_100_5.dat" download="100_100_5.dat" aria-label="Download 100_100_5.dat for ring, n=100, p=5, alpha=0.6">100_100_5.dat</a></td></tr>
+<tr data-search="100 5 0.8 10,520,266.24 100_100_5.dat"><td>100</td><td>5</td><td>0.8</td><td class="cost">10,520,266.24</td><td><a href="instances/100_100_5.dat" download="100_100_5.dat" aria-label="Download 100_100_5.dat for ring, n=100, p=5, alpha=0.8">100_100_5.dat</a></td></tr>
+<tr data-search="100 5 1.0 11,006,043.49 100_100_5.dat"><td>100</td><td>5</td><td>1.0</td><td class="cost">11,006,043.49<sup aria-label="certified">*</sup></td><td><a href="instances/100_100_5.dat" download="100_100_5.dat" aria-label="Download 100_100_5.dat for ring, n=100, p=5, alpha=1.0">100_100_5.dat</a></td></tr>
+<tr class="pair-start" data-search="150 5 0.2 8,687,605.95 150_100_5.dat"><td>150</td><td>5</td><td>0.2</td><td class="cost">8,687,605.95</td><td><a href="instances/150_100_5.dat" download="150_100_5.dat" aria-label="Download 150_100_5.dat for ring, n=150, p=5, alpha=0.2">150_100_5.dat</a></td></tr>
+<tr data-search="150 5 0.4 11,361,688.67 150_100_5.dat"><td>150</td><td>5</td><td>0.4</td><td class="cost">11,361,688.67</td><td><a href="instances/150_100_5.dat" download="150_100_5.dat" aria-label="Download 150_100_5.dat for ring, n=150, p=5, alpha=0.4">150_100_5.dat</a></td></tr>
+<tr data-search="150 5 0.6 13,496,851.73 150_100_5.dat"><td>150</td><td>5</td><td>0.6</td><td class="cost">13,496,851.73</td><td><a href="instances/150_100_5.dat" download="150_100_5.dat" aria-label="Download 150_100_5.dat for ring, n=150, p=5, alpha=0.6">150_100_5.dat</a></td></tr>
+<tr data-search="150 5 0.8 15,094,260.27 150_100_5.dat"><td>150</td><td>5</td><td>0.8</td><td class="cost">15,094,260.27</td><td><a href="instances/150_100_5.dat" download="150_100_5.dat" aria-label="Download 150_100_5.dat for ring, n=150, p=5, alpha=0.8">150_100_5.dat</a></td></tr>
+<tr data-search="150 5 1.0 15,896,224.45 150_100_5.dat"><td>150</td><td>5</td><td>1.0</td><td class="cost">15,896,224.45<sup aria-label="certified">*</sup></td><td><a href="instances/150_100_5.dat" download="150_100_5.dat" aria-label="Download 150_100_5.dat for ring, n=150, p=5, alpha=1.0">150_100_5.dat</a></td></tr>
+<tr class="pair-start" data-search="40 10 0.2 1,959,423.90 40_100_10.dat"><td>40</td><td>10</td><td>0.2</td><td class="cost">1,959,423.90</td><td><a href="instances/40_100_10.dat" download="40_100_10.dat" aria-label="Download 40_100_10.dat for ring, n=40, p=10, alpha=0.2">40_100_10.dat</a></td></tr>
+<tr data-search="40 10 0.4 3,121,715.85 40_100_10.dat"><td>40</td><td>10</td><td>0.4</td><td class="cost">3,121,715.85</td><td><a href="instances/40_100_10.dat" download="40_100_10.dat" aria-label="Download 40_100_10.dat for ring, n=40, p=10, alpha=0.4">40_100_10.dat</a></td></tr>
+<tr data-search="40 10 0.6 3,994,299.97 40_100_10.dat"><td>40</td><td>10</td><td>0.6</td><td class="cost">3,994,299.97</td><td><a href="instances/40_100_10.dat" download="40_100_10.dat" aria-label="Download 40_100_10.dat for ring, n=40, p=10, alpha=0.6">40_100_10.dat</a></td></tr>
+<tr data-search="40 10 0.8 4,607,389.13 40_100_10.dat"><td>40</td><td>10</td><td>0.8</td><td class="cost">4,607,389.13</td><td><a href="instances/40_100_10.dat" download="40_100_10.dat" aria-label="Download 40_100_10.dat for ring, n=40, p=10, alpha=0.8">40_100_10.dat</a></td></tr>
+<tr data-search="40 10 1.0 4,876,414.54 40_100_10.dat"><td>40</td><td>10</td><td>1.0</td><td class="cost">4,876,414.54<sup aria-label="certified">*</sup></td><td><a href="instances/40_100_10.dat" download="40_100_10.dat" aria-label="Download 40_100_10.dat for ring, n=40, p=10, alpha=1.0">40_100_10.dat</a></td></tr>
+<tr class="pair-start" data-search="50 10 0.2 2,334,498.53 50_100_10.dat"><td>50</td><td>10</td><td>0.2</td><td class="cost">2,334,498.53</td><td><a href="instances/50_100_10.dat" download="50_100_10.dat" aria-label="Download 50_100_10.dat for ring, n=50, p=10, alpha=0.2">50_100_10.dat</a></td></tr>
+<tr data-search="50 10 0.4 3,588,222.81 50_100_10.dat"><td>50</td><td>10</td><td>0.4</td><td class="cost">3,588,222.81</td><td><a href="instances/50_100_10.dat" download="50_100_10.dat" aria-label="Download 50_100_10.dat for ring, n=50, p=10, alpha=0.4">50_100_10.dat</a></td></tr>
+<tr data-search="50 10 0.6 4,497,635.81 50_100_10.dat"><td>50</td><td>10</td><td>0.6</td><td class="cost">4,497,635.81</td><td><a href="instances/50_100_10.dat" download="50_100_10.dat" aria-label="Download 50_100_10.dat for ring, n=50, p=10, alpha=0.6">50_100_10.dat</a></td></tr>
+<tr data-search="50 10 0.8 5,088,697.26 50_100_10.dat"><td>50</td><td>10</td><td>0.8</td><td class="cost">5,088,697.26</td><td><a href="instances/50_100_10.dat" download="50_100_10.dat" aria-label="Download 50_100_10.dat for ring, n=50, p=10, alpha=0.8">50_100_10.dat</a></td></tr>
+<tr data-search="50 10 1.0 5,371,720.54 50_100_10.dat"><td>50</td><td>10</td><td>1.0</td><td class="cost">5,371,720.54<sup aria-label="certified">*</sup></td><td><a href="instances/50_100_10.dat" download="50_100_10.dat" aria-label="Download 50_100_10.dat for ring, n=50, p=10, alpha=1.0">50_100_10.dat</a></td></tr>
+<tr class="pair-start" data-search="100 10 0.2 5,337,551.87 100_100_10.dat"><td>100</td><td>10</td><td>0.2</td><td class="cost">5,337,551.87</td><td><a href="instances/100_100_10.dat" download="100_100_10.dat" aria-label="Download 100_100_10.dat for ring, n=100, p=10, alpha=0.2">100_100_10.dat</a></td></tr>
+<tr data-search="100 10 0.4 7,740,218.12 100_100_10.dat"><td>100</td><td>10</td><td>0.4</td><td class="cost">7,740,218.12</td><td><a href="instances/100_100_10.dat" download="100_100_10.dat" aria-label="Download 100_100_10.dat for ring, n=100, p=10, alpha=0.4">100_100_10.dat</a></td></tr>
+<tr data-search="100 10 0.6 9,297,615.43 100_100_10.dat"><td>100</td><td>10</td><td>0.6</td><td class="cost">9,297,615.43</td><td><a href="instances/100_100_10.dat" download="100_100_10.dat" aria-label="Download 100_100_10.dat for ring, n=100, p=10, alpha=0.6">100_100_10.dat</a></td></tr>
+<tr data-search="100 10 0.8 10,516,468.87 100_100_10.dat"><td>100</td><td>10</td><td>0.8</td><td class="cost">10,516,468.87</td><td><a href="instances/100_100_10.dat" download="100_100_10.dat" aria-label="Download 100_100_10.dat for ring, n=100, p=10, alpha=0.8">100_100_10.dat</a></td></tr>
+<tr data-search="100 10 1.0 10,934,156.93 100_100_10.dat"><td>100</td><td>10</td><td>1.0</td><td class="cost">10,934,156.93<sup aria-label="certified">*</sup></td><td><a href="instances/100_100_10.dat" download="100_100_10.dat" aria-label="Download 100_100_10.dat for ring, n=100, p=10, alpha=1.0">100_100_10.dat</a></td></tr>
+<tr class="pair-start" data-search="150 10 0.2 7,824,995.89 150_100_10.dat"><td>150</td><td>10</td><td>0.2</td><td class="cost">7,824,995.89</td><td><a href="instances/150_100_10.dat" download="150_100_10.dat" aria-label="Download 150_100_10.dat for ring, n=150, p=10, alpha=0.2">150_100_10.dat</a></td></tr>
+<tr data-search="150 10 0.4 11,405,419.09 150_100_10.dat"><td>150</td><td>10</td><td>0.4</td><td class="cost">11,405,419.09</td><td><a href="instances/150_100_10.dat" download="150_100_10.dat" aria-label="Download 150_100_10.dat for ring, n=150, p=10, alpha=0.4">150_100_10.dat</a></td></tr>
+<tr data-search="150 10 0.6 13,573,343.30 150_100_10.dat"><td>150</td><td>10</td><td>0.6</td><td class="cost">13,573,343.30</td><td><a href="instances/150_100_10.dat" download="150_100_10.dat" aria-label="Download 150_100_10.dat for ring, n=150, p=10, alpha=0.6">150_100_10.dat</a></td></tr>
+<tr data-search="150 10 0.8 15,141,218.50 150_100_10.dat"><td>150</td><td>10</td><td>0.8</td><td class="cost">15,141,218.50</td><td><a href="instances/150_100_10.dat" download="150_100_10.dat" aria-label="Download 150_100_10.dat for ring, n=150, p=10, alpha=0.8">150_100_10.dat</a></td></tr>
+<tr data-search="150 10 1.0 15,787,892.58 150_100_10.dat"><td>150</td><td>10</td><td>1.0</td><td class="cost">15,787,892.58<sup aria-label="certified">*</sup></td><td><a href="instances/150_100_10.dat" download="150_100_10.dat" aria-label="Download 150_100_10.dat for ring, n=150, p=10, alpha=1.0">150_100_10.dat</a></td></tr></tbody>
+    </table></div>
+  </section>
+  <section id="tree" class="panel" aria-labelledby="tree-heading">
+    <h2 id="tree-heading">Tree-backbone cases</h2>
+    <div class="table-wrap"><table>
+      <thead><tr><th scope="col"><i>n</i></th><th scope="col"><i>p</i></th><th scope="col">α</th><th scope="col" class="cost"><i>z</i><sup>BKS</sup></th><th scope="col">Instance data</th></tr></thead>
+      <tbody><tr data-search="10 5 0.2 555,341.89 10_100_5.dat"><td>10</td><td>5</td><td>0.2</td><td class="cost">555,341.89<sup aria-label="certified">*</sup></td><td><a href="instances/10_100_5.dat" download="10_100_5.dat" aria-label="Download 10_100_5.dat for tree, n=10, p=5, alpha=0.2">10_100_5.dat</a></td></tr>
+<tr data-search="10 5 0.4 932,069.96 10_100_5.dat"><td>10</td><td>5</td><td>0.4</td><td class="cost">932,069.96<sup aria-label="certified">*</sup></td><td><a href="instances/10_100_5.dat" download="10_100_5.dat" aria-label="Download 10_100_5.dat for tree, n=10, p=5, alpha=0.4">10_100_5.dat</a></td></tr>
+<tr data-search="10 5 0.6 1,302,883.81 10_100_5.dat"><td>10</td><td>5</td><td>0.6</td><td class="cost">1,302,883.81<sup aria-label="certified">*</sup></td><td><a href="instances/10_100_5.dat" download="10_100_5.dat" aria-label="Download 10_100_5.dat for tree, n=10, p=5, alpha=0.6">10_100_5.dat</a></td></tr>
+<tr data-search="10 5 0.8 1,594,801.15 10_100_5.dat"><td>10</td><td>5</td><td>0.8</td><td class="cost">1,594,801.15<sup aria-label="certified">*</sup></td><td><a href="instances/10_100_5.dat" download="10_100_5.dat" aria-label="Download 10_100_5.dat for tree, n=10, p=5, alpha=0.8">10_100_5.dat</a></td></tr>
+<tr data-search="10 5 1.0 1,819,576.48 10_100_5.dat"><td>10</td><td>5</td><td>1.0</td><td class="cost">1,819,576.48<sup aria-label="certified">*</sup></td><td><a href="instances/10_100_5.dat" download="10_100_5.dat" aria-label="Download 10_100_5.dat for tree, n=10, p=5, alpha=1.0">10_100_5.dat</a></td></tr>
+<tr class="pair-start" data-search="20 5 0.2 1,204,528.99 20_100_5.dat"><td>20</td><td>5</td><td>0.2</td><td class="cost">1,204,528.99<sup aria-label="certified">*</sup></td><td><a href="instances/20_100_5.dat" download="20_100_5.dat" aria-label="Download 20_100_5.dat for tree, n=20, p=5, alpha=0.2">20_100_5.dat</a></td></tr>
+<tr data-search="20 5 0.4 1,792,472.85 20_100_5.dat"><td>20</td><td>5</td><td>0.4</td><td class="cost">1,792,472.85<sup aria-label="certified">*</sup></td><td><a href="instances/20_100_5.dat" download="20_100_5.dat" aria-label="Download 20_100_5.dat for tree, n=20, p=5, alpha=0.4">20_100_5.dat</a></td></tr>
+<tr data-search="20 5 0.6 2,321,895.02 20_100_5.dat"><td>20</td><td>5</td><td>0.6</td><td class="cost">2,321,895.02<sup aria-label="certified">*</sup></td><td><a href="instances/20_100_5.dat" download="20_100_5.dat" aria-label="Download 20_100_5.dat for tree, n=20, p=5, alpha=0.6">20_100_5.dat</a></td></tr>
+<tr data-search="20 5 0.8 2,814,094.29 20_100_5.dat"><td>20</td><td>5</td><td>0.8</td><td class="cost">2,814,094.29<sup aria-label="certified">*</sup></td><td><a href="instances/20_100_5.dat" download="20_100_5.dat" aria-label="Download 20_100_5.dat for tree, n=20, p=5, alpha=0.8">20_100_5.dat</a></td></tr>
+<tr data-search="20 5 1.0 3,064,714.87 20_100_5.dat"><td>20</td><td>5</td><td>1.0</td><td class="cost">3,064,714.87<sup aria-label="certified">*</sup></td><td><a href="instances/20_100_5.dat" download="20_100_5.dat" aria-label="Download 20_100_5.dat for tree, n=20, p=5, alpha=1.0">20_100_5.dat</a></td></tr>
+<tr class="pair-start" data-search="30 5 0.2 1,715,773.36 30_100_5.dat"><td>30</td><td>5</td><td>0.2</td><td class="cost">1,715,773.36<sup aria-label="certified">*</sup></td><td><a href="instances/30_100_5.dat" download="30_100_5.dat" aria-label="Download 30_100_5.dat for tree, n=30, p=5, alpha=0.2">30_100_5.dat</a></td></tr>
+<tr data-search="30 5 0.4 2,494,418.32 30_100_5.dat"><td>30</td><td>5</td><td>0.4</td><td class="cost">2,494,418.32<sup aria-label="certified">*</sup></td><td><a href="instances/30_100_5.dat" download="30_100_5.dat" aria-label="Download 30_100_5.dat for tree, n=30, p=5, alpha=0.4">30_100_5.dat</a></td></tr>
+<tr data-search="30 5 0.6 3,228,276.27 30_100_5.dat"><td>30</td><td>5</td><td>0.6</td><td class="cost">3,228,276.27<sup aria-label="certified">*</sup></td><td><a href="instances/30_100_5.dat" download="30_100_5.dat" aria-label="Download 30_100_5.dat for tree, n=30, p=5, alpha=0.6">30_100_5.dat</a></td></tr>
+<tr data-search="30 5 0.8 3,829,388.26 30_100_5.dat"><td>30</td><td>5</td><td>0.8</td><td class="cost">3,829,388.26<sup aria-label="certified">*</sup></td><td><a href="instances/30_100_5.dat" download="30_100_5.dat" aria-label="Download 30_100_5.dat for tree, n=30, p=5, alpha=0.8">30_100_5.dat</a></td></tr>
+<tr data-search="30 5 1.0 4,154,922.32 30_100_5.dat"><td>30</td><td>5</td><td>1.0</td><td class="cost">4,154,922.32<sup aria-label="certified">*</sup></td><td><a href="instances/30_100_5.dat" download="30_100_5.dat" aria-label="Download 30_100_5.dat for tree, n=30, p=5, alpha=1.0">30_100_5.dat</a></td></tr>
+<tr class="pair-start" data-search="40 5 0.2 2,201,701.67 40_100_5.dat"><td>40</td><td>5</td><td>0.2</td><td class="cost">2,201,701.67<sup aria-label="certified">*</sup></td><td><a href="instances/40_100_5.dat" download="40_100_5.dat" aria-label="Download 40_100_5.dat for tree, n=40, p=5, alpha=0.2">40_100_5.dat</a></td></tr>
+<tr data-search="40 5 0.4 3,143,537.64 40_100_5.dat"><td>40</td><td>5</td><td>0.4</td><td class="cost">3,143,537.64<sup aria-label="certified">*</sup></td><td><a href="instances/40_100_5.dat" download="40_100_5.dat" aria-label="Download 40_100_5.dat for tree, n=40, p=5, alpha=0.4">40_100_5.dat</a></td></tr>
+<tr data-search="40 5 0.6 4,006,522.58 40_100_5.dat"><td>40</td><td>5</td><td>0.6</td><td class="cost">4,006,522.58<sup aria-label="certified">*</sup></td><td><a href="instances/40_100_5.dat" download="40_100_5.dat" aria-label="Download 40_100_5.dat for tree, n=40, p=5, alpha=0.6">40_100_5.dat</a></td></tr>
+<tr data-search="40 5 0.8 4,631,179.69 40_100_5.dat"><td>40</td><td>5</td><td>0.8</td><td class="cost">4,631,179.69<sup aria-label="certified">*</sup></td><td><a href="instances/40_100_5.dat" download="40_100_5.dat" aria-label="Download 40_100_5.dat for tree, n=40, p=5, alpha=0.8">40_100_5.dat</a></td></tr>
+<tr data-search="40 5 1.0 4,929,745.11 40_100_5.dat"><td>40</td><td>5</td><td>1.0</td><td class="cost">4,929,745.11<sup aria-label="certified">*</sup></td><td><a href="instances/40_100_5.dat" download="40_100_5.dat" aria-label="Download 40_100_5.dat for tree, n=40, p=5, alpha=1.0">40_100_5.dat</a></td></tr>
+<tr class="pair-start" data-search="50 5 0.2 2,566,417.84 50_100_5.dat"><td>50</td><td>5</td><td>0.2</td><td class="cost">2,566,417.84<sup aria-label="certified">*</sup></td><td><a href="instances/50_100_5.dat" download="50_100_5.dat" aria-label="Download 50_100_5.dat for tree, n=50, p=5, alpha=0.2">50_100_5.dat</a></td></tr>
+<tr data-search="50 5 0.4 3,559,569.03 50_100_5.dat"><td>50</td><td>5</td><td>0.4</td><td class="cost">3,559,569.03<sup aria-label="certified">*</sup></td><td><a href="instances/50_100_5.dat" download="50_100_5.dat" aria-label="Download 50_100_5.dat for tree, n=50, p=5, alpha=0.4">50_100_5.dat</a></td></tr>
+<tr data-search="50 5 0.6 4,412,390.48 50_100_5.dat"><td>50</td><td>5</td><td>0.6</td><td class="cost">4,412,390.48<sup aria-label="certified">*</sup></td><td><a href="instances/50_100_5.dat" download="50_100_5.dat" aria-label="Download 50_100_5.dat for tree, n=50, p=5, alpha=0.6">50_100_5.dat</a></td></tr>
+<tr data-search="50 5 0.8 5,118,759.82 50_100_5.dat"><td>50</td><td>5</td><td>0.8</td><td class="cost">5,118,759.82<sup aria-label="certified">*</sup></td><td><a href="instances/50_100_5.dat" download="50_100_5.dat" aria-label="Download 50_100_5.dat for tree, n=50, p=5, alpha=0.8">50_100_5.dat</a></td></tr>
+<tr data-search="50 5 1.0 5,480,018.18 50_100_5.dat"><td>50</td><td>5</td><td>1.0</td><td class="cost">5,480,018.18<sup aria-label="certified">*</sup></td><td><a href="instances/50_100_5.dat" download="50_100_5.dat" aria-label="Download 50_100_5.dat for tree, n=50, p=5, alpha=1.0">50_100_5.dat</a></td></tr>
+<tr class="pair-start" data-search="100 5 0.2 5,727,556.99 100_100_5.dat"><td>100</td><td>5</td><td>0.2</td><td class="cost">5,727,556.99</td><td><a href="instances/100_100_5.dat" download="100_100_5.dat" aria-label="Download 100_100_5.dat for tree, n=100, p=5, alpha=0.2">100_100_5.dat</a></td></tr>
+<tr data-search="100 5 0.4 7,880,536.77 100_100_5.dat"><td>100</td><td>5</td><td>0.4</td><td class="cost">7,880,536.77</td><td><a href="instances/100_100_5.dat" download="100_100_5.dat" aria-label="Download 100_100_5.dat for tree, n=100, p=5, alpha=0.4">100_100_5.dat</a></td></tr>
+<tr data-search="100 5 0.6 9,407,989.37 100_100_5.dat"><td>100</td><td>5</td><td>0.6</td><td class="cost">9,407,989.37</td><td><a href="instances/100_100_5.dat" download="100_100_5.dat" aria-label="Download 100_100_5.dat for tree, n=100, p=5, alpha=0.6">100_100_5.dat</a></td></tr>
+<tr data-search="100 5 0.8 10,554,063.87 100_100_5.dat"><td>100</td><td>5</td><td>0.8</td><td class="cost">10,554,063.87</td><td><a href="instances/100_100_5.dat" download="100_100_5.dat" aria-label="Download 100_100_5.dat for tree, n=100, p=5, alpha=0.8">100_100_5.dat</a></td></tr>
+<tr data-search="100 5 1.0 11,006,043.49 100_100_5.dat"><td>100</td><td>5</td><td>1.0</td><td class="cost">11,006,043.49<sup aria-label="certified">*</sup></td><td><a href="instances/100_100_5.dat" download="100_100_5.dat" aria-label="Download 100_100_5.dat for tree, n=100, p=5, alpha=1.0">100_100_5.dat</a></td></tr>
+<tr class="pair-start" data-search="150 5 0.2 8,443,552.45 150_100_5.dat"><td>150</td><td>5</td><td>0.2</td><td class="cost">8,443,552.45</td><td><a href="instances/150_100_5.dat" download="150_100_5.dat" aria-label="Download 150_100_5.dat for tree, n=150, p=5, alpha=0.2">150_100_5.dat</a></td></tr>
+<tr data-search="150 5 0.4 11,332,218.04 150_100_5.dat"><td>150</td><td>5</td><td>0.4</td><td class="cost">11,332,218.04</td><td><a href="instances/150_100_5.dat" download="150_100_5.dat" aria-label="Download 150_100_5.dat for tree, n=150, p=5, alpha=0.4">150_100_5.dat</a></td></tr>
+<tr data-search="150 5 0.6 13,504,287.60 150_100_5.dat"><td>150</td><td>5</td><td>0.6</td><td class="cost">13,504,287.60</td><td><a href="instances/150_100_5.dat" download="150_100_5.dat" aria-label="Download 150_100_5.dat for tree, n=150, p=5, alpha=0.6">150_100_5.dat</a></td></tr>
+<tr data-search="150 5 0.8 15,094,877.29 150_100_5.dat"><td>150</td><td>5</td><td>0.8</td><td class="cost">15,094,877.29</td><td><a href="instances/150_100_5.dat" download="150_100_5.dat" aria-label="Download 150_100_5.dat for tree, n=150, p=5, alpha=0.8">150_100_5.dat</a></td></tr>
+<tr data-search="150 5 1.0 15,896,224.45 150_100_5.dat"><td>150</td><td>5</td><td>1.0</td><td class="cost">15,896,224.45<sup aria-label="certified">*</sup></td><td><a href="instances/150_100_5.dat" download="150_100_5.dat" aria-label="Download 150_100_5.dat for tree, n=150, p=5, alpha=1.0">150_100_5.dat</a></td></tr>
+<tr class="pair-start" data-search="40 10 0.2 1,898,597.71 40_100_10.dat"><td>40</td><td>10</td><td>0.2</td><td class="cost">1,898,597.71</td><td><a href="instances/40_100_10.dat" download="40_100_10.dat" aria-label="Download 40_100_10.dat for tree, n=40, p=10, alpha=0.2">40_100_10.dat</a></td></tr>
+<tr data-search="40 10 0.4 3,004,831.88 40_100_10.dat"><td>40</td><td>10</td><td>0.4</td><td class="cost">3,004,831.88</td><td><a href="instances/40_100_10.dat" download="40_100_10.dat" aria-label="Download 40_100_10.dat for tree, n=40, p=10, alpha=0.4">40_100_10.dat</a></td></tr>
+<tr data-search="40 10 0.6 3,988,341.81 40_100_10.dat"><td>40</td><td>10</td><td>0.6</td><td class="cost">3,988,341.81</td><td><a href="instances/40_100_10.dat" download="40_100_10.dat" aria-label="Download 40_100_10.dat for tree, n=40, p=10, alpha=0.6">40_100_10.dat</a></td></tr>
+<tr data-search="40 10 0.8 4,599,873.27 40_100_10.dat"><td>40</td><td>10</td><td>0.8</td><td class="cost">4,599,873.27</td><td><a href="instances/40_100_10.dat" download="40_100_10.dat" aria-label="Download 40_100_10.dat for tree, n=40, p=10, alpha=0.8">40_100_10.dat</a></td></tr>
+<tr data-search="40 10 1.0 4,876,414.54 40_100_10.dat"><td>40</td><td>10</td><td>1.0</td><td class="cost">4,876,414.54<sup aria-label="certified">*</sup></td><td><a href="instances/40_100_10.dat" download="40_100_10.dat" aria-label="Download 40_100_10.dat for tree, n=40, p=10, alpha=1.0">40_100_10.dat</a></td></tr>
+<tr class="pair-start" data-search="50 10 0.2 2,240,978.56 50_100_10.dat"><td>50</td><td>10</td><td>0.2</td><td class="cost">2,240,978.56</td><td><a href="instances/50_100_10.dat" download="50_100_10.dat" aria-label="Download 50_100_10.dat for tree, n=50, p=10, alpha=0.2">50_100_10.dat</a></td></tr>
+<tr data-search="50 10 0.4 3,449,514.38 50_100_10.dat"><td>50</td><td>10</td><td>0.4</td><td class="cost">3,449,514.38</td><td><a href="instances/50_100_10.dat" download="50_100_10.dat" aria-label="Download 50_100_10.dat for tree, n=50, p=10, alpha=0.4">50_100_10.dat</a></td></tr>
+<tr data-search="50 10 0.6 4,452,039.51 50_100_10.dat"><td>50</td><td>10</td><td>0.6</td><td class="cost">4,452,039.51</td><td><a href="instances/50_100_10.dat" download="50_100_10.dat" aria-label="Download 50_100_10.dat for tree, n=50, p=10, alpha=0.6">50_100_10.dat</a></td></tr>
+<tr data-search="50 10 0.8 5,077,329.46 50_100_10.dat"><td>50</td><td>10</td><td>0.8</td><td class="cost">5,077,329.46</td><td><a href="instances/50_100_10.dat" download="50_100_10.dat" aria-label="Download 50_100_10.dat for tree, n=50, p=10, alpha=0.8">50_100_10.dat</a></td></tr>
+<tr data-search="50 10 1.0 5,371,720.54 50_100_10.dat"><td>50</td><td>10</td><td>1.0</td><td class="cost">5,371,720.54<sup aria-label="certified">*</sup></td><td><a href="instances/50_100_10.dat" download="50_100_10.dat" aria-label="Download 50_100_10.dat for tree, n=50, p=10, alpha=1.0">50_100_10.dat</a></td></tr>
+<tr class="pair-start" data-search="100 10 0.2 4,977,155.69 100_100_10.dat"><td>100</td><td>10</td><td>0.2</td><td class="cost">4,977,155.69</td><td><a href="instances/100_100_10.dat" download="100_100_10.dat" aria-label="Download 100_100_10.dat for tree, n=100, p=10, alpha=0.2">100_100_10.dat</a></td></tr>
+<tr data-search="100 10 0.4 7,564,932.13 100_100_10.dat"><td>100</td><td>10</td><td>0.4</td><td class="cost">7,564,932.13</td><td><a href="instances/100_100_10.dat" download="100_100_10.dat" aria-label="Download 100_100_10.dat for tree, n=100, p=10, alpha=0.4">100_100_10.dat</a></td></tr>
+<tr data-search="100 10 0.6 9,327,873.24 100_100_10.dat"><td>100</td><td>10</td><td>0.6</td><td class="cost">9,327,873.24</td><td><a href="instances/100_100_10.dat" download="100_100_10.dat" aria-label="Download 100_100_10.dat for tree, n=100, p=10, alpha=0.6">100_100_10.dat</a></td></tr>
+<tr data-search="100 10 0.8 10,597,395.04 100_100_10.dat"><td>100</td><td>10</td><td>0.8</td><td class="cost">10,597,395.04</td><td><a href="instances/100_100_10.dat" download="100_100_10.dat" aria-label="Download 100_100_10.dat for tree, n=100, p=10, alpha=0.8">100_100_10.dat</a></td></tr>
+<tr data-search="100 10 1.0 10,934,156.93 100_100_10.dat"><td>100</td><td>10</td><td>1.0</td><td class="cost">10,934,156.93<sup aria-label="certified">*</sup></td><td><a href="instances/100_100_10.dat" download="100_100_10.dat" aria-label="Download 100_100_10.dat for tree, n=100, p=10, alpha=1.0">100_100_10.dat</a></td></tr>
+<tr class="pair-start" data-search="150 10 0.2 7,524,628.03 150_100_10.dat"><td>150</td><td>10</td><td>0.2</td><td class="cost">7,524,628.03</td><td><a href="instances/150_100_10.dat" download="150_100_10.dat" aria-label="Download 150_100_10.dat for tree, n=150, p=10, alpha=0.2">150_100_10.dat</a></td></tr>
+<tr data-search="150 10 0.4 11,235,464.26 150_100_10.dat"><td>150</td><td>10</td><td>0.4</td><td class="cost">11,235,464.26</td><td><a href="instances/150_100_10.dat" download="150_100_10.dat" aria-label="Download 150_100_10.dat for tree, n=150, p=10, alpha=0.4">150_100_10.dat</a></td></tr>
+<tr data-search="150 10 0.6 13,661,333.60 150_100_10.dat"><td>150</td><td>10</td><td>0.6</td><td class="cost">13,661,333.60</td><td><a href="instances/150_100_10.dat" download="150_100_10.dat" aria-label="Download 150_100_10.dat for tree, n=150, p=10, alpha=0.6">150_100_10.dat</a></td></tr>
+<tr data-search="150 10 0.8 15,239,511.60 150_100_10.dat"><td>150</td><td>10</td><td>0.8</td><td class="cost">15,239,511.60</td><td><a href="instances/150_100_10.dat" download="150_100_10.dat" aria-label="Download 150_100_10.dat for tree, n=150, p=10, alpha=0.8">150_100_10.dat</a></td></tr>
+<tr data-search="150 10 1.0 15,787,892.58 150_100_10.dat"><td>150</td><td>10</td><td>1.0</td><td class="cost">15,787,892.58<sup aria-label="certified">*</sup></td><td><a href="instances/150_100_10.dat" download="150_100_10.dat" aria-label="Download 150_100_10.dat for tree, n=150, p=10, alpha=1.0">150_100_10.dat</a></td></tr></tbody>
+    </table></div>
+  </section>
+  <section id="downloads" class="panel" aria-labelledby="downloads-heading">
+    <h2 id="downloads-heading">Downloads and checksums</h2>
+    <p>The ZIP includes all 11 manuscript data files, the 110-case index, a README, and SHA-256 checksums. Individual <code>.dat</code> files are linked in the tables above.</p>
+    <div class="links"><a href="MApHLP_benchmark_instances.zip" download>Complete ZIP</a><a href="case_manifest.csv" download>Case index CSV</a><a href="SHA256SUMS.txt" download>SHA-256 checksums</a></div>
+  </section>
+</main>
+<footer><div class="wrap">
+  <div class="footer-meta"><p><em>This page is maintained by <a href="https://www.soumenatta.com/">Dr. Soumen Atta, PhD</a>.</em></p><p><em>This page was created on October 04, 2026.</em></p></div>
+</div></footer>
 </body>
 </html>

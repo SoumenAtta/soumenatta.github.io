@@ -28,7 +28,7 @@
 
 - code: "MApHLP (Ring & Tree)"
   title: "Multiple Allocation p-Hub Location Problems with Ring and Tree Backbone Networks"
-  path: "/maphlp-ring-tree-benchmarks/"
+  path: "/datasets/maphlp-ring-tree-benchmarks/"
   paper: "Multiple Allocation p-Hub Location Problems with Ring and Tree Backbone Networks for VoD Content Placement"
   venue: "Supplementary benchmark data · 11 data files · 110 ring and tree cases"
 
