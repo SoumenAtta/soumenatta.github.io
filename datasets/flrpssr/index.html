@@ -1,0 +1,479 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>FLRP-SSR Supplementary Webpage</title>
+  <meta name="description" content="FLRP-SSR benchmark instances, Gurobi and ALNS results, route schedules, and solution files for scenario-based facility location and routing under service-time uncertainty.">
+  <link rel="canonical" href="https://www.soumenatta.com/datasets/flrpssr/">
+  <link rel="stylesheet" href="site.css">
+</head>
+<body>
+  <main>
+    <p><a href="/datasets/">&larr; Back to Data Sets</a></p>
+    <h1>Supplementary Webpage</h1>
+    <h2>A Three-Layer Adaptive Large Neighborhood Search for Scenario-Based Integrated Facility Location and Routing under Service-Time Uncertainty</h2>
+    <p class="author"><strong>Soumen Atta</strong><br>Faculty of Information Technology, University of Jyv&auml;skyl&auml;, P.O. Box 35 (Agora), Jyv&auml;skyl&auml;, 40014, Finland<br>Email: <a href="mailto:soumen.s.atta@jyu.fi" target="_blank" rel="noopener">soumen.s.atta@jyu.fi</a></p>
+    <div class="table-wrap instance-table">
+      <table id="instance-table">
+        <caption>
+          <p>The table below provides results for all 40 instances. Instance names give the customer count followed by the replicate number: for example, 10_1 is the first 10-customer instance. ALNS means adaptive large neighborhood search and denotes the proposed matheuristic; subscripts G and H identify Gurobi and ALNS, respectively.</p>
+          <p><strong>Objectives.</strong> L is probability-weighted total customer lateness over the 20 stored service-duration scenarios, measured in the instance time units; C is facility-opening plus routing cost, measured in the instance cost units. L<sub>G</sub> and C<sub>G</sub> are recomputed from Gurobi’s returned routes. Best L<sub>H</sub> and Best C<sub>H</sub> are the two components of the same best ALNS solution among 30 runs with different random seeds, selected by minimizing L first and then C. Zero lateness means no late customer in any of the 20 scenarios.</p>
+          <p><strong>Optimality gaps.</strong> Gap L (%) and Gap C (%) are Gurobi’s relative incumbent-to-bound optimality gaps for the lateness-minimization and cost-minimization phases, respectively; % means percent. These gaps refer to the raw phase objectives, not the route-recomputed objectives or an ALNS-to-Gurobi cost difference. “—” denotes an unavailable cost-phase gap because the cost-minimization phase was not attempted.</p>
+          <p><strong>Timing.</strong> t<sub>G</sub> is Gurobi’s recorded solve-procedure elapsed time, including phase transitions but excluding initial model construction and queueing. Mean t<sub>H</sub> is the average elapsed time of one ALNS run across all 30 seeds. 30-run effort is the sum of those 30 run times, not a single-run time; ALNS times exclude batch setup and inter-job waiting. All reported computing times are in seconds, distinct from the instance time units used for L.</p>
+          <p><strong>Status.</strong> OPT means both Gurobi phases were optimal within the configured relative gap tolerance of 0.01% and numerical tolerances. ML1 means a memory limit ended the lateness phase before optimality was certified; the cost phase was not attempted. ML2 means zero lateness was certified, but a memory limit ended the cost phase before optimality was certified. Neither ML1 nor ML2 certifies minimum cost.</p>
+          <p><strong>Links.</strong> The instance name opens its input file. Schedule opens the selected ALNS solution’s graphical route schedule using nominal service durations. Solution opens that same solution in JSON (JavaScript Object Notation), a machine-readable format.</p>
+        </caption>
+        <thead>
+          <tr><th rowspan="2" scope="col">Instance</th><th colspan="6" scope="colgroup">Gurobi</th><th colspan="6" scope="colgroup">ALNS</th></tr>
+          <tr><th scope="col">Status</th><th class="numeric" scope="col">L<sub>G</sub></th><th class="numeric" scope="col">C<sub>G</sub></th><th class="numeric" scope="col">Gap L (%)</th><th class="numeric" scope="col">Gap C (%)</th><th class="numeric" scope="col">t<sub>G</sub></th><th class="numeric" scope="col">Best L<sub>H</sub></th><th class="numeric" scope="col">Best C<sub>H</sub></th><th class="numeric" scope="col">Mean t<sub>H</sub></th><th class="numeric" scope="col">30-run effort</th><th scope="col">Schedule</th><th scope="col">Solution</th></tr>
+        </thead>
+        <tbody>
+<tr data-instance="flrp-ssr_instance_10_1" data-size="10" data-status="OPT">
+          <th scope="row"><a href="instances/flrp-ssr_instance_10_1.json" target="_blank" rel="noopener noreferrer">10_1</a></th>
+          <td data-label="Gurobi status"><span class="badge opt">OPT</span></td>
+          <td class="numeric" data-label="Gurobi L">0.000</td><td class="numeric" data-label="Gurobi C">2,907.233</td>
+          <td class="numeric" data-label="Gurobi gap L (%)">0.000</td><td class="numeric" data-label="Gurobi gap C (%)">0.000</td>
+          <td class="numeric" data-label="Gurobi time (s)">4.7</td>
+          <td class="numeric" data-label="ALNS best L">0.000</td><td class="numeric" data-label="ALNS best C">2,940.556</td>
+          <td class="numeric" data-label="ALNS mean time (s)">0.380</td>
+          <td class="numeric" data-label="ALNS 30-run effort (s)">11.40</td>
+          <td class="files" data-label="ALNS schedule"><a href="route_figures/flrp-ssr_instance_10_1.svg" target="_blank" rel="noopener noreferrer">View</a></td>
+          <td class="files" data-label="ALNS solution"><a href="results/flrp-ssr_instance_10_1/best_alns_solution.json" target="_blank" rel="noopener noreferrer">JSON</a></td></tr>
+<tr data-instance="flrp-ssr_instance_10_2" data-size="10" data-status="OPT">
+          <th scope="row"><a href="instances/flrp-ssr_instance_10_2.json" target="_blank" rel="noopener noreferrer">10_2</a></th>
+          <td data-label="Gurobi status"><span class="badge opt">OPT</span></td>
+          <td class="numeric" data-label="Gurobi L">0.000</td><td class="numeric" data-label="Gurobi C">2,955.954</td>
+          <td class="numeric" data-label="Gurobi gap L (%)">0.000</td><td class="numeric" data-label="Gurobi gap C (%)">0.000</td>
+          <td class="numeric" data-label="Gurobi time (s)">2.2</td>
+          <td class="numeric" data-label="ALNS best L">0.000</td><td class="numeric" data-label="ALNS best C">3,018.735</td>
+          <td class="numeric" data-label="ALNS mean time (s)">0.589</td>
+          <td class="numeric" data-label="ALNS 30-run effort (s)">17.67</td>
+          <td class="files" data-label="ALNS schedule"><a href="route_figures/flrp-ssr_instance_10_2.svg" target="_blank" rel="noopener noreferrer">View</a></td>
+          <td class="files" data-label="ALNS solution"><a href="results/flrp-ssr_instance_10_2/best_alns_solution.json" target="_blank" rel="noopener noreferrer">JSON</a></td></tr>
+<tr data-instance="flrp-ssr_instance_10_3" data-size="10" data-status="OPT">
+          <th scope="row"><a href="instances/flrp-ssr_instance_10_3.json" target="_blank" rel="noopener noreferrer">10_3</a></th>
+          <td data-label="Gurobi status"><span class="badge opt">OPT</span></td>
+          <td class="numeric" data-label="Gurobi L">0.000</td><td class="numeric" data-label="Gurobi C">2,693.858</td>
+          <td class="numeric" data-label="Gurobi gap L (%)">0.000</td><td class="numeric" data-label="Gurobi gap C (%)">0.000</td>
+          <td class="numeric" data-label="Gurobi time (s)">3.8</td>
+          <td class="numeric" data-label="ALNS best L">0.000</td><td class="numeric" data-label="ALNS best C">2,709.377</td>
+          <td class="numeric" data-label="ALNS mean time (s)">0.433</td>
+          <td class="numeric" data-label="ALNS 30-run effort (s)">12.98</td>
+          <td class="files" data-label="ALNS schedule"><a href="route_figures/flrp-ssr_instance_10_3.svg" target="_blank" rel="noopener noreferrer">View</a></td>
+          <td class="files" data-label="ALNS solution"><a href="results/flrp-ssr_instance_10_3/best_alns_solution.json" target="_blank" rel="noopener noreferrer">JSON</a></td></tr>
+<tr data-instance="flrp-ssr_instance_10_4" data-size="10" data-status="OPT">
+          <th scope="row"><a href="instances/flrp-ssr_instance_10_4.json" target="_blank" rel="noopener noreferrer">10_4</a></th>
+          <td data-label="Gurobi status"><span class="badge opt">OPT</span></td>
+          <td class="numeric" data-label="Gurobi L">0.000</td><td class="numeric" data-label="Gurobi C">2,574.647</td>
+          <td class="numeric" data-label="Gurobi gap L (%)">0.000</td><td class="numeric" data-label="Gurobi gap C (%)">0.000</td>
+          <td class="numeric" data-label="Gurobi time (s)">3.3</td>
+          <td class="numeric" data-label="ALNS best L">0.000</td><td class="numeric" data-label="ALNS best C">2,574.647</td>
+          <td class="numeric" data-label="ALNS mean time (s)">0.414</td>
+          <td class="numeric" data-label="ALNS 30-run effort (s)">12.43</td>
+          <td class="files" data-label="ALNS schedule"><a href="route_figures/flrp-ssr_instance_10_4.svg" target="_blank" rel="noopener noreferrer">View</a></td>
+          <td class="files" data-label="ALNS solution"><a href="results/flrp-ssr_instance_10_4/best_alns_solution.json" target="_blank" rel="noopener noreferrer">JSON</a></td></tr>
+<tr data-instance="flrp-ssr_instance_10_5" data-size="10" data-status="OPT">
+          <th scope="row"><a href="instances/flrp-ssr_instance_10_5.json" target="_blank" rel="noopener noreferrer">10_5</a></th>
+          <td data-label="Gurobi status"><span class="badge opt">OPT</span></td>
+          <td class="numeric" data-label="Gurobi L">0.000</td><td class="numeric" data-label="Gurobi C">3,101.219</td>
+          <td class="numeric" data-label="Gurobi gap L (%)">0.000</td><td class="numeric" data-label="Gurobi gap C (%)">0.000</td>
+          <td class="numeric" data-label="Gurobi time (s)">4.1</td>
+          <td class="numeric" data-label="ALNS best L">0.000</td><td class="numeric" data-label="ALNS best C">3,101.219</td>
+          <td class="numeric" data-label="ALNS mean time (s)">0.474</td>
+          <td class="numeric" data-label="ALNS 30-run effort (s)">14.23</td>
+          <td class="files" data-label="ALNS schedule"><a href="route_figures/flrp-ssr_instance_10_5.svg" target="_blank" rel="noopener noreferrer">View</a></td>
+          <td class="files" data-label="ALNS solution"><a href="results/flrp-ssr_instance_10_5/best_alns_solution.json" target="_blank" rel="noopener noreferrer">JSON</a></td></tr>
+<tr data-instance="flrp-ssr_instance_10_6" data-size="10" data-status="OPT">
+          <th scope="row"><a href="instances/flrp-ssr_instance_10_6.json" target="_blank" rel="noopener noreferrer">10_6</a></th>
+          <td data-label="Gurobi status"><span class="badge opt">OPT</span></td>
+          <td class="numeric" data-label="Gurobi L">0.000</td><td class="numeric" data-label="Gurobi C">2,632.109</td>
+          <td class="numeric" data-label="Gurobi gap L (%)">0.000</td><td class="numeric" data-label="Gurobi gap C (%)">0.000</td>
+          <td class="numeric" data-label="Gurobi time (s)">4.2</td>
+          <td class="numeric" data-label="ALNS best L">0.000</td><td class="numeric" data-label="ALNS best C">2,670.297</td>
+          <td class="numeric" data-label="ALNS mean time (s)">0.461</td>
+          <td class="numeric" data-label="ALNS 30-run effort (s)">13.82</td>
+          <td class="files" data-label="ALNS schedule"><a href="route_figures/flrp-ssr_instance_10_6.svg" target="_blank" rel="noopener noreferrer">View</a></td>
+          <td class="files" data-label="ALNS solution"><a href="results/flrp-ssr_instance_10_6/best_alns_solution.json" target="_blank" rel="noopener noreferrer">JSON</a></td></tr>
+<tr data-instance="flrp-ssr_instance_10_7" data-size="10" data-status="OPT">
+          <th scope="row"><a href="instances/flrp-ssr_instance_10_7.json" target="_blank" rel="noopener noreferrer">10_7</a></th>
+          <td data-label="Gurobi status"><span class="badge opt">OPT</span></td>
+          <td class="numeric" data-label="Gurobi L">0.000</td><td class="numeric" data-label="Gurobi C">2,703.702</td>
+          <td class="numeric" data-label="Gurobi gap L (%)">0.000</td><td class="numeric" data-label="Gurobi gap C (%)">0.000</td>
+          <td class="numeric" data-label="Gurobi time (s)">1.2</td>
+          <td class="numeric" data-label="ALNS best L">0.000</td><td class="numeric" data-label="ALNS best C">2,712.127</td>
+          <td class="numeric" data-label="ALNS mean time (s)">0.470</td>
+          <td class="numeric" data-label="ALNS 30-run effort (s)">14.10</td>
+          <td class="files" data-label="ALNS schedule"><a href="route_figures/flrp-ssr_instance_10_7.svg" target="_blank" rel="noopener noreferrer">View</a></td>
+          <td class="files" data-label="ALNS solution"><a href="results/flrp-ssr_instance_10_7/best_alns_solution.json" target="_blank" rel="noopener noreferrer">JSON</a></td></tr>
+<tr data-instance="flrp-ssr_instance_10_8" data-size="10" data-status="OPT">
+          <th scope="row"><a href="instances/flrp-ssr_instance_10_8.json" target="_blank" rel="noopener noreferrer">10_8</a></th>
+          <td data-label="Gurobi status"><span class="badge opt">OPT</span></td>
+          <td class="numeric" data-label="Gurobi L">0.000</td><td class="numeric" data-label="Gurobi C">2,862.472</td>
+          <td class="numeric" data-label="Gurobi gap L (%)">0.000</td><td class="numeric" data-label="Gurobi gap C (%)">0.000</td>
+          <td class="numeric" data-label="Gurobi time (s)">2.0</td>
+          <td class="numeric" data-label="ALNS best L">0.000</td><td class="numeric" data-label="ALNS best C">2,926.386</td>
+          <td class="numeric" data-label="ALNS mean time (s)">0.461</td>
+          <td class="numeric" data-label="ALNS 30-run effort (s)">13.82</td>
+          <td class="files" data-label="ALNS schedule"><a href="route_figures/flrp-ssr_instance_10_8.svg" target="_blank" rel="noopener noreferrer">View</a></td>
+          <td class="files" data-label="ALNS solution"><a href="results/flrp-ssr_instance_10_8/best_alns_solution.json" target="_blank" rel="noopener noreferrer">JSON</a></td></tr>
+<tr data-instance="flrp-ssr_instance_10_9" data-size="10" data-status="OPT">
+          <th scope="row"><a href="instances/flrp-ssr_instance_10_9.json" target="_blank" rel="noopener noreferrer">10_9</a></th>
+          <td data-label="Gurobi status"><span class="badge opt">OPT</span></td>
+          <td class="numeric" data-label="Gurobi L">0.000</td><td class="numeric" data-label="Gurobi C">3,117.285</td>
+          <td class="numeric" data-label="Gurobi gap L (%)">0.000</td><td class="numeric" data-label="Gurobi gap C (%)">0.000</td>
+          <td class="numeric" data-label="Gurobi time (s)">2.2</td>
+          <td class="numeric" data-label="ALNS best L">0.000</td><td class="numeric" data-label="ALNS best C">3,117.285</td>
+          <td class="numeric" data-label="ALNS mean time (s)">0.410</td>
+          <td class="numeric" data-label="ALNS 30-run effort (s)">12.31</td>
+          <td class="files" data-label="ALNS schedule"><a href="route_figures/flrp-ssr_instance_10_9.svg" target="_blank" rel="noopener noreferrer">View</a></td>
+          <td class="files" data-label="ALNS solution"><a href="results/flrp-ssr_instance_10_9/best_alns_solution.json" target="_blank" rel="noopener noreferrer">JSON</a></td></tr>
+<tr data-instance="flrp-ssr_instance_10_10" data-size="10" data-status="OPT">
+          <th scope="row"><a href="instances/flrp-ssr_instance_10_10.json" target="_blank" rel="noopener noreferrer">10_10</a></th>
+          <td data-label="Gurobi status"><span class="badge opt">OPT</span></td>
+          <td class="numeric" data-label="Gurobi L">0.000</td><td class="numeric" data-label="Gurobi C">2,954.457</td>
+          <td class="numeric" data-label="Gurobi gap L (%)">0.000</td><td class="numeric" data-label="Gurobi gap C (%)">0.005</td>
+          <td class="numeric" data-label="Gurobi time (s)">5.4</td>
+          <td class="numeric" data-label="ALNS best L">0.000</td><td class="numeric" data-label="ALNS best C">2,954.457</td>
+          <td class="numeric" data-label="ALNS mean time (s)">0.598</td>
+          <td class="numeric" data-label="ALNS 30-run effort (s)">17.94</td>
+          <td class="files" data-label="ALNS schedule"><a href="route_figures/flrp-ssr_instance_10_10.svg" target="_blank" rel="noopener noreferrer">View</a></td>
+          <td class="files" data-label="ALNS solution"><a href="results/flrp-ssr_instance_10_10/best_alns_solution.json" target="_blank" rel="noopener noreferrer">JSON</a></td></tr>
+<tr data-instance="flrp-ssr_instance_25_1" data-size="25" data-status="OPT">
+          <th scope="row"><a href="instances/flrp-ssr_instance_25_1.json" target="_blank" rel="noopener noreferrer">25_1</a></th>
+          <td data-label="Gurobi status"><span class="badge opt">OPT</span></td>
+          <td class="numeric" data-label="Gurobi L">0.000</td><td class="numeric" data-label="Gurobi C">5,331.487</td>
+          <td class="numeric" data-label="Gurobi gap L (%)">0.000</td><td class="numeric" data-label="Gurobi gap C (%)">0.000</td>
+          <td class="numeric" data-label="Gurobi time (s)">772.2</td>
+          <td class="numeric" data-label="ALNS best L">0.000</td><td class="numeric" data-label="ALNS best C">5,416.735</td>
+          <td class="numeric" data-label="ALNS mean time (s)">2.499</td>
+          <td class="numeric" data-label="ALNS 30-run effort (s)">74.97</td>
+          <td class="files" data-label="ALNS schedule"><a href="route_figures/flrp-ssr_instance_25_1.svg" target="_blank" rel="noopener noreferrer">View</a></td>
+          <td class="files" data-label="ALNS solution"><a href="results/flrp-ssr_instance_25_1/best_alns_solution.json" target="_blank" rel="noopener noreferrer">JSON</a></td></tr>
+<tr data-instance="flrp-ssr_instance_25_2" data-size="25" data-status="OPT">
+          <th scope="row"><a href="instances/flrp-ssr_instance_25_2.json" target="_blank" rel="noopener noreferrer">25_2</a></th>
+          <td data-label="Gurobi status"><span class="badge opt">OPT</span></td>
+          <td class="numeric" data-label="Gurobi L">0.000</td><td class="numeric" data-label="Gurobi C">4,775.201</td>
+          <td class="numeric" data-label="Gurobi gap L (%)">0.000</td><td class="numeric" data-label="Gurobi gap C (%)">0.000</td>
+          <td class="numeric" data-label="Gurobi time (s)">932.9</td>
+          <td class="numeric" data-label="ALNS best L">0.000</td><td class="numeric" data-label="ALNS best C">4,937.285</td>
+          <td class="numeric" data-label="ALNS mean time (s)">1.292</td>
+          <td class="numeric" data-label="ALNS 30-run effort (s)">38.76</td>
+          <td class="files" data-label="ALNS schedule"><a href="route_figures/flrp-ssr_instance_25_2.svg" target="_blank" rel="noopener noreferrer">View</a></td>
+          <td class="files" data-label="ALNS solution"><a href="results/flrp-ssr_instance_25_2/best_alns_solution.json" target="_blank" rel="noopener noreferrer">JSON</a></td></tr>
+<tr data-instance="flrp-ssr_instance_25_3" data-size="25" data-status="OPT">
+          <th scope="row"><a href="instances/flrp-ssr_instance_25_3.json" target="_blank" rel="noopener noreferrer">25_3</a></th>
+          <td data-label="Gurobi status"><span class="badge opt">OPT</span></td>
+          <td class="numeric" data-label="Gurobi L">0.000</td><td class="numeric" data-label="Gurobi C">5,243.730</td>
+          <td class="numeric" data-label="Gurobi gap L (%)">0.000</td><td class="numeric" data-label="Gurobi gap C (%)">0.000</td>
+          <td class="numeric" data-label="Gurobi time (s)">420.6</td>
+          <td class="numeric" data-label="ALNS best L">0.000</td><td class="numeric" data-label="ALNS best C">5,308.573</td>
+          <td class="numeric" data-label="ALNS mean time (s)">2.160</td>
+          <td class="numeric" data-label="ALNS 30-run effort (s)">64.80</td>
+          <td class="files" data-label="ALNS schedule"><a href="route_figures/flrp-ssr_instance_25_3.svg" target="_blank" rel="noopener noreferrer">View</a></td>
+          <td class="files" data-label="ALNS solution"><a href="results/flrp-ssr_instance_25_3/best_alns_solution.json" target="_blank" rel="noopener noreferrer">JSON</a></td></tr>
+<tr data-instance="flrp-ssr_instance_25_4" data-size="25" data-status="OPT">
+          <th scope="row"><a href="instances/flrp-ssr_instance_25_4.json" target="_blank" rel="noopener noreferrer">25_4</a></th>
+          <td data-label="Gurobi status"><span class="badge opt">OPT</span></td>
+          <td class="numeric" data-label="Gurobi L">0.000</td><td class="numeric" data-label="Gurobi C">5,243.398</td>
+          <td class="numeric" data-label="Gurobi gap L (%)">0.000</td><td class="numeric" data-label="Gurobi gap C (%)">0.000</td>
+          <td class="numeric" data-label="Gurobi time (s)">4,111.5</td>
+          <td class="numeric" data-label="ALNS best L">0.000</td><td class="numeric" data-label="ALNS best C">5,436.377</td>
+          <td class="numeric" data-label="ALNS mean time (s)">1.459</td>
+          <td class="numeric" data-label="ALNS 30-run effort (s)">43.78</td>
+          <td class="files" data-label="ALNS schedule"><a href="route_figures/flrp-ssr_instance_25_4.svg" target="_blank" rel="noopener noreferrer">View</a></td>
+          <td class="files" data-label="ALNS solution"><a href="results/flrp-ssr_instance_25_4/best_alns_solution.json" target="_blank" rel="noopener noreferrer">JSON</a></td></tr>
+<tr data-instance="flrp-ssr_instance_25_5" data-size="25" data-status="OPT">
+          <th scope="row"><a href="instances/flrp-ssr_instance_25_5.json" target="_blank" rel="noopener noreferrer">25_5</a></th>
+          <td data-label="Gurobi status"><span class="badge opt">OPT</span></td>
+          <td class="numeric" data-label="Gurobi L">0.000</td><td class="numeric" data-label="Gurobi C">4,905.327</td>
+          <td class="numeric" data-label="Gurobi gap L (%)">0.000</td><td class="numeric" data-label="Gurobi gap C (%)">0.000</td>
+          <td class="numeric" data-label="Gurobi time (s)">512.7</td>
+          <td class="numeric" data-label="ALNS best L">0.000</td><td class="numeric" data-label="ALNS best C">5,045.855</td>
+          <td class="numeric" data-label="ALNS mean time (s)">1.723</td>
+          <td class="numeric" data-label="ALNS 30-run effort (s)">51.68</td>
+          <td class="files" data-label="ALNS schedule"><a href="route_figures/flrp-ssr_instance_25_5.svg" target="_blank" rel="noopener noreferrer">View</a></td>
+          <td class="files" data-label="ALNS solution"><a href="results/flrp-ssr_instance_25_5/best_alns_solution.json" target="_blank" rel="noopener noreferrer">JSON</a></td></tr>
+<tr data-instance="flrp-ssr_instance_25_6" data-size="25" data-status="OPT">
+          <th scope="row"><a href="instances/flrp-ssr_instance_25_6.json" target="_blank" rel="noopener noreferrer">25_6</a></th>
+          <td data-label="Gurobi status"><span class="badge opt">OPT</span></td>
+          <td class="numeric" data-label="Gurobi L">0.000</td><td class="numeric" data-label="Gurobi C">5,166.901</td>
+          <td class="numeric" data-label="Gurobi gap L (%)">0.000</td><td class="numeric" data-label="Gurobi gap C (%)">0.000</td>
+          <td class="numeric" data-label="Gurobi time (s)">1,165.3</td>
+          <td class="numeric" data-label="ALNS best L">0.000</td><td class="numeric" data-label="ALNS best C">5,221.563</td>
+          <td class="numeric" data-label="ALNS mean time (s)">1.480</td>
+          <td class="numeric" data-label="ALNS 30-run effort (s)">44.39</td>
+          <td class="files" data-label="ALNS schedule"><a href="route_figures/flrp-ssr_instance_25_6.svg" target="_blank" rel="noopener noreferrer">View</a></td>
+          <td class="files" data-label="ALNS solution"><a href="results/flrp-ssr_instance_25_6/best_alns_solution.json" target="_blank" rel="noopener noreferrer">JSON</a></td></tr>
+<tr data-instance="flrp-ssr_instance_25_7" data-size="25" data-status="OPT">
+          <th scope="row"><a href="instances/flrp-ssr_instance_25_7.json" target="_blank" rel="noopener noreferrer">25_7</a></th>
+          <td data-label="Gurobi status"><span class="badge opt">OPT</span></td>
+          <td class="numeric" data-label="Gurobi L">0.000</td><td class="numeric" data-label="Gurobi C">4,859.575</td>
+          <td class="numeric" data-label="Gurobi gap L (%)">0.000</td><td class="numeric" data-label="Gurobi gap C (%)">0.000</td>
+          <td class="numeric" data-label="Gurobi time (s)">238.8</td>
+          <td class="numeric" data-label="ALNS best L">0.000</td><td class="numeric" data-label="ALNS best C">4,914.669</td>
+          <td class="numeric" data-label="ALNS mean time (s)">2.222</td>
+          <td class="numeric" data-label="ALNS 30-run effort (s)">66.67</td>
+          <td class="files" data-label="ALNS schedule"><a href="route_figures/flrp-ssr_instance_25_7.svg" target="_blank" rel="noopener noreferrer">View</a></td>
+          <td class="files" data-label="ALNS solution"><a href="results/flrp-ssr_instance_25_7/best_alns_solution.json" target="_blank" rel="noopener noreferrer">JSON</a></td></tr>
+<tr data-instance="flrp-ssr_instance_25_8" data-size="25" data-status="OPT">
+          <th scope="row"><a href="instances/flrp-ssr_instance_25_8.json" target="_blank" rel="noopener noreferrer">25_8</a></th>
+          <td data-label="Gurobi status"><span class="badge opt">OPT</span></td>
+          <td class="numeric" data-label="Gurobi L">0.000</td><td class="numeric" data-label="Gurobi C">4,681.295</td>
+          <td class="numeric" data-label="Gurobi gap L (%)">0.000</td><td class="numeric" data-label="Gurobi gap C (%)">0.000</td>
+          <td class="numeric" data-label="Gurobi time (s)">916.4</td>
+          <td class="numeric" data-label="ALNS best L">0.000</td><td class="numeric" data-label="ALNS best C">4,732.969</td>
+          <td class="numeric" data-label="ALNS mean time (s)">0.968</td>
+          <td class="numeric" data-label="ALNS 30-run effort (s)">29.03</td>
+          <td class="files" data-label="ALNS schedule"><a href="route_figures/flrp-ssr_instance_25_8.svg" target="_blank" rel="noopener noreferrer">View</a></td>
+          <td class="files" data-label="ALNS solution"><a href="results/flrp-ssr_instance_25_8/best_alns_solution.json" target="_blank" rel="noopener noreferrer">JSON</a></td></tr>
+<tr data-instance="flrp-ssr_instance_25_9" data-size="25" data-status="OPT">
+          <th scope="row"><a href="instances/flrp-ssr_instance_25_9.json" target="_blank" rel="noopener noreferrer">25_9</a></th>
+          <td data-label="Gurobi status"><span class="badge opt">OPT</span></td>
+          <td class="numeric" data-label="Gurobi L">0.000</td><td class="numeric" data-label="Gurobi C">4,956.264</td>
+          <td class="numeric" data-label="Gurobi gap L (%)">0.000</td><td class="numeric" data-label="Gurobi gap C (%)">0.000</td>
+          <td class="numeric" data-label="Gurobi time (s)">633.5</td>
+          <td class="numeric" data-label="ALNS best L">0.000</td><td class="numeric" data-label="ALNS best C">4,956.264</td>
+          <td class="numeric" data-label="ALNS mean time (s)">1.415</td>
+          <td class="numeric" data-label="ALNS 30-run effort (s)">42.46</td>
+          <td class="files" data-label="ALNS schedule"><a href="route_figures/flrp-ssr_instance_25_9.svg" target="_blank" rel="noopener noreferrer">View</a></td>
+          <td class="files" data-label="ALNS solution"><a href="results/flrp-ssr_instance_25_9/best_alns_solution.json" target="_blank" rel="noopener noreferrer">JSON</a></td></tr>
+<tr data-instance="flrp-ssr_instance_25_10" data-size="25" data-status="OPT">
+          <th scope="row"><a href="instances/flrp-ssr_instance_25_10.json" target="_blank" rel="noopener noreferrer">25_10</a></th>
+          <td data-label="Gurobi status"><span class="badge opt">OPT</span></td>
+          <td class="numeric" data-label="Gurobi L">0.000</td><td class="numeric" data-label="Gurobi C">4,853.626</td>
+          <td class="numeric" data-label="Gurobi gap L (%)">0.000</td><td class="numeric" data-label="Gurobi gap C (%)">0.000</td>
+          <td class="numeric" data-label="Gurobi time (s)">211.0</td>
+          <td class="numeric" data-label="ALNS best L">0.000</td><td class="numeric" data-label="ALNS best C">4,912.469</td>
+          <td class="numeric" data-label="ALNS mean time (s)">0.981</td>
+          <td class="numeric" data-label="ALNS 30-run effort (s)">29.42</td>
+          <td class="files" data-label="ALNS schedule"><a href="route_figures/flrp-ssr_instance_25_10.svg" target="_blank" rel="noopener noreferrer">View</a></td>
+          <td class="files" data-label="ALNS solution"><a href="results/flrp-ssr_instance_25_10/best_alns_solution.json" target="_blank" rel="noopener noreferrer">JSON</a></td></tr>
+<tr data-instance="flrp-ssr_instance_50_1" data-size="50" data-status="ML2">
+          <th scope="row"><a href="instances/flrp-ssr_instance_50_1.json" target="_blank" rel="noopener noreferrer">50_1</a></th>
+          <td data-label="Gurobi status"><span class="badge ml2">ML2</span></td>
+          <td class="numeric" data-label="Gurobi L">0.000</td><td class="numeric" data-label="Gurobi C">9,947.289</td>
+          <td class="numeric" data-label="Gurobi gap L (%)">0.000</td><td class="numeric" data-label="Gurobi gap C (%)">2.555</td>
+          <td class="numeric" data-label="Gurobi time (s)">13,115.4</td>
+          <td class="numeric" data-label="ALNS best L">0.000</td><td class="numeric" data-label="ALNS best C">10,091.653</td>
+          <td class="numeric" data-label="ALNS mean time (s)">2.200</td>
+          <td class="numeric" data-label="ALNS 30-run effort (s)">66.00</td>
+          <td class="files" data-label="ALNS schedule"><a href="route_figures/flrp-ssr_instance_50_1.svg" target="_blank" rel="noopener noreferrer">View</a></td>
+          <td class="files" data-label="ALNS solution"><a href="results/flrp-ssr_instance_50_1/best_alns_solution.json" target="_blank" rel="noopener noreferrer">JSON</a></td></tr>
+<tr data-instance="flrp-ssr_instance_50_2" data-size="50" data-status="ML2">
+          <th scope="row"><a href="instances/flrp-ssr_instance_50_2.json" target="_blank" rel="noopener noreferrer">50_2</a></th>
+          <td data-label="Gurobi status"><span class="badge ml2">ML2</span></td>
+          <td class="numeric" data-label="Gurobi L">0.000</td><td class="numeric" data-label="Gurobi C">9,964.657</td>
+          <td class="numeric" data-label="Gurobi gap L (%)">0.000</td><td class="numeric" data-label="Gurobi gap C (%)">2.322</td>
+          <td class="numeric" data-label="Gurobi time (s)">11,313.2</td>
+          <td class="numeric" data-label="ALNS best L">0.000</td><td class="numeric" data-label="ALNS best C">10,050.750</td>
+          <td class="numeric" data-label="ALNS mean time (s)">3.461</td>
+          <td class="numeric" data-label="ALNS 30-run effort (s)">103.84</td>
+          <td class="files" data-label="ALNS schedule"><a href="route_figures/flrp-ssr_instance_50_2.svg" target="_blank" rel="noopener noreferrer">View</a></td>
+          <td class="files" data-label="ALNS solution"><a href="results/flrp-ssr_instance_50_2/best_alns_solution.json" target="_blank" rel="noopener noreferrer">JSON</a></td></tr>
+<tr data-instance="flrp-ssr_instance_50_3" data-size="50" data-status="ML2">
+          <th scope="row"><a href="instances/flrp-ssr_instance_50_3.json" target="_blank" rel="noopener noreferrer">50_3</a></th>
+          <td data-label="Gurobi status"><span class="badge ml2">ML2</span></td>
+          <td class="numeric" data-label="Gurobi L">0.000</td><td class="numeric" data-label="Gurobi C">10,577.165</td>
+          <td class="numeric" data-label="Gurobi gap L (%)">0.000</td><td class="numeric" data-label="Gurobi gap C (%)">2.032</td>
+          <td class="numeric" data-label="Gurobi time (s)">15,332.8</td>
+          <td class="numeric" data-label="ALNS best L">0.000</td><td class="numeric" data-label="ALNS best C">10,557.167</td>
+          <td class="numeric" data-label="ALNS mean time (s)">3.448</td>
+          <td class="numeric" data-label="ALNS 30-run effort (s)">103.45</td>
+          <td class="files" data-label="ALNS schedule"><a href="route_figures/flrp-ssr_instance_50_3.svg" target="_blank" rel="noopener noreferrer">View</a></td>
+          <td class="files" data-label="ALNS solution"><a href="results/flrp-ssr_instance_50_3/best_alns_solution.json" target="_blank" rel="noopener noreferrer">JSON</a></td></tr>
+<tr data-instance="flrp-ssr_instance_50_4" data-size="50" data-status="ML2">
+          <th scope="row"><a href="instances/flrp-ssr_instance_50_4.json" target="_blank" rel="noopener noreferrer">50_4</a></th>
+          <td data-label="Gurobi status"><span class="badge ml2">ML2</span></td>
+          <td class="numeric" data-label="Gurobi L">0.000</td><td class="numeric" data-label="Gurobi C">10,366.258</td>
+          <td class="numeric" data-label="Gurobi gap L (%)">0.000</td><td class="numeric" data-label="Gurobi gap C (%)">3.045</td>
+          <td class="numeric" data-label="Gurobi time (s)">18,014.2</td>
+          <td class="numeric" data-label="ALNS best L">0.000</td><td class="numeric" data-label="ALNS best C">10,419.249</td>
+          <td class="numeric" data-label="ALNS mean time (s)">2.949</td>
+          <td class="numeric" data-label="ALNS 30-run effort (s)">88.46</td>
+          <td class="files" data-label="ALNS schedule"><a href="route_figures/flrp-ssr_instance_50_4.svg" target="_blank" rel="noopener noreferrer">View</a></td>
+          <td class="files" data-label="ALNS solution"><a href="results/flrp-ssr_instance_50_4/best_alns_solution.json" target="_blank" rel="noopener noreferrer">JSON</a></td></tr>
+<tr data-instance="flrp-ssr_instance_50_5" data-size="50" data-status="ML2">
+          <th scope="row"><a href="instances/flrp-ssr_instance_50_5.json" target="_blank" rel="noopener noreferrer">50_5</a></th>
+          <td data-label="Gurobi status"><span class="badge ml2">ML2</span></td>
+          <td class="numeric" data-label="Gurobi L">0.000</td><td class="numeric" data-label="Gurobi C">10,646.050</td>
+          <td class="numeric" data-label="Gurobi gap L (%)">0.000</td><td class="numeric" data-label="Gurobi gap C (%)">2.423</td>
+          <td class="numeric" data-label="Gurobi time (s)">16,762.0</td>
+          <td class="numeric" data-label="ALNS best L">0.000</td><td class="numeric" data-label="ALNS best C">10,652.325</td>
+          <td class="numeric" data-label="ALNS mean time (s)">2.659</td>
+          <td class="numeric" data-label="ALNS 30-run effort (s)">79.77</td>
+          <td class="files" data-label="ALNS schedule"><a href="route_figures/flrp-ssr_instance_50_5.svg" target="_blank" rel="noopener noreferrer">View</a></td>
+          <td class="files" data-label="ALNS solution"><a href="results/flrp-ssr_instance_50_5/best_alns_solution.json" target="_blank" rel="noopener noreferrer">JSON</a></td></tr>
+<tr data-instance="flrp-ssr_instance_50_6" data-size="50" data-status="ML1">
+          <th scope="row"><a href="instances/flrp-ssr_instance_50_6.json" target="_blank" rel="noopener noreferrer">50_6</a></th>
+          <td data-label="Gurobi status"><span class="badge ml1">ML1</span></td>
+          <td class="numeric" data-label="Gurobi L">1,463.430</td><td class="numeric" data-label="Gurobi C">13,368.393</td>
+          <td class="numeric" data-label="Gurobi gap L (%)">100.000</td><td class="numeric" data-label="Gurobi gap C (%)">—</td>
+          <td class="numeric" data-label="Gurobi time (s)">2,924.3</td>
+          <td class="numeric" data-label="ALNS best L">0.000</td><td class="numeric" data-label="ALNS best C">10,726.385</td>
+          <td class="numeric" data-label="ALNS mean time (s)">2.207</td>
+          <td class="numeric" data-label="ALNS 30-run effort (s)">66.22</td>
+          <td class="files" data-label="ALNS schedule"><a href="route_figures/flrp-ssr_instance_50_6.svg" target="_blank" rel="noopener noreferrer">View</a></td>
+          <td class="files" data-label="ALNS solution"><a href="results/flrp-ssr_instance_50_6/best_alns_solution.json" target="_blank" rel="noopener noreferrer">JSON</a></td></tr>
+<tr data-instance="flrp-ssr_instance_50_7" data-size="50" data-status="ML1">
+          <th scope="row"><a href="instances/flrp-ssr_instance_50_7.json" target="_blank" rel="noopener noreferrer">50_7</a></th>
+          <td data-label="Gurobi status"><span class="badge ml1">ML1</span></td>
+          <td class="numeric" data-label="Gurobi L">52.517</td><td class="numeric" data-label="Gurobi C">13,279.240</td>
+          <td class="numeric" data-label="Gurobi gap L (%)">100.000</td><td class="numeric" data-label="Gurobi gap C (%)">—</td>
+          <td class="numeric" data-label="Gurobi time (s)">1,890.6</td>
+          <td class="numeric" data-label="ALNS best L">0.000</td><td class="numeric" data-label="ALNS best C">11,216.759</td>
+          <td class="numeric" data-label="ALNS mean time (s)">2.641</td>
+          <td class="numeric" data-label="ALNS 30-run effort (s)">79.24</td>
+          <td class="files" data-label="ALNS schedule"><a href="route_figures/flrp-ssr_instance_50_7.svg" target="_blank" rel="noopener noreferrer">View</a></td>
+          <td class="files" data-label="ALNS solution"><a href="results/flrp-ssr_instance_50_7/best_alns_solution.json" target="_blank" rel="noopener noreferrer">JSON</a></td></tr>
+<tr data-instance="flrp-ssr_instance_50_8" data-size="50" data-status="ML2">
+          <th scope="row"><a href="instances/flrp-ssr_instance_50_8.json" target="_blank" rel="noopener noreferrer">50_8</a></th>
+          <td data-label="Gurobi status"><span class="badge ml2">ML2</span></td>
+          <td class="numeric" data-label="Gurobi L">0.000</td><td class="numeric" data-label="Gurobi C">9,450.058</td>
+          <td class="numeric" data-label="Gurobi gap L (%)">0.000</td><td class="numeric" data-label="Gurobi gap C (%)">2.135</td>
+          <td class="numeric" data-label="Gurobi time (s)">7,711.3</td>
+          <td class="numeric" data-label="ALNS best L">0.000</td><td class="numeric" data-label="ALNS best C">9,619.421</td>
+          <td class="numeric" data-label="ALNS mean time (s)">3.134</td>
+          <td class="numeric" data-label="ALNS 30-run effort (s)">94.03</td>
+          <td class="files" data-label="ALNS schedule"><a href="route_figures/flrp-ssr_instance_50_8.svg" target="_blank" rel="noopener noreferrer">View</a></td>
+          <td class="files" data-label="ALNS solution"><a href="results/flrp-ssr_instance_50_8/best_alns_solution.json" target="_blank" rel="noopener noreferrer">JSON</a></td></tr>
+<tr data-instance="flrp-ssr_instance_50_9" data-size="50" data-status="ML2">
+          <th scope="row"><a href="instances/flrp-ssr_instance_50_9.json" target="_blank" rel="noopener noreferrer">50_9</a></th>
+          <td data-label="Gurobi status"><span class="badge ml2">ML2</span></td>
+          <td class="numeric" data-label="Gurobi L">0.000</td><td class="numeric" data-label="Gurobi C">10,301.920</td>
+          <td class="numeric" data-label="Gurobi gap L (%)">0.000</td><td class="numeric" data-label="Gurobi gap C (%)">4.287</td>
+          <td class="numeric" data-label="Gurobi time (s)">6,895.6</td>
+          <td class="numeric" data-label="ALNS best L">0.000</td><td class="numeric" data-label="ALNS best C">10,359.302</td>
+          <td class="numeric" data-label="ALNS mean time (s)">3.078</td>
+          <td class="numeric" data-label="ALNS 30-run effort (s)">92.33</td>
+          <td class="files" data-label="ALNS schedule"><a href="route_figures/flrp-ssr_instance_50_9.svg" target="_blank" rel="noopener noreferrer">View</a></td>
+          <td class="files" data-label="ALNS solution"><a href="results/flrp-ssr_instance_50_9/best_alns_solution.json" target="_blank" rel="noopener noreferrer">JSON</a></td></tr>
+<tr data-instance="flrp-ssr_instance_50_10" data-size="50" data-status="ML2">
+          <th scope="row"><a href="instances/flrp-ssr_instance_50_10.json" target="_blank" rel="noopener noreferrer">50_10</a></th>
+          <td data-label="Gurobi status"><span class="badge ml2">ML2</span></td>
+          <td class="numeric" data-label="Gurobi L">0.000</td><td class="numeric" data-label="Gurobi C">10,681.316</td>
+          <td class="numeric" data-label="Gurobi gap L (%)">0.000</td><td class="numeric" data-label="Gurobi gap C (%)">3.203</td>
+          <td class="numeric" data-label="Gurobi time (s)">6,950.2</td>
+          <td class="numeric" data-label="ALNS best L">0.000</td><td class="numeric" data-label="ALNS best C">10,652.038</td>
+          <td class="numeric" data-label="ALNS mean time (s)">3.099</td>
+          <td class="numeric" data-label="ALNS 30-run effort (s)">92.98</td>
+          <td class="files" data-label="ALNS schedule"><a href="route_figures/flrp-ssr_instance_50_10.svg" target="_blank" rel="noopener noreferrer">View</a></td>
+          <td class="files" data-label="ALNS solution"><a href="results/flrp-ssr_instance_50_10/best_alns_solution.json" target="_blank" rel="noopener noreferrer">JSON</a></td></tr>
+<tr data-instance="flrp-ssr_instance_75_1" data-size="75" data-status="ML1">
+          <th scope="row"><a href="instances/flrp-ssr_instance_75_1.json" target="_blank" rel="noopener noreferrer">75_1</a></th>
+          <td data-label="Gurobi status"><span class="badge ml1">ML1</span></td>
+          <td class="numeric" data-label="Gurobi L">6,268.284</td><td class="numeric" data-label="Gurobi C">19,698.225</td>
+          <td class="numeric" data-label="Gurobi gap L (%)">100.000</td><td class="numeric" data-label="Gurobi gap C (%)">—</td>
+          <td class="numeric" data-label="Gurobi time (s)">4,697.6</td>
+          <td class="numeric" data-label="ALNS best L">0.000</td><td class="numeric" data-label="ALNS best C">14,735.949</td>
+          <td class="numeric" data-label="ALNS mean time (s)">4.840</td>
+          <td class="numeric" data-label="ALNS 30-run effort (s)">145.19</td>
+          <td class="files" data-label="ALNS schedule"><a href="route_figures/flrp-ssr_instance_75_1.svg" target="_blank" rel="noopener noreferrer">View</a></td>
+          <td class="files" data-label="ALNS solution"><a href="results/flrp-ssr_instance_75_1/best_alns_solution.json" target="_blank" rel="noopener noreferrer">JSON</a></td></tr>
+<tr data-instance="flrp-ssr_instance_75_2" data-size="75" data-status="ML1">
+          <th scope="row"><a href="instances/flrp-ssr_instance_75_2.json" target="_blank" rel="noopener noreferrer">75_2</a></th>
+          <td data-label="Gurobi status"><span class="badge ml1">ML1</span></td>
+          <td class="numeric" data-label="Gurobi L">757.024</td><td class="numeric" data-label="Gurobi C">19,496.320</td>
+          <td class="numeric" data-label="Gurobi gap L (%)">100.000</td><td class="numeric" data-label="Gurobi gap C (%)">—</td>
+          <td class="numeric" data-label="Gurobi time (s)">5,831.0</td>
+          <td class="numeric" data-label="ALNS best L">0.000</td><td class="numeric" data-label="ALNS best C">15,289.053</td>
+          <td class="numeric" data-label="ALNS mean time (s)">3.919</td>
+          <td class="numeric" data-label="ALNS 30-run effort (s)">117.58</td>
+          <td class="files" data-label="ALNS schedule"><a href="route_figures/flrp-ssr_instance_75_2.svg" target="_blank" rel="noopener noreferrer">View</a></td>
+          <td class="files" data-label="ALNS solution"><a href="results/flrp-ssr_instance_75_2/best_alns_solution.json" target="_blank" rel="noopener noreferrer">JSON</a></td></tr>
+<tr data-instance="flrp-ssr_instance_75_3" data-size="75" data-status="ML1">
+          <th scope="row"><a href="instances/flrp-ssr_instance_75_3.json" target="_blank" rel="noopener noreferrer">75_3</a></th>
+          <td data-label="Gurobi status"><span class="badge ml1">ML1</span></td>
+          <td class="numeric" data-label="Gurobi L">1,598.880</td><td class="numeric" data-label="Gurobi C">19,970.054</td>
+          <td class="numeric" data-label="Gurobi gap L (%)">100.000</td><td class="numeric" data-label="Gurobi gap C (%)">—</td>
+          <td class="numeric" data-label="Gurobi time (s)">8,621.1</td>
+          <td class="numeric" data-label="ALNS best L">0.000</td><td class="numeric" data-label="ALNS best C">15,330.739</td>
+          <td class="numeric" data-label="ALNS mean time (s)">4.102</td>
+          <td class="numeric" data-label="ALNS 30-run effort (s)">123.07</td>
+          <td class="files" data-label="ALNS schedule"><a href="route_figures/flrp-ssr_instance_75_3.svg" target="_blank" rel="noopener noreferrer">View</a></td>
+          <td class="files" data-label="ALNS solution"><a href="results/flrp-ssr_instance_75_3/best_alns_solution.json" target="_blank" rel="noopener noreferrer">JSON</a></td></tr>
+<tr data-instance="flrp-ssr_instance_75_4" data-size="75" data-status="ML1">
+          <th scope="row"><a href="instances/flrp-ssr_instance_75_4.json" target="_blank" rel="noopener noreferrer">75_4</a></th>
+          <td data-label="Gurobi status"><span class="badge ml1">ML1</span></td>
+          <td class="numeric" data-label="Gurobi L">8,452.641</td><td class="numeric" data-label="Gurobi C">20,091.449</td>
+          <td class="numeric" data-label="Gurobi gap L (%)">100.000</td><td class="numeric" data-label="Gurobi gap C (%)">—</td>
+          <td class="numeric" data-label="Gurobi time (s)">13,187.3</td>
+          <td class="numeric" data-label="ALNS best L">0.000</td><td class="numeric" data-label="ALNS best C">15,808.365</td>
+          <td class="numeric" data-label="ALNS mean time (s)">3.869</td>
+          <td class="numeric" data-label="ALNS 30-run effort (s)">116.08</td>
+          <td class="files" data-label="ALNS schedule"><a href="route_figures/flrp-ssr_instance_75_4.svg" target="_blank" rel="noopener noreferrer">View</a></td>
+          <td class="files" data-label="ALNS solution"><a href="results/flrp-ssr_instance_75_4/best_alns_solution.json" target="_blank" rel="noopener noreferrer">JSON</a></td></tr>
+<tr data-instance="flrp-ssr_instance_75_5" data-size="75" data-status="ML1">
+          <th scope="row"><a href="instances/flrp-ssr_instance_75_5.json" target="_blank" rel="noopener noreferrer">75_5</a></th>
+          <td data-label="Gurobi status"><span class="badge ml1">ML1</span></td>
+          <td class="numeric" data-label="Gurobi L">4,415.647</td><td class="numeric" data-label="Gurobi C">20,239.317</td>
+          <td class="numeric" data-label="Gurobi gap L (%)">100.000</td><td class="numeric" data-label="Gurobi gap C (%)">—</td>
+          <td class="numeric" data-label="Gurobi time (s)">7,370.2</td>
+          <td class="numeric" data-label="ALNS best L">0.000</td><td class="numeric" data-label="ALNS best C">16,029.831</td>
+          <td class="numeric" data-label="ALNS mean time (s)">4.322</td>
+          <td class="numeric" data-label="ALNS 30-run effort (s)">129.65</td>
+          <td class="files" data-label="ALNS schedule"><a href="route_figures/flrp-ssr_instance_75_5.svg" target="_blank" rel="noopener noreferrer">View</a></td>
+          <td class="files" data-label="ALNS solution"><a href="results/flrp-ssr_instance_75_5/best_alns_solution.json" target="_blank" rel="noopener noreferrer">JSON</a></td></tr>
+<tr data-instance="flrp-ssr_instance_75_6" data-size="75" data-status="ML1">
+          <th scope="row"><a href="instances/flrp-ssr_instance_75_6.json" target="_blank" rel="noopener noreferrer">75_6</a></th>
+          <td data-label="Gurobi status"><span class="badge ml1">ML1</span></td>
+          <td class="numeric" data-label="Gurobi L">29,302.331</td><td class="numeric" data-label="Gurobi C">18,919.473</td>
+          <td class="numeric" data-label="Gurobi gap L (%)">100.000</td><td class="numeric" data-label="Gurobi gap C (%)">—</td>
+          <td class="numeric" data-label="Gurobi time (s)">2,574.3</td>
+          <td class="numeric" data-label="ALNS best L">0.000</td><td class="numeric" data-label="ALNS best C">15,128.174</td>
+          <td class="numeric" data-label="ALNS mean time (s)">4.643</td>
+          <td class="numeric" data-label="ALNS 30-run effort (s)">139.29</td>
+          <td class="files" data-label="ALNS schedule"><a href="route_figures/flrp-ssr_instance_75_6.svg" target="_blank" rel="noopener noreferrer">View</a></td>
+          <td class="files" data-label="ALNS solution"><a href="results/flrp-ssr_instance_75_6/best_alns_solution.json" target="_blank" rel="noopener noreferrer">JSON</a></td></tr>
+<tr data-instance="flrp-ssr_instance_75_7" data-size="75" data-status="ML1">
+          <th scope="row"><a href="instances/flrp-ssr_instance_75_7.json" target="_blank" rel="noopener noreferrer">75_7</a></th>
+          <td data-label="Gurobi status"><span class="badge ml1">ML1</span></td>
+          <td class="numeric" data-label="Gurobi L">5,306.326</td><td class="numeric" data-label="Gurobi C">19,852.647</td>
+          <td class="numeric" data-label="Gurobi gap L (%)">100.000</td><td class="numeric" data-label="Gurobi gap C (%)">—</td>
+          <td class="numeric" data-label="Gurobi time (s)">3,064.2</td>
+          <td class="numeric" data-label="ALNS best L">0.000</td><td class="numeric" data-label="ALNS best C">16,346.656</td>
+          <td class="numeric" data-label="ALNS mean time (s)">4.294</td>
+          <td class="numeric" data-label="ALNS 30-run effort (s)">128.81</td>
+          <td class="files" data-label="ALNS schedule"><a href="route_figures/flrp-ssr_instance_75_7.svg" target="_blank" rel="noopener noreferrer">View</a></td>
+          <td class="files" data-label="ALNS solution"><a href="results/flrp-ssr_instance_75_7/best_alns_solution.json" target="_blank" rel="noopener noreferrer">JSON</a></td></tr>
+<tr data-instance="flrp-ssr_instance_75_8" data-size="75" data-status="ML1">
+          <th scope="row"><a href="instances/flrp-ssr_instance_75_8.json" target="_blank" rel="noopener noreferrer">75_8</a></th>
+          <td data-label="Gurobi status"><span class="badge ml1">ML1</span></td>
+          <td class="numeric" data-label="Gurobi L">263.532</td><td class="numeric" data-label="Gurobi C">19,632.691</td>
+          <td class="numeric" data-label="Gurobi gap L (%)">100.000</td><td class="numeric" data-label="Gurobi gap C (%)">—</td>
+          <td class="numeric" data-label="Gurobi time (s)">13,503.1</td>
+          <td class="numeric" data-label="ALNS best L">0.000</td><td class="numeric" data-label="ALNS best C">15,895.765</td>
+          <td class="numeric" data-label="ALNS mean time (s)">4.706</td>
+          <td class="numeric" data-label="ALNS 30-run effort (s)">141.17</td>
+          <td class="files" data-label="ALNS schedule"><a href="route_figures/flrp-ssr_instance_75_8.svg" target="_blank" rel="noopener noreferrer">View</a></td>
+          <td class="files" data-label="ALNS solution"><a href="results/flrp-ssr_instance_75_8/best_alns_solution.json" target="_blank" rel="noopener noreferrer">JSON</a></td></tr>
+<tr data-instance="flrp-ssr_instance_75_9" data-size="75" data-status="ML1">
+          <th scope="row"><a href="instances/flrp-ssr_instance_75_9.json" target="_blank" rel="noopener noreferrer">75_9</a></th>
+          <td data-label="Gurobi status"><span class="badge ml1">ML1</span></td>
+          <td class="numeric" data-label="Gurobi L">110.636</td><td class="numeric" data-label="Gurobi C">19,975.249</td>
+          <td class="numeric" data-label="Gurobi gap L (%)">100.000</td><td class="numeric" data-label="Gurobi gap C (%)">—</td>
+          <td class="numeric" data-label="Gurobi time (s)">13,817.3</td>
+          <td class="numeric" data-label="ALNS best L">0.000</td><td class="numeric" data-label="ALNS best C">16,298.072</td>
+          <td class="numeric" data-label="ALNS mean time (s)">3.884</td>
+          <td class="numeric" data-label="ALNS 30-run effort (s)">116.51</td>
+          <td class="files" data-label="ALNS schedule"><a href="route_figures/flrp-ssr_instance_75_9.svg" target="_blank" rel="noopener noreferrer">View</a></td>
+          <td class="files" data-label="ALNS solution"><a href="results/flrp-ssr_instance_75_9/best_alns_solution.json" target="_blank" rel="noopener noreferrer">JSON</a></td></tr>
+<tr data-instance="flrp-ssr_instance_75_10" data-size="75" data-status="ML1">
+          <th scope="row"><a href="instances/flrp-ssr_instance_75_10.json" target="_blank" rel="noopener noreferrer">75_10</a></th>
+          <td data-label="Gurobi status"><span class="badge ml1">ML1</span></td>
+          <td class="numeric" data-label="Gurobi L">177.946</td><td class="numeric" data-label="Gurobi C">18,510.584</td>
+          <td class="numeric" data-label="Gurobi gap L (%)">100.000</td><td class="numeric" data-label="Gurobi gap C (%)">—</td>
+          <td class="numeric" data-label="Gurobi time (s)">5,924.4</td>
+          <td class="numeric" data-label="ALNS best L">0.000</td><td class="numeric" data-label="ALNS best C">14,841.792</td>
+          <td class="numeric" data-label="ALNS mean time (s)">5.250</td>
+          <td class="numeric" data-label="ALNS 30-run effort (s)">157.50</td>
+          <td class="files" data-label="ALNS schedule"><a href="route_figures/flrp-ssr_instance_75_10.svg" target="_blank" rel="noopener noreferrer">View</a></td>
+          <td class="files" data-label="ALNS solution"><a href="results/flrp-ssr_instance_75_10/best_alns_solution.json" target="_blank" rel="noopener noreferrer">JSON</a></td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="created-date">This page was created on January 23, 2026.</p>
+    <p class="maintainer">This page is maintained by <a href="https://www.soumenatta.com/" target="_blank" rel="noopener">Dr. Soumen Atta, Ph.D.</a></p>
+  </main>
+</body>
+</html>

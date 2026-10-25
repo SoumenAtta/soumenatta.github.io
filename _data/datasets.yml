@@ -66,3 +66,9 @@
   paper: "Riesz s-Energy Regularized Bi-Objective Maximal Covering Location Problem and Its Solution via a Memetic Algorithm"
   venue: "Memetic Computing, Springer, Vol. 18:47, 2026"
   doi: "10.1007/s12293-026-00531-4"
+
+- code: "FLRP-SSR"
+  title: "Scenario-Based Integrated Facility Location and Routing under Service-Time Uncertainty"
+  path: "/datasets/flrpssr/"
+  paper: "A Three-Layer Adaptive Large Neighborhood Search for Scenario-Based Integrated Facility Location and Routing under Service-Time Uncertainty"
+  venue: "Supplementary benchmark data · 40 instances · results, route schedules and solution files"

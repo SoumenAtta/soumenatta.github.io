@@ -1,0 +1,360 @@
+{
+  "open_facilities": [
+    1001,
+    1002,
+    1005,
+    1006,
+    1007,
+    1010,
+    1012,
+    1015,
+    1017,
+    1019
+  ],
+  "assignments": {
+    "42": 1001,
+    "39": 1002,
+    "31": 1007,
+    "45": 1015,
+    "3": 1005,
+    "5": 1007,
+    "6": 1005,
+    "9": 1007,
+    "12": 1001,
+    "13": 1007,
+    "20": 1005,
+    "21": 1001,
+    "25": 1019,
+    "28": 1019,
+    "29": 1005,
+    "33": 1006,
+    "34": 1019,
+    "43": 1001,
+    "46": 1007,
+    "47": 1019,
+    "48": 1012,
+    "23": 1005,
+    "38": 1010,
+    "37": 1015,
+    "18": 1001,
+    "49": 1005,
+    "24": 1006,
+    "19": 1007,
+    "35": 1001,
+    "36": 1005,
+    "14": 1005,
+    "17": 1019,
+    "10": 1007,
+    "7": 1019,
+    "40": 1007,
+    "8": 1001,
+    "32": 1001,
+    "16": 1002,
+    "22": 1007,
+    "30": 1017,
+    "4": 1007,
+    "41": 1019,
+    "27": 1015,
+    "26": 1007,
+    "2": 1019,
+    "11": 1005,
+    "15": 1005,
+    "1": 1019,
+    "44": 1001,
+    "50": 1006
+  },
+  "vehicle_facility": {
+    "0": 1001,
+    "1": 1002,
+    "2": 1005,
+    "3": 1006,
+    "4": 1007,
+    "5": 1019,
+    "6": 1010,
+    "7": 1012,
+    "8": 1015,
+    "9": 1017
+  },
+  "routes": {
+    "0": [
+      1001,
+      12,
+      43,
+      42,
+      8,
+      18,
+      44,
+      35,
+      21,
+      32,
+      1001
+    ],
+    "1": [
+      1002,
+      16,
+      39,
+      1002
+    ],
+    "2": [
+      1005,
+      20,
+      14,
+      49,
+      23,
+      3,
+      6,
+      15,
+      29,
+      11,
+      36,
+      1005
+    ],
+    "3": [
+      1006,
+      24,
+      33,
+      50,
+      1006
+    ],
+    "4": [
+      1007,
+      13,
+      31,
+      10,
+      19,
+      26,
+      5,
+      22,
+      9,
+      40,
+      4,
+      46,
+      1007
+    ],
+    "5": [
+      1019,
+      47,
+      17,
+      34,
+      2,
+      1,
+      41,
+      25,
+      28,
+      7,
+      1019
+    ],
+    "6": [
+      1010,
+      38,
+      1010
+    ],
+    "7": [
+      1012,
+      48,
+      1012
+    ],
+    "8": [
+      1015,
+      27,
+      37,
+      45,
+      1015
+    ],
+    "9": [
+      1017,
+      30,
+      1017
+    ]
+  },
+  "route_lengths": {
+    "0": 9,
+    "1": 2,
+    "2": 10,
+    "3": 3,
+    "4": 11,
+    "5": 9,
+    "6": 1,
+    "7": 1,
+    "8": 3,
+    "9": 1
+  },
+  "num_open_facilities": 10,
+  "num_nonempty_routes": 10,
+  "total_lateness": 0.0,
+  "structural_cost": 10091.653,
+  "feasibility_rate": 1.0,
+  "max_lateness": 0.0,
+  "late_visit_count": 0,
+  "scenario_summary": {
+    "num_scenarios": 20,
+    "num_feasible_scenarios": 20,
+    "feasibility_rate": 1.0,
+    "structural_cost": 10091.653,
+    "expected_total_lateness": 0.0,
+    "max_lateness": 0.0,
+    "late_visit_count": 0,
+    "scenario_outcomes": [
+      {
+        "scenario_id": "s1",
+        "probability": 0.05,
+        "feasible": true,
+        "total_lateness": 0.0,
+        "max_lateness": 0.0,
+        "late_visit_count": 0
+      },
+      {
+        "scenario_id": "s2",
+        "probability": 0.05,
+        "feasible": true,
+        "total_lateness": 0.0,
+        "max_lateness": 0.0,
+        "late_visit_count": 0
+      },
+      {
+        "scenario_id": "s3",
+        "probability": 0.05,
+        "feasible": true,
+        "total_lateness": 0.0,
+        "max_lateness": 0.0,
+        "late_visit_count": 0
+      },
+      {
+        "scenario_id": "s4",
+        "probability": 0.05,
+        "feasible": true,
+        "total_lateness": 0.0,
+        "max_lateness": 0.0,
+        "late_visit_count": 0
+      },
+      {
+        "scenario_id": "s5",
+        "probability": 0.05,
+        "feasible": true,
+        "total_lateness": 0.0,
+        "max_lateness": 0.0,
+        "late_visit_count": 0
+      },
+      {
+        "scenario_id": "s6",
+        "probability": 0.05,
+        "feasible": true,
+        "total_lateness": 0.0,
+        "max_lateness": 0.0,
+        "late_visit_count": 0
+      },
+      {
+        "scenario_id": "s7",
+        "probability": 0.05,
+        "feasible": true,
+        "total_lateness": 0.0,
+        "max_lateness": 0.0,
+        "late_visit_count": 0
+      },
+      {
+        "scenario_id": "s8",
+        "probability": 0.05,
+        "feasible": true,
+        "total_lateness": 0.0,
+        "max_lateness": 0.0,
+        "late_visit_count": 0
+      },
+      {
+        "scenario_id": "s9",
+        "probability": 0.05,
+        "feasible": true,
+        "total_lateness": 0.0,
+        "max_lateness": 0.0,
+        "late_visit_count": 0
+      },
+      {
+        "scenario_id": "s10",
+        "probability": 0.05,
+        "feasible": true,
+        "total_lateness": 0.0,
+        "max_lateness": 0.0,
+        "late_visit_count": 0
+      },
+      {
+        "scenario_id": "s11",
+        "probability": 0.05,
+        "feasible": true,
+        "total_lateness": 0.0,
+        "max_lateness": 0.0,
+        "late_visit_count": 0
+      },
+      {
+        "scenario_id": "s12",
+        "probability": 0.05,
+        "feasible": true,
+        "total_lateness": 0.0,
+        "max_lateness": 0.0,
+        "late_visit_count": 0
+      },
+      {
+        "scenario_id": "s13",
+        "probability": 0.05,
+        "feasible": true,
+        "total_lateness": 0.0,
+        "max_lateness": 0.0,
+        "late_visit_count": 0
+      },
+      {
+        "scenario_id": "s14",
+        "probability": 0.05,
+        "feasible": true,
+        "total_lateness": 0.0,
+        "max_lateness": 0.0,
+        "late_visit_count": 0
+      },
+      {
+        "scenario_id": "s15",
+        "probability": 0.05,
+        "feasible": true,
+        "total_lateness": 0.0,
+        "max_lateness": 0.0,
+        "late_visit_count": 0
+      },
+      {
+        "scenario_id": "s16",
+        "probability": 0.05,
+        "feasible": true,
+        "total_lateness": 0.0,
+        "max_lateness": 0.0,
+        "late_visit_count": 0
+      },
+      {
+        "scenario_id": "s17",
+        "probability": 0.05,
+        "feasible": true,
+        "total_lateness": 0.0,
+        "max_lateness": 0.0,
+        "late_visit_count": 0
+      },
+      {
+        "scenario_id": "s18",
+        "probability": 0.05,
+        "feasible": true,
+        "total_lateness": 0.0,
+        "max_lateness": 0.0,
+        "late_visit_count": 0
+      },
+      {
+        "scenario_id": "s19",
+        "probability": 0.05,
+        "feasible": true,
+        "total_lateness": 0.0,
+        "max_lateness": 0.0,
+        "late_visit_count": 0
+      },
+      {
+        "scenario_id": "s20",
+        "probability": 0.05,
+        "feasible": true,
+        "total_lateness": 0.0,
+        "max_lateness": 0.0,
+        "late_visit_count": 0
+      }
+    ]
+  }
+}
