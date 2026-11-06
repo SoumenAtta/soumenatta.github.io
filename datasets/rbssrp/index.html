@@ -79,6 +79,15 @@ thead th.gurobi-group { background: #eaf0f5; }
 thead th.matheuristic-group { background: #e6f0ed; color: #245d54; }
 thead .instance-head { text-align: left; vertical-align: middle; }
 th, td { padding: 12px 15px; text-align: right; border-bottom: 1px solid #e4ebee; vertical-align: middle; }
+.quality thead .instance-head,
+.quality thead .gurobi-group,
+.quality thead tr:last-child > th:nth-child(3),
+.quality .instance-row > th:first-child,
+.quality .instance-row > td[data-metric="gurobi_gap_percent"],
+.quality .cohort-mean > th:first-child,
+.quality .cohort-mean > td:nth-child(4) {
+  border-right: 1px solid #a6bac3;
+}
 td { font-variant-numeric: tabular-nums; font-feature-settings: "tnum"; white-space: nowrap; }
 tbody th.instance { text-align: left; font-weight: 550; background: white; }
 .instance { min-width: 218px; white-space: nowrap; }
