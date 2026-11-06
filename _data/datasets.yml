@@ -72,3 +72,9 @@
   path: "/datasets/flrpssr/"
   paper: "A Three-Layer Adaptive Large Neighborhood Search for Scenario-Based Integrated Facility Location and Routing under Service-Time Uncertainty"
   venue: "Supplementary benchmark data · 40 instances · results, route schedules and solution files"
+
+- code: "RBSSRP"
+  title: "Robust Base Selection and Synchronized Routing Problem"
+  path: "/datasets/rbssrp/"
+  paper: "Base selection and synchronized home-care routing under shared travel disruptions: An exact formulation and a matheuristic"
+  venue: "Supplementary benchmark data · 48 instances · Gurobi and matheuristic comparison"
